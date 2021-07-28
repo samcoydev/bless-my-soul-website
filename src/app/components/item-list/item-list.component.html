@@ -1,0 +1,12 @@
+<h3>Items</h3>
+<div class="item-list">
+    <li>
+        <div *ngFor="let item of items">
+            <p>{{item.name}}</p>
+            <div><span>ID: </span>{{item.id}}</div>
+            <div><span>Price: </span>{{item.price}}</div>
+            <p>{{item.description}}</p>
+            <p>{{item.state}}</p>
+        </div>
+    </li>
+</div>
