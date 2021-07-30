@@ -1,9 +1,7 @@
 export class Item {
-    constructor(
-        public id: number, 
-        public name: string, 
-        public price: number,
-        public description: string, 
-        public state:string
-        ) {}
+        public id!: number;
+        public name!: string;
+        public price!: number;
+        public description!: string;
+        public state!:string;
 }

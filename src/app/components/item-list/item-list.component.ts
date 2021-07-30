@@ -18,7 +18,10 @@ export class ItemListComponent implements OnInit {
   }
 
   getItems(): void {
-    this.items = this.itemService.getItems();
+    this.itemService.getItems()
+      .subscribe(response => {
+        this.items = response;
+      })
   }
 
 }
