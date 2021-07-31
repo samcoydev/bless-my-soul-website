@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 import { ItemModule } from './modules/item/item.module';
-import { AccountModule } from './modules/account/account.module';
+import { UserModule } from './modules/user/user.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { AccountModule } from './modules/account/account.module';
     AppRoutingModule,
     HttpClientModule,
     ItemModule,
-    AccountModule
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

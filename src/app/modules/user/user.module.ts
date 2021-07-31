@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegisterComponent } from 'src/app/components/register/register.component';
-import { AccountRoutingModule } from './account-routing.module';
+import { UserRoutingModule } from './user-routing.module';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from 'src/app/components/user/user.component';
@@ -18,8 +18,8 @@ import { UserComponent } from 'src/app/components/user/user.component';
   ],
   imports: [
     CommonModule,
-    AccountRoutingModule,
+    UserRoutingModule,
     ReactiveFormsModule
   ]
 })
-export class AccountModule { }
+export class UserModule { }

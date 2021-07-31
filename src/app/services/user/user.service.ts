@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -13,15 +13,26 @@ export class UserService {
 
   private url = environment.apiUrl + '/users';
   
-  private userSubject!: BehaviorSubject<User>;
-  public user!: Observable<User>;
+  private userSubject: BehaviorSubject<User>;
+  public user: Observable<User>;
 
   constructor(
     private httpClient: HttpClient,
-    private router: Router) {
+    private router: Router
+    ) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(String(localStorage.getItem('user'))));
     this.user = this.userSubject.asObservable();
   }
+  
+  private usersUpdatedSource = new Subject<string>();
+  usersUpdated$ = this.usersUpdatedSource.asObservable();
+
+  announceItemsUpdated(message: string) {
+    console.log(message);
+    this.usersUpdatedSource.next(message);
+  }
+
+  // CRUD
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url);
@@ -47,11 +58,6 @@ export class UserService {
                 return user;
       }));
   }
-
-  logout(): void {
-    this.resetUser();
-    this.router.navigate(['/account/login']);
-  }
   
   deleteUser(id: number): Observable<Object> {
     return this.httpClient.delete(this.url + '/' + `${id}`)
@@ -62,6 +68,13 @@ export class UserService {
         }
         return deletedUser;
       }));
+  }
+
+  // Cache Methods
+
+  logout(): void {
+    this.resetUser();
+    this.router.navigate(['/account/login']);
   }
 
   resetUser(): void {
