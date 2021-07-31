@@ -12,29 +12,43 @@ export class ItemService {
 
   private url = environment.apiUrl + '/item';
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-
   constructor(private httpClient: HttpClient) { }
 
   getItems() {
     return this.httpClient.get<Item[]>(this.url);
   }
 
+  getItemByID(id: number) {
+    return this.httpClient.get<Item>(this.url + '/' + `${id}`);
+  }
+
   postItem(item: Item): Observable<Item> {
-    return this.httpClient.post<Item>(this.url, item, this.httpOptions).pipe(
+    return this.httpClient.post<Item>(this.url, item).pipe(
       tap((newItem: Item) => console.log(`Posted Item: ${newItem.id}`)),
       catchError(this.handleError<Item>('postItem'))
     );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  updateItem(item: Item): Observable<Item> {
+    return this.httpClient.put<Item>(this.url + '/' + `${item.id}`, item).pipe(
+      tap((updatedItem: Item) => console.log(`Updated Item: ${updatedItem.id}`)),
+      catchError(this.handleError<Item>('updateItem'))
+    );
+  }
+
+  deleteItem(id: number): Observable<Item> {
+    return this.httpClient.delete<Item>(this.url + '/' + `${id}`).pipe(
+      tap(_ => console.log(`Deleted Item: ${id}`)),
+      catchError(this.handleError<Item>('deleteItem'))
+    );
+  }
+
+  private handleError<T>(operation = 'Operation', result?: T) {
     return (error: any): Observable<T> => {
 
       console.error(error);
 
-      console.log(`${operation} failed: ${error.message}`);
+      console.log(`${operation} Failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

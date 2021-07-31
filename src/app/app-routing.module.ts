@@ -8,6 +8,7 @@ import { ItemComponent } from './components/item/item.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'item-list', component: ItemListComponent },
+  { path: 'item/:itemId', component: ItemComponent },
   { path: 'create-item', component: CreateItemComponent },
 
   { path: '**', redirectTo: 'home'},

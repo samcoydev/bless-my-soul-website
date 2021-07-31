@@ -1,5 +1,23 @@
-<h2>{{item.name}}</h2>
-<div><span>ID: </span>{{item.id}}</div>
-<div><span>Price: </span>{{item.price}}</div>
-<p>{{item.description}}</p>
-<p>{{item.state}}</p>
+<div class="row">
+    <h1>Update Item</h1>
+</div>
+<div class="row">
+    <div class="col-6">
+        <form [formGroup]="itemForm" (ngSubmit)="updateItem()">
+            <label for="name">Name: </label>
+            <input id="name" type="text" formControlName="name">
+
+            <label for="price">Price: </label>
+            <input id="price" type="number" formControlName="price">
+
+            <label for="description">Description: </label>
+            <input id="description" type="text" formControlName="description">
+            <button type="submit" [disabled]="!itemForm.valid">Update</button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class='col-3'>
+        <button (click)="deleteItem()">Delete</button>
+    </div>
+</div>

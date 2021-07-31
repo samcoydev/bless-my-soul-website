@@ -34,15 +34,12 @@ export class CreateItemComponent implements OnInit {
   get f() { return this.itemForm.controls; }
 
   onSubmit() {
-    console.log("Submitted: ", this.itemForm.value.name)
     this.submitted = true;
     if (this.itemForm.invalid){
       return;
     }
-    console.log("It is valid: ", this.itemForm.value.name)
     this.item = this.itemForm.value;
 
-    console.log("Post: ", this.item)
     this.itemService.postItem(this.item)
       .subscribe(error => console.log(error));
   }

@@ -21,6 +21,7 @@ export class ItemListComponent implements OnInit {
     this.itemService.getItems()
       .subscribe(response => {
         this.items = response;
+        console.log("Hot list of hot items: ", this.items);
       })
   }
 
