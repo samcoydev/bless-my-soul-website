@@ -14,11 +14,11 @@ export class ItemService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getItems() {
+  getAllItems(): Observable<Item[]> {
     return this.httpClient.get<Item[]>(this.url);
   }
 
-  getItemByID(id: number) {
+  getItemByID(id: number): Observable<Item> {
     return this.httpClient.get<Item>(this.url + '/' + `${id}`);
   }
 

@@ -12,27 +12,25 @@ import { Location } from '@angular/common';
 })
 export class ItemComponent implements OnInit {
   
-  itemForm!: FormGroup;
-  item!: Item;
+  itemForm = new FormGroup({
+    name: new FormControl('', Validators.required),
+    price: new FormControl(0.0),
+    description: new FormControl('', Validators.maxLength(500))
+  });
+  item = new Item();
   submitted = false;
 
   constructor(
-    private route: ActivatedRoute, 
-    private itemService: ItemService,
-    private location: Location) { }
+    private itemService: ItemService, 
+    private location: Location,
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const itemIdFromRoute = Number(routeParams.get('itemId'));
 
     this.getItem(itemIdFromRoute);
-
-    this.itemForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      price: new FormControl(0.0),
-      description: new FormControl('', Validators.maxLength(500))
-    });
-
   }
 
   getItem(id: number) {
