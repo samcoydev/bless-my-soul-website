@@ -13,44 +13,42 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class CreateItemComponent implements OnInit {
 
-  itemForm!: FormGroup;
+  item: Item = new Item;
+
+  newItemForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    price: new FormControl(0.0),
+    description: new FormControl('', Validators.maxLength(500)),
+    state: new FormControl(StateType.Draft, Validators.required)
+  });
+
   isSubmitted = false;
   isLoading = false;
-
-  item!: Item;
-  itemName: string = '';
-  itemPrice: number = 0;
-  itemDesc: string = '';
 
   stateLabelMapping = StateTypeLabelMapping;
   states = Object.values(StateType);
 
   constructor(
-    private itemService: ItemService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private itemService: ItemService
   ) { }
 
   ngOnInit(): void {
     this.item = new Item;
-    this.itemForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      price: new FormControl(0.0),
-      description: new FormControl('', Validators.maxLength(500)),
-      state: new FormControl(StateType.Draft, Validators.required)
-    })
   }
 
-  get f() { return this.itemForm.controls; }
+  get f() { return this.newItemForm.controls; }
 
-  onSubmit() {
+  createItem() {
     this.isSubmitted = true;
-    if (this.itemForm.invalid){
-      return;
-    }
-    this.item = this.itemForm.value;
 
-    this.itemService.postItem(this.item)
+    if (this.newItemForm.invalid)
+      return;
+
+    this.isLoading = true;
+
+    this.itemService.postItem(this.newItemForm.value)
       .pipe(first())
       .subscribe({
         next: () => {

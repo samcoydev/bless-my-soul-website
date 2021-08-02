@@ -11,9 +11,6 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  isSubmitted = false;
-  isLoading = false;
-
   newUserForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
     password: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -22,10 +19,14 @@ export class RegisterComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email])
   });
 
+  isSubmitted = false;
+  isLoading = false;
+
   constructor(
-    private userService: UserService,
+    private route: ActivatedRoute,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private userService: UserService
+    ) { }
 
   ngOnInit(): void {
   }
