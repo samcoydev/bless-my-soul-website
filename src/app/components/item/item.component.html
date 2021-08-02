@@ -1,7 +1,4 @@
 <div class="row">
-    <h1>Update Item</h1>
-</div>
-<div class="row">
     <div class="col-6">
         <form [formGroup]="itemForm" (ngSubmit)="updateItem()">
             <label for="name">Name: </label>
@@ -12,6 +9,12 @@
 
             <label for="description">Description: </label>
             <input id="description" type="text" formControlName="description">
+
+            <label for="state">State: </label>
+            <select id="state" formControlName="state">
+                <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}</option>
+            </select>
+            
             <button type="submit" [disabled]="!itemForm.valid">Update</button>
         </form>
     </div>

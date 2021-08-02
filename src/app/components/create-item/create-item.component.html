@@ -9,6 +9,12 @@
 
             <label for="description">Description: </label>
             <input id="description" type="text" formControlName="description">
+
+            <label for="state">State: </label>
+            <select id="state" formControlName="state">
+                <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}</option>
+            </select>
+
             <button type="submit" [disabled]="!itemForm.valid">Submit</button>
         </form>
     </div>

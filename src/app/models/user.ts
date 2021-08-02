@@ -1,3 +1,5 @@
+import { RoleType } from "../helpers/role";
+
 export class User {
     public id = -1;
     public username = '';
@@ -5,4 +7,5 @@ export class User {
     public firstname = '';
     public lastname = '';
     public email = '';
+    public role!: RoleType;
 }

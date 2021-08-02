@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item';
 import { ItemService } from 'src/app/services/item/item.service';
 import { Location } from '@angular/common';
+import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state';
 
 @Component({
   selector: 'app-item',
@@ -12,10 +13,14 @@ import { Location } from '@angular/common';
 })
 export class ItemComponent implements OnInit {
   
+  stateLabelMapping = StateTypeLabelMapping;
+  states = Object.values(StateType);
+
   itemForm = new FormGroup({
     name: new FormControl('', Validators.required),
     price: new FormControl(0.0),
-    description: new FormControl('', Validators.maxLength(500))
+    description: new FormControl('', Validators.maxLength(500)),
+    state: new FormControl(StateType.Draft, Validators.required)
   });
   item = new Item();
   submitted = false;
@@ -45,6 +50,7 @@ export class ItemComponent implements OnInit {
     this.itemForm.controls["name"].setValue(this.item.name);
     this.itemForm.controls["price"].setValue(this.item.price);
     this.itemForm.controls["description"].setValue(this.item.description);
+    this.itemForm.controls["state"].setValue(this.item.state);
   }
 
   updateItem(): void{
