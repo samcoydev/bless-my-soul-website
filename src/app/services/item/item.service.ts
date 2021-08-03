@@ -12,12 +12,12 @@ export class ItemService {
 
   private url = environment.apiUrl + '/item';
 
-  constructor(private httpClient: HttpClient) { }
-
   private itemsUpdatedSource = new Subject<string>();
   itemsUpdated$ = this.itemsUpdatedSource.asObservable();
 
-  announceItemsUpdated(message: string) {
+  constructor(private httpClient: HttpClient) { }
+
+  announceItemsUpdated(message: string): void {
     console.log(message);
     this.itemsUpdatedSource.next(message);
   }

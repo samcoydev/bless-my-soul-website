@@ -11,10 +11,13 @@ import { Router } from '@angular/router';
 })
 export class UserService {
 
-  private url = environment.apiUrl + '/users';
+  private url = environment.apiUrl + '/user';
   
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
+
+  private usersUpdatedSource = new Subject<string>();
+  usersUpdated$ = this.usersUpdatedSource.asObservable();
 
   constructor(
     private httpClient: HttpClient,
@@ -23,16 +26,13 @@ export class UserService {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(String(localStorage.getItem('user'))));
     this.user = this.userSubject.asObservable();
   }
-  
-  private usersUpdatedSource = new Subject<string>();
-  usersUpdated$ = this.usersUpdatedSource.asObservable();
 
-  announceItemsUpdated(message: string) {
+  announceItemsUpdated(message: string): void {
     console.log(message);
     this.usersUpdatedSource.next(message);
   }
 
-  // CRUD
+  // CRUD //
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url);
