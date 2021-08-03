@@ -2,20 +2,34 @@
     <div class="col-6">
         <form [formGroup]="itemForm" (ngSubmit)="updateItem()">
             <label for="name">Name: </label>
-            <input id="name" type="text" formControlName="name">
+            <input id="name" type="text" formControlName="name" [ngClass]="{ 'is-invalid': isSubmitted && f.name.errors }">
+            <div *ngIf="isSubmitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">A name is required.</div>
+                <div *ngIf="f.name.errors.minLength">A name is required.</div>
+            </div>
 
             <label for="price">Price: </label>
-            <input id="price" type="number" formControlName="price">
+            <input id="price" type="number" formControlName="price" [ngClass]="{ 'is-invalid': isSubmitted && f.price.errors }">
 
             <label for="description">Description: </label>
-            <input id="description" type="text" formControlName="description">
+            <input id="description" type="text" formControlName="description" [ngClass]="{ 'is-invalid': isSubmitted && f.description.errors }">
+            <div *ngIf="isSubmitted && f.description.errors" class="invalid-feedback">
+                <div *ngIf="f.description.errors.maxLength">The description must be less than 500 characters.</div>
+            </div>>
 
             <label for="state">State: </label>
-            <select id="state" formControlName="state">
+            <select id="state" formControlName="state" [ngClass]="{ 'is-invalid': isSubmitted && f.state.errors }">
                 <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}</option>
             </select>
+            <div *ngIf="isSubmitted && f.state.errors" class="invalid-feedback">
+                <div *ngIf="f.state.errors.required">A state is required.</div>
+            </div>
+
             
-            <button type="submit" [disabled]="!itemForm.valid">Update</button>
+            <button [disabled]="isLoading" class="btn btn-primary" type="submit">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                Update
+            </button>
         </form>
     </div>
 </div>

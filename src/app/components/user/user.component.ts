@@ -11,12 +11,12 @@ import { Location } from '@angular/common';
 })
 export class UserComponent implements OnInit {
 
-  user = new User();
+  user: User = new User;
 
   constructor(
-    private userService: UserService,
-    private location: Location,
     private route: ActivatedRoute,
+    private location: Location,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
     this.getUser(userIdFromRoute);
   }
 
-  getUser(id: number) {
+  getUser(id: number): void {
     this.userService.getUserByID(id)
       .subscribe(response => {
         this.user = response;

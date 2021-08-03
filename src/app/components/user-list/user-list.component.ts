@@ -14,13 +14,12 @@ export class UserListComponent implements OnInit {
 
   users: User[] = [];
   users$: Observable<User[]> = new Observable;
-  filter = new FormControl('');
+  filter: FormControl = new FormControl('');
+  userListSubscription = new Subscription;
 
   constructor(private userService: UserService) { 
     this.users$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)));
   }
-
-  userListSubscription = new Subscription;
 
   ngOnInit(): void {
     this.userListSubscription = this.userService.usersUpdated$.subscribe(message => {
@@ -34,7 +33,6 @@ export class UserListComponent implements OnInit {
     this.userService.getAllUsers()
       .subscribe(response => {
         this.users = response;
-        console.log(this.users);
       })
   }
 

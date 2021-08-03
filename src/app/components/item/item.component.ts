@@ -13,22 +13,26 @@ import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state';
 })
 export class ItemComponent implements OnInit {
   
-  stateLabelMapping = StateTypeLabelMapping;
-  states = Object.values(StateType);
+  item: Item = new Item;
 
   itemForm = new FormGroup({
-    name: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
     price: new FormControl(0.0),
     description: new FormControl('', Validators.maxLength(500)),
     state: new FormControl(StateType.Draft, Validators.required)
   });
-  item = new Item();
-  submitted = false;
+
+  isSubmitted = false;
+  isLoading = false;
+
+  stateLabelMapping = StateTypeLabelMapping;
+  states = Object.values(StateType);
+
 
   constructor(
-    private itemService: ItemService, 
-    private location: Location,
     private route: ActivatedRoute,
+    private location: Location,
+    private itemService: ItemService
     ) { }
 
   ngOnInit(): void {
@@ -38,7 +42,9 @@ export class ItemComponent implements OnInit {
     this.getItem(itemIdFromRoute);
   }
 
-  getItem(id: number) {
+  get f() { return this.itemForm.controls; }
+
+  getItem(id: number): void {
     this.itemService.getItemByID(id)
       .subscribe(response => {
         this.item = response;
@@ -54,9 +60,12 @@ export class ItemComponent implements OnInit {
   }
 
   updateItem(): void{
-    this.submitted = true;
+    this.isSubmitted = true;
+
     if (this.itemForm.invalid)
       return;
+
+    this.isLoading = true;
     
     let oldId = this.item.id;
     this.item = this.itemForm.value;
@@ -68,7 +77,10 @@ export class ItemComponent implements OnInit {
 
   deleteItem(): void {
     this.itemService.deleteItem(this.item.id)
-      .subscribe(error => console.log(error));
+      .subscribe(error => {
+        this.isLoading = false;
+        console.log(error);
+      });
     this.location.back();
   }
 

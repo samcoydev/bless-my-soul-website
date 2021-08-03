@@ -40,7 +40,7 @@ export class CreateItemComponent implements OnInit {
 
   get f() { return this.newItemForm.controls; }
 
-  createItem() {
+  createItem(): void {
     this.isSubmitted = true;
 
     if (this.newItemForm.invalid)

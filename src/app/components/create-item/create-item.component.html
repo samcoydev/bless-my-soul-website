@@ -25,7 +25,10 @@
                 <div *ngIf="f.state.errors.required">A state is required.</div>
             </div>
 
-            <button type="submit" [disabled]="!newItemForm.valid">Submit</button>
+            <button [disabled]="isLoading" class="btn btn-primary" type="submit">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                Create
+            </button>
         </form>
     </div>
 </div>
