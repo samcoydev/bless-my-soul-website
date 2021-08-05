@@ -1,0 +1,1 @@
+ng build -c production && heroku static:deploy
