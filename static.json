@@ -1,4 +1,6 @@
 {
-  "root": "dist",
-  "clean_urls": false
+  "root": "dist/bless-my-soul-website",
+  "clean_urls": false,
+  "https_only": true,
+  "error_page": "/"
 }
