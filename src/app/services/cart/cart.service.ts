@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { StateType } from 'src/app/helpers/state';
 import { CartItem } from 'src/app/models/cart-item';
@@ -15,12 +15,19 @@ import { UserService } from '../user/user.service';
 export class CartService {
 
   private url = environment.apiUrl + '/cart';
-  
+
+  private cartItemsUpdatedSource = new Subject<string>();
+  cartItemsUpdated$ = this.cartItemsUpdatedSource.asObservable();
+
   constructor(
     private httpClient: HttpClient,
     private userService: UserService,
-    private itemService: ItemService,
-    ) { }
+  ) { }
+
+  announceCartItemsUpdated(message: string): void {
+    console.log(message);
+    this.cartItemsUpdatedSource.next(message);
+  }
 
   getCart(): Observable<CartItem[]> {
     return this.httpClient.get<CartItem[]>(this.url + '/' + `${this.userService.userValue.id}`);
@@ -28,27 +35,27 @@ export class CartService {
 
   postCartItem(cartItem: CartItem): Observable<CartItem> {
     return this.httpClient.post<CartItem>(this.url, cartItem).pipe(
-      tap((newCartItem: CartItem) => {
-        console.log(`Posted Item: ${newCartItem}`);
-      }),
-      catchError(this.handleError<CartItem>('postItem'))
-    );
+      tap((newItem: CartItem) => {
+        this.announceCartItemsUpdated('Cart Items updated - New Record');
+      }));
+  }
+
+  updateCartItem(cartItem: CartItem): Observable<CartItem> {
+    return this.httpClient.put<CartItem>(this.url + '/' + `${cartItem.id}`, cartItem).pipe(
+      tap((newItem: CartItem) => {
+        this.announceCartItemsUpdated('Cart Items updated - Updated Record');
+      }));
+  }
+
+  deleteCartItem(id: number): Observable<CartItem> {
+    return this.httpClient.delete<CartItem>(this.url + '/' + `${id}`).pipe(
+      tap((newItem: CartItem) => {
+        this.announceCartItemsUpdated('Cart Items updated - Deleted Record');
+      }));
   }
 
   convertItemToCartItem(item: Item): CartItem {
-    console.log("convert ", item);
     return new CartItem(-1, item.id, this.userService.userValue.id, 1);
   }
-  
-  private handleError<T>(operation = 'Operation', result?: T) {
-    return (error: any): Observable<T> => {
 
-      console.error(error);
-
-      console.log(`${operation} Failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

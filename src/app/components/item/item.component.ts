@@ -28,7 +28,6 @@ export class ItemComponent implements OnInit {
   stateLabelMapping = StateTypeLabelMapping;
   states = Object.values(StateType);
 
-
   constructor(
     private route: ActivatedRoute,
     private location: Location,

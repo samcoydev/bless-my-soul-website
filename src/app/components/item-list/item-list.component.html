@@ -10,7 +10,15 @@
                     <h5 class="card-title" routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
                     <div><span>Price: </span>{{item.price}}</div>
                     <p>{{item.description}}</p>
-                    <button (click)="addToCart(item)">Add To Cart</button>
+                    <div *ngIf="!checkIfItemIsInCart(item.id); else elseBlock">
+                        <button [disabled]="isLoading" (click)="addToCart(item)">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Add To Cart
+                        </button>
+                    </div>
+                    <ng-template #elseBlock>
+                        <p>This item is in your cart</p>
+                    </ng-template>
                 </div>
             </div>
         </div>
