@@ -9,12 +9,14 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ItemModule } from './modules/item/item.module';
 import { UserModule } from './modules/user/user.module';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { CartItemComponent } from './components/cart-item/cart-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    CartItemComponent
   ],
   imports: [
     BrowserModule,

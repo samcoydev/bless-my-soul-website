@@ -13,7 +13,7 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class CreateItemComponent implements OnInit {
 
-  item: Item = new Item;
+  item: Item = new Item(-1, '', -1, '', StateType.Draft);
 
   newItemForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
@@ -35,7 +35,7 @@ export class CreateItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.item = new Item;
+    this.item = new Item(-1, '', -1, '', StateType.Draft);
   }
 
   get f() { return this.newItemForm.controls; }

@@ -2,8 +2,10 @@ import { Item } from "./item";
 import { User } from "./user";
 
 export class CartItem {
-        public id = -1;
-        public itemid: number = -1;
-        public userid: number = -1;
-        public qty: number = -1;
+        constructor(
+                public id: number,
+                public itemID: number,
+                public userID: number, 
+                public qty: number,
+        ) {}
 }

@@ -1,9 +1,11 @@
 import { StateType } from "../helpers/state";
 
 export class Item {
-        public id = -1;
-        public name = '';
-        public price = 0.0;
-        public description = '';
-        public state!: StateType;
+        constructor(
+                public id: number,
+                public name: string,
+                public price: number,
+                public description: string,
+                public state: StateType
+        ) {}
 }

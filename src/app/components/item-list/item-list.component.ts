@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { first, map, startWith } from 'rxjs/operators';
 import { Item } from 'src/app/models/item';
+import { CartService } from 'src/app/services/cart/cart.service';
 import { ItemService } from 'src/app/services/item/item.service';
 
 @Component({
@@ -17,7 +18,10 @@ export class ItemListComponent implements OnInit {
   filter: FormControl = new FormControl('');
   itemListSubscription = new Subscription;
 
-  constructor(private itemService: ItemService) {
+  constructor(
+    private itemService: ItemService,
+    private cartService: CartService,
+    ) {
     this.items$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)));
    }
 
@@ -41,5 +45,14 @@ export class ItemListComponent implements OnInit {
       const term = text.toLowerCase();
       return item.name.toLowerCase().includes(term)
     });
+  }
+
+  addToCart(item: Item): void {
+    let convertedItem = this.cartService.convertItemToCartItem(item);
+    this.cartService.postCartItem(convertedItem).pipe(first()).subscribe({
+      error: error => {
+        console.log(error);
+      }
+    })
   }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 
 const userModule = () => import('./modules/user/user.module').then(x => x.UserModule);
 const itemModule = () => import('./modules/item/item.module').then(x => x.ItemModule);
@@ -10,6 +11,7 @@ const routes: Routes = [
 
   { path: 'user', loadChildren: userModule },
   { path: 'item', loadChildren: itemModule },
+  { path: 'cart', component: ShoppingCartComponent },
 
   { path: '**', redirectTo: 'home'},
 ];

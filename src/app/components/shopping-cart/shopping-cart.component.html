@@ -1,1 +1,16 @@
-<p>shopping-cart works!</p>
+<div class="container">
+    <h3>Cart</h3>
+    <ul>
+        <div *ngFor="let cartItem of cartItems" class="card">
+            <div class="card">
+                <div class="card-header">
+                    Item
+                </div>
+                <div class="card-body">
+                    <app-cart-item [itemID]="cartItem.itemID"></app-cart-item>
+                    <p>Quantity: {{cartItem.qty}}</p>
+                </div>
+            </div>
+        </div>
+    </ul>
+</div>

@@ -13,7 +13,7 @@ import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state';
 })
 export class ItemComponent implements OnInit {
   
-  item: Item = new Item;
+  item: Item = new Item(-1, '', -1, '', StateType.Draft);
 
   itemForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),

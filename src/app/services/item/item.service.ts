@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Item } from 'src/app/models/item';
 import { environment } from 'src/environments/environment';
 import { Observable, of, Subject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +26,14 @@ export class ItemService {
 
   getAllItems(): Observable<Item[]> {
     return this.httpClient.get<Item[]>(this.url).pipe(
-      tap((items: Item[]) => console.log(`Got Items: ${items}`)),
+      tap((items: Item[]) => console.log('Got Items')),
       catchError(this.handleError<Item[]>('getAllItems'))
       );;
   }
 
   getItemByID(id: number): Observable<Item> {
     return this.httpClient.get<Item>(this.url + '/' + `${id}`).pipe(
-      tap((item: Item) => console.log(`Got Item: ${item.id}`)),
+      tap((item: Item) => console.log('Got Item')),
       catchError(this.handleError<Item>('getItemByID'))
       );
   }
