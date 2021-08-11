@@ -13,8 +13,8 @@ export class UserService {
 
   private url = environment.apiUrl + '/user';
   
-  private userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
   private usersUpdatedSource = new Subject<string>();
   usersUpdated$ = this.usersUpdatedSource.asObservable();
@@ -23,16 +23,29 @@ export class UserService {
     private httpClient: HttpClient,
     private router: Router
     ) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(String(localStorage.getItem('user'))));
-    this.user = this.userSubject.asObservable();
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(String(localStorage.getItem('user'))));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
-
-  announceItemsUpdated(message: string): void {
+  
+  announceUsersUpdated(message: string): void {
     console.log(message);
     this.usersUpdatedSource.next(message);
   }
 
-  // CRUD //
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
+
+  public isSessionAuthenticated(): boolean {
+    let user = localStorage.getItem('user');
+    if (user) {
+      console.log("[SESSION-AUTHED] ", true);
+      return true;
+    }
+
+    console.log("[SESSION-AUTHED] ", false);
+    return false
+  }
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url);
@@ -44,57 +57,41 @@ export class UserService {
 
   register(user: User): Observable<User> {
     return this.httpClient.post<User>(this.url, user).pipe(
-      tap((newUser: User) => console.log(`Posted User: ${newUser.id}`)),
-      catchError(this.handleError<User>('registerUser'))
-    );
+      tap((newUser: User) => {
+        this.announceUsersUpdated('Users updated - New Record');
+      }));
   }
   
   login(username: string, password: string): Observable<User> {
-    return this.httpClient.post<User>(this.url + '/authenticate', { username, password})
-      .pipe(map(user => {
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                console.log("Login authorized: ", user);
-                return user;
-      }));
+    // TODO: Fix this mess
+    return this.httpClient.post<User>(this.url + '/authenticate', { username, password}).pipe(
+      tap((user: User) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          console.log("Login authorized: ", user);
+          return user;
+        }
+        console.log("Login not authorized.");
+        return null;
+    }));
   }
   
   deleteUser(id: number): Observable<Object> {
     return this.httpClient.delete(this.url + '/' + `${id}`)
       .pipe(map(deletedUser => {
         // Log the user out if they deleted their own record.
-        if (id == this.userValue.id) {
+        if (id == this.currentUserValue.id) {
             this.logout();
         }
         return deletedUser;
       }));
   }
 
-  // Cache Methods
-
   logout(): void {
-    this.resetUser();
+    localStorage.removeItem('user');
+    this.currentUserSubject.next(new User);
     this.router.navigate(['/account/login']);
   }
 
-  resetUser(): void {
-    localStorage.removeItem('user');
-    this.userSubject.next(new User);
-  }
-
-  public get userValue(): User {
-    return this.userSubject.value;
-  }
-
-  private handleError<T>(operation = 'Operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      console.error(error);
-
-      console.log(`${operation} Failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
-  }
 }

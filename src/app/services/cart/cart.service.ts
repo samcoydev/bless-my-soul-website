@@ -5,6 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { StateType } from 'src/app/helpers/state';
 import { CartItem } from 'src/app/models/cart-item';
 import { Item } from 'src/app/models/item';
+import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 import { ItemService } from '../item/item.service';
 import { UserService } from '../user/user.service';
@@ -30,7 +31,7 @@ export class CartService {
   }
 
   getCart(): Observable<CartItem[]> {
-    return this.httpClient.get<CartItem[]>(this.url + '/' + `${this.userService.userValue.id}`);
+    return this.httpClient.get<CartItem[]>(this.url + '/' + `${this.userService.currentUserValue.id}`);
   }
 
   postCartItem(cartItem: CartItem): Observable<CartItem> {
@@ -55,7 +56,7 @@ export class CartService {
   }
 
   convertItemToCartItem(item: Item): CartItem {
-    return new CartItem(-1, item.id, this.userService.userValue.id, 1);
+    return new CartItem(-1, item.id, this.userService.currentUserValue.id, 1);
   }
 
 }

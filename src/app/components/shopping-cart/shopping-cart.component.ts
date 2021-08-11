@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/cart-item';
 import { Item } from 'src/app/models/item';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,14 +16,18 @@ export class ShoppingCartComponent implements OnInit {
   relatedItems: Item[] = [];
   
   cartItemListSubscription = new Subscription;
+  currentUserSubscription = new Subscription;
 
   isLoading = false;
 
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private userService: UserService,
+  ) { }
 
   ngOnInit(): void {
     this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(message => {
-      this.getCart();
+      this.getCart()
     });
 
     this.getCart();

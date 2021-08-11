@@ -4,8 +4,10 @@ import { Observable, Subscription } from 'rxjs';
 import { first, map, startWith } from 'rxjs/operators';
 import { CartItem } from 'src/app/models/cart-item';
 import { Item } from 'src/app/models/item';
+import { User } from 'src/app/models/user';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ItemService } from 'src/app/services/item/item.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-item-list',
@@ -15,6 +17,7 @@ import { ItemService } from 'src/app/services/item/item.service';
 export class ItemListComponent implements OnInit {
 
   items: Item[] = [];
+  itemsInCart: CartItem[] = [];
 
   items$: Observable<Item[]> = new Observable;
   filter: FormControl = new FormControl('');
@@ -22,28 +25,32 @@ export class ItemListComponent implements OnInit {
   itemListSubscription = new Subscription;
   cartItemListSubscription = new Subscription;
 
-  itemsInCart: CartItem[] = [];
-
   isLoading = false;
+  isSessionAuthed = false;
 
   constructor(
     private itemService: ItemService,
     private cartService: CartService,
+    private userService: UserService,
     ) {
     this.items$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)));
    }
 
   ngOnInit(): void {
+    this.isSessionAuthed = this.userService.isSessionAuthenticated();
     this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => {
       this.getItems();
     });
 
-    this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(message => {
-      this.getCart();
-    });
-
     this.getItems();
-    this.getCart();
+
+    if (this.isSessionAuthed) {
+      this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(message => {
+        this.getCart();
+      });
+
+      this.getCart();
+    }
   }
 
   getItems(): void {
