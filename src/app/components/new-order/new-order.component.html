@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <label for="notes">Order Notes</label>
-        <textarea class="form-control" id="notes" rows="3"></textarea>
+        <textarea class="form-control" [disabled]="isLoading" [(ngModel)]="notes" id="notes" rows="3"></textarea>
     </div>
     <div class="row">
         <p>Subtotal: {{subtotal | currency}}</p>

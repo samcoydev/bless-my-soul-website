@@ -12,6 +12,7 @@ import { UserModule } from './modules/user/user.module';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { NewOrderComponent } from './components/new-order/new-order.component';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NewOrderComponent } from './components/new-order/new-order.component';
     NavBarComponent,
     ShoppingCartComponent,
     CartItemComponent,
-    NewOrderComponent
+    NewOrderComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,

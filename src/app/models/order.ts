@@ -1,11 +1,13 @@
 import { OrderType } from "../helpers/order-type";
+import { CartItem } from "./cart-item";
+import { User } from "./user";
 
 export class Order {
         constructor(
                 public id: number,
-                public userID: number,
-                public itemIDs: number[],
+                public user: User,
+                public cartItems: CartItem[],
                 public notes: string,
-                public status: OrderType
+                public state: OrderType
         ) {}
 }
