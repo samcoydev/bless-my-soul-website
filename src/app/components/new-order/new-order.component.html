@@ -1,28 +1,25 @@
 <div class="container">
-    <h3 class="row">Cart</h3>
+    <h3 class="row">Order Overview</h3>
     <div class="row">
         <ul>
             <div *ngFor="let cartItem of cartItems" class="card">
                 <div class="card">
-                    <div class="card-header">
-                        Item
-                    </div>
                     <div class="card-body">
                         <app-cart-item [item]="cartItem.item"></app-cart-item>
                         <p>Quantity: {{cartItem.qty}}</p>
-                        <div>
-                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                            <input type="number" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)"/>
-                        </div>
                     </div>
                 </div>
             </div>
         </ul>
     </div>
     <div class="row">
+        <label for="notes">Order Notes</label>
+        <textarea class="form-control" id="notes" rows="3"></textarea>
+    </div>
+    <div class="row">
         <p>Subtotal: {{subtotal | currency}}</p>
     </div>
     <div *ngIf="cartItems.length >= 1" class="row">
-        <button class="btn btn-primary col-2" routerLink="/new-order">Make an Order</button>
+        <button class="btn btn-primary col-2" (click)="createOrder()">Request Order</button>
     </div>
 </div>

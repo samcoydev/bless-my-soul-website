@@ -11,13 +11,15 @@ import { ItemModule } from './modules/item/item.module';
 import { UserModule } from './modules/user/user.module';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
+import { NewOrderComponent } from './components/new-order/new-order.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     ShoppingCartComponent,
-    CartItemComponent
+    CartItemComponent,
+    NewOrderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { RoleType } from "../helpers/role";
+import { RoleType } from "../helpers/role-type";
 
 export class User {
     public id = -1;

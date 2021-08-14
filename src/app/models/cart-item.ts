@@ -4,8 +4,8 @@ import { User } from "./user";
 export class CartItem {
         constructor(
                 public id: number,
-                public itemID: number,
-                public userID: number, 
+                public item: Item,
+                public user: User, 
                 public qty: number,
         ) {}
 }

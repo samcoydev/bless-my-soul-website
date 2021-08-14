@@ -1,4 +1,4 @@
-import { StateType } from "../helpers/state";
+import { StateType } from "../helpers/state-type";
 
 export class Item {
         constructor(

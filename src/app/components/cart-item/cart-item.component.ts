@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StateType } from 'src/app/helpers/state';
+import { StateType } from 'src/app/helpers/state-type';
 import { Item } from 'src/app/models/item';
 import { ItemService } from 'src/app/services/item/item.service';
 
@@ -10,20 +10,11 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class CartItemComponent implements OnInit {
   
-  @Input() itemID = -1;
-  item: Item = new Item(-1, '', -1, '', StateType.Draft);
+  @Input() item = new Item(-1, '', -1, '', StateType.Draft);
 
   constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.getItem();
-  }
-
-  getItem(): void {
-    this.itemService.getItemByID(this.itemID)
-      .subscribe(response => {
-        this.item = response;
-      })
   }
 
 }

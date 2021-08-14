@@ -8,11 +8,11 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
-                    <div><span>Price: </span>{{item.price}}</div>
+                    <div><span>Price: </span>{{item.price | currency}}</div>
                     <p>{{item.description}}</p>
                     <!-- If logged in -->
                     <div *ngIf="isSessionAuthed; else elseBlock">
-                        <div *ngIf="!checkIfItemIsInCart(item.id); else elseBlock">
+                        <div *ngIf="!checkIfItemIsInCart(item); else elseBlock">
                             <button [disabled]="isLoading" (click)="addToCart(item)">
                                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
                                 Add To Cart

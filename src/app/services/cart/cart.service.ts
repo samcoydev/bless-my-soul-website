@@ -1,13 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
-import { StateType } from 'src/app/helpers/state';
+import { tap } from 'rxjs/operators';
 import { CartItem } from 'src/app/models/cart-item';
 import { Item } from 'src/app/models/item';
-import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
-import { ItemService } from '../item/item.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -56,7 +53,7 @@ export class CartService {
   }
 
   convertItemToCartItem(item: Item): CartItem {
-    return new CartItem(-1, item.id, this.userService.currentUserValue.id, 1);
+    return new CartItem(-1, item, this.userService.currentUserValue, 1);
   }
 
 }

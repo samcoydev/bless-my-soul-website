@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/cart-item';
 import { Item } from 'src/app/models/item';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ItemService } from 'src/app/services/item/item.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class ShoppingCartComponent implements OnInit {
 
   cartItems: CartItem[] = [];
-  relatedItems: Item[] = [];
+  subtotal: number = 0;
   
   cartItemListSubscription = new Subscription;
   currentUserSubscription = new Subscription;
@@ -22,7 +23,7 @@ export class ShoppingCartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private userService: UserService,
+    private itemService: ItemService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +38,13 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.getCart()
       .subscribe(response => {
         this.cartItems = response;
+        this.getSubtotal();
       });
+  }
+
+  getSubtotal(): void {
+    this.subtotal = 0;
+    this.cartItems.forEach(cartItem => this.subtotal += cartItem.item.price * cartItem.qty);
   }
 
   updateCartItem(cartItem: CartItem): void {

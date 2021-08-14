@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { NewOrderComponent } from './components/new-order/new-order.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'user', loadChildren: userModule },
   { path: 'item', loadChildren: itemModule },
   { path: 'cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'new-order', component: NewOrderComponent, canActivate: [AuthGuard] },
 
   { path: '**', redirectTo: 'home'},
 ];

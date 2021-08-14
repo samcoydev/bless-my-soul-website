@@ -67,10 +67,10 @@ export class ItemListComponent implements OnInit {
       })
   }
 
-  checkIfItemIsInCart(itemID: number): boolean {
+  checkIfItemIsInCart(item: Item): boolean {
     let wasItemFound = false;
     this.itemsInCart.forEach(cartItem => {
-      if (cartItem.itemID == itemID)
+      if (cartItem.item == item)
         wasItemFound = true;
     })
     

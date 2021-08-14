@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state';
+import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state-type';
 import { Item } from 'src/app/models/item';
 import { ItemService } from 'src/app/services/item/item.service';
 

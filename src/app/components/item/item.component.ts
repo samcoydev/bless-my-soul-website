@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item';
 import { ItemService } from 'src/app/services/item/item.service';
 import { Location } from '@angular/common';
-import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state';
+import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
 
 @Component({
   selector: 'app-item',
