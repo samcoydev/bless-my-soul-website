@@ -13,6 +13,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { NewOrderComponent } from './components/new-order/new-order.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { AllOrdersListComponent } from './components/all-orders-list/all-orders-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { OrderListComponent } from './components/order-list/order-list.component
     ShoppingCartComponent,
     CartItemComponent,
     NewOrderComponent,
-    OrderListComponent
+    OrderListComponent,
+    AllOrdersListComponent
   ],
   imports: [
     BrowserModule,

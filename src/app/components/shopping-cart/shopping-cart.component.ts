@@ -19,8 +19,6 @@ export class ShoppingCartComponent implements OnInit {
   cartItemListSubscription = new Subscription;
   currentUserSubscription = new Subscription;
 
-  isLoading = false;
-
   constructor(
     private cartService: CartService,
     private itemService: ItemService
@@ -45,24 +43,6 @@ export class ShoppingCartComponent implements OnInit {
   getSubtotal(): void {
     this.subtotal = 0;
     this.cartItems.forEach(cartItem => this.subtotal += cartItem.item.price * cartItem.qty);
-  }
-
-  updateCartItem(cartItem: CartItem): void {
-    this.isLoading = true;
-    if (cartItem.qty < 1) {
-      // TODO: Use an "are you sure" pop-up to confirm this.
-      this.cartService.deleteCartItem(cartItem.id)
-        .subscribe(response => {
-          this.isLoading = false;
-          console.log("Cart Item deleted");
-        });
-    } else {
-    this.cartService.updateCartItem(cartItem)
-      .subscribe(response => {
-        this.isLoading = false;
-        console.log(response);
-      });
-    }
   }
 
 }

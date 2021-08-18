@@ -1,21 +1,17 @@
 <div class="container">
-    <h3>Orders</h3>
+    <h3>Your Orders</h3>
     <ul>
         <div *ngFor="let order of orders" class="card">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{order.user.email}}</h5>
+                    <p>Items</p>
                     <ul>
                         <div *ngFor="let cartItem of order.cartItems" class="card">
-                            <app-cart-item [item]="cartItem.item"></app-cart-item>
-                            <div *ngIf="cartItem.order">
-                                <p>Order ID: {{cartItem.order.id}}</p>
-                            </div>
+                            <app-cart-item [cartItem]="cartItem"></app-cart-item>
                         </div>
                     </ul>
-                    <p>{{order.notes}}</p>
-                    <p>ID: {{order.id}}</p>
-                    <button class="btn btn-danger" (click)="deleteOrder(order)">Delete Order</button>
+                    <p>Order Status: {{orderLabelMapping[order.state]}}</p>
+                    <p>Order Notes: {{order.notes}}</p>
                 </div>
             </div>
         </div>

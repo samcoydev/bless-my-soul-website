@@ -1,4 +1,12 @@
-<div class="card-body">
+
+<div class="card-header">
     <h5 routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
+</div>
+<div class="card-body">
     <div><span>Price: </span>{{item.price | currency}}</div>
+    <div>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+        <label for="quantity">Quantity: </label>
+        <input id="quantity" type="number" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)"/>
+    </div>
 </div>

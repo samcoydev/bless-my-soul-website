@@ -5,7 +5,7 @@
             <div *ngFor="let cartItem of cartItems" class="card">
                 <div class="card">
                     <div class="card-body">
-                        <app-cart-item [item]="cartItem.item"></app-cart-item>
+                        <app-cart-item [cartItem]="cartItem"></app-cart-item>
                         <p>Quantity: {{cartItem.qty}}</p>
                     </div>
                 </div>

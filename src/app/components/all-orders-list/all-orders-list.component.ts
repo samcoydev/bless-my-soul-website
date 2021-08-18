@@ -1,30 +1,29 @@
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import { Subscription } from 'rxjs';
+import { OrderType, OrderTypeLabelMapping } from 'src/app/helpers/order-type';
 import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/services/order/order.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
-  selector: 'app-order-list',
-  templateUrl: './order-list.component.html',
-  styleUrls: ['./order-list.component.css']
+  selector: 'app-all-orders-list',
+  templateUrl: './all-orders-list.component.html',
+  styleUrls: ['./all-orders-list.component.css']
 })
-export class OrderListComponent implements OnInit {
+export class AllOrdersListComponent implements OnInit {
 
   orders: Order[] = [];
   
   orderListSubscription = new Subscription;
+
   orderLabelMapping = OrderTypeLabelMapping;
+  states = Object.values(OrderType);
 
   isLoading = false;
   isSessionAuthed = false;
 
   constructor(
-    private orderService: OrderService,
-    private userService: UserService,
+    private orderService: OrderService
     ) { }
 
    ngOnInit(): void {
@@ -36,9 +35,18 @@ export class OrderListComponent implements OnInit {
   }
 
   getOrders(): void {
-    this.orderService.getOrdersByUserID(this.userService.currentUserValue.id)
+    this.orderService.getAllOrders()
       .subscribe(response => {
         this.orders = response;
+      })
+  }
+
+  updateOrder(order: Order): void {
+    this.isLoading = true;
+    this.orderService.updateOrder(order)
+      .subscribe(error => {
+        this.isLoading = false;
+        console.log(error);
       })
   }
 

@@ -4,17 +4,7 @@
         <ul>
             <div *ngFor="let cartItem of cartItems" class="card">
                 <div class="card">
-                    <div class="card-header">
-                        Item
-                    </div>
-                    <div class="card-body">
-                        <app-cart-item [item]="cartItem.item"></app-cart-item>
-                        <p>Quantity: {{cartItem.qty}}</p>
-                        <div>
-                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                            <input type="number" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)"/>
-                        </div>
-                    </div>
+                    <app-cart-item [cartItem]="cartItem"></app-cart-item>
                 </div>
             </div>
         </ul>

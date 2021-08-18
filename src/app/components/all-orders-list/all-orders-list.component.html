@@ -1,0 +1,23 @@
+<div class="container">
+    <h3>All Orders</h3>
+    <ul>
+        <div *ngFor="let order of orders" class="card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{order.user.email}}</h5>
+                    <ul>
+                        <div *ngFor="let cartItem of order.cartItems" class="card">
+                            <app-cart-item [cartItem]="cartItem"></app-cart-item>
+                        </div>
+                    </ul>
+                    <label for="state">State: </label>
+                    <select id="state" [(ngModel)]="order.state" (change)="updateOrder(order)">
+                        <option *ngFor="let state of states" [value]="state">{{orderLabelMapping[state]}}</option>
+                    </select>
+                    <p>Notes: {{order.notes}}</p>
+                    <button class="btn btn-danger" (click)="deleteOrder(order)">Delete Order</button>
+                </div>
+            </div>
+        </div>
+    </ul>
+</div>

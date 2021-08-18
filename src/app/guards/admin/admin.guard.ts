@@ -9,8 +9,7 @@ import { UserService } from 'src/app/services/user/user.service';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  
-  private currentUser: User = new User;
+
   
   constructor(
     private userService: UserService,
@@ -19,7 +18,7 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (this.currentUser.role != RoleType.Admin) {
+    if (this.userService.currentUserValue.role != RoleType.Admin) {
       window.alert('Access Denied. Only the admin can see this page.')
       this.router.navigate(['user/login'])
     }

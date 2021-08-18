@@ -3,7 +3,6 @@ import { Order } from "./order";
 import { User } from "./user";
 
 export class CartItem {
-        public order!: Order;
         constructor(
                 public id: number,
                 public item: Item,

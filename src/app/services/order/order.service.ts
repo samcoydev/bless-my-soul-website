@@ -32,6 +32,10 @@ export class OrderService {
     return this.httpClient.get<Order>(this.url + '/' + `${id}`);
   }
 
+  getOrdersByUserID(id: number): Observable<Order[]> {
+    return this.httpClient.get<Order[]>(this.url + '/user/' + `${id}`);
+  }
+
   postOrder(order: Order): Observable<Order> {
     return this.httpClient.post<Order>(this.url, order).pipe(
       tap((newOrder: Order) => {
