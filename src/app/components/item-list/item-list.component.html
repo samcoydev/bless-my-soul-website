@@ -10,6 +10,7 @@
                     <h5 class="card-title" routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
                     <div><span>Price: </span>{{item.price | currency}}</div>
                     <p>{{item.description}}</p>
+                    <p>{{item.state}}</p>
                     <!-- If logged in -->
                     <div *ngIf="isSessionAuthed; else elseBlock">
                         <div *ngIf="!checkIfItemIsInCart(item); else elseBlock">
