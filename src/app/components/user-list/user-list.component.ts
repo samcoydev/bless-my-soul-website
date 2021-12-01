@@ -39,7 +39,7 @@ export class UserListComponent implements OnInit {
   search(text: string): User[] {
     return this.users.filter(user => {
       const term = text.toLowerCase();
-      return user.username.toLowerCase().includes(term)
+      return user.email.toLowerCase().includes(term)
     });
   }
 

@@ -4,11 +4,11 @@
 <div class="row">
     <div class="col-6">
         <form [formGroup]="newUserForm" (ngSubmit)="registerUser()">
-            <label for="username">Username: </label>
-            <input id="username" type="text" formControlName="username" [ngClass]="{ 'is-invalid': isSubmitted && f.username.errors }" />
-            <div *ngIf="isSubmitted && f.username.errors" class="invalid-feedback">
-                <div *ngIf="f.username.errors.required">A username is required.</div>
-                <div *ngIf="f.username.errors.maxLength">The username must not exceed 20 characters.</div>
+            <label for="email">Email: </label>
+            <input id="email" type="text" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted && f.email.errors }" />
+            <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">An email is required.</div>
+                <div *ngIf="f.email.errors.email">Must be a valid email.</div>
             </div>
 
             <label for="password">Password: </label>
@@ -30,13 +30,6 @@
             <div *ngIf="isSubmitted && f.lastname.errors" class="invalid-feedback">
                 <div *ngIf="f.lastname.errors.required">A last Name is required.</div>
                 <div *ngIf="f.lastname.errors.maxLength">The last name must not exceed 20 characters.</div>
-            </div>
-
-            <label for="email">Email: </label>
-            <input id="email" type="text" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted && f.email.errors }" />
-            <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">An email is required.</div>
-                <div *ngIf="f.email.errors.email">Must be a valid email.</div>
             </div>
 
             <div class="form-group">

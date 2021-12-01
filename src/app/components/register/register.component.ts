@@ -12,11 +12,10 @@ import { UserService } from 'src/app/services/user/user.service';
 export class RegisterComponent implements OnInit {
 
   newUserForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(3)]),
     firstname: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    lastname: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    email: new FormControl('', [Validators.required, Validators.email])
+    lastname: new FormControl('', [Validators.required, Validators.maxLength(20)])
   });
 
   isSubmitted = false;

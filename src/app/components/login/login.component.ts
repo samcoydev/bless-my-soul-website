@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
 
   newUserForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       return;
 
     this.isLoading = true;
-    this.userService.login(this.f.username.value, this.f.password.value)
+    this.userService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe({
         next: () => {

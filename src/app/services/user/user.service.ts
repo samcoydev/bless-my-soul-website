@@ -62,9 +62,9 @@ export class UserService {
       }));
   }
   
-  login(username: string, password: string): Observable<User> {
+  login(email: string, password: string): Observable<User> {
     // TODO: Fix this mess
-    return this.httpClient.post<User>(this.url + '/authenticate', { username, password}).pipe(
+    return this.httpClient.post<User>(this.url + '/authenticate', {email, password}).pipe(
       tap((user: User) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
