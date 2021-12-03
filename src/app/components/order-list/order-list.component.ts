@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
-import { Order } from 'src/app/models/order';
+import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';
 import { UserService } from 'src/app/services/user/user.service';
 

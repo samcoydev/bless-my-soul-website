@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CartItem } from 'src/app/models/cart-item';
-import { Item } from 'src/app/models/item';
+import { CartItem } from 'src/app/models/cart-item.model';
+import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ItemService } from 'src/app/services/item/item.service';
 import { UserService } from 'src/app/services/user/user.service';

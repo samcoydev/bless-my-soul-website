@@ -1,33 +1,45 @@
 <div class="container">
     <h3>Items</h3>
-    <ul>
-        <div *ngFor="let item of items" class="card">
-            <div class="card">
-                <div class="card-header">
-                    Item
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title" routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
-                    <div><span>Price: </span>{{item.price | currency}}</div>
-                    <p>{{item.description}}</p>
-                    <p>{{item.state}}</p>
-                    <!-- If logged in -->
-                    <div *ngIf="isSessionAuthed; else elseBlock">
-                        <div *ngIf="!checkIfItemIsInCart(item); else elseBlock">
-                            <button [disabled]="isLoading" (click)="addToCart(item)">
-                                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                                Add To Cart
-                            </button>
+    <div class="row">
+        <label for="category">Category</label>
+        <select class="form-control" id="category"
+                required
+                (change)="sortByCategory()"
+                [(ngModel)]="categoryToSortBy" name="category">
+          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+        </select>
+    </div>
+    <div class="row">
+        <ul>
+            <div *ngFor="let item of items" class="card">
+                <div class="card">
+                    <div class="card-header">
+                        Item
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
+                        <div><span>Price: </span>{{item.price | currency}}</div>
+                        <p>{{item.description}}</p>
+                        <p>{{item.category.name}}</p>
+                        <p>{{item.state}}</p>
+                        <!-- If logged in -->
+                        <div *ngIf="isSessionAuthed; else elseBlock">
+                            <div *ngIf="!checkIfItemIsInCart(item); else elseBlock">
+                                <button [disabled]="isLoading" (click)="addToCart(item)">
+                                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                                    Add To Cart
+                                </button>
+                            </div>
+                            <ng-template #elseBlock>
+                                <p>This item is in your cart</p>
+                            </ng-template>
                         </div>
                         <ng-template #elseBlock>
-                            <p>This item is in your cart</p>
+                            <p>Please log in to your account to add to your cart</p>
                         </ng-template>
                     </div>
-                    <ng-template #elseBlock>
-                        <p>Please log in to your account to add to your cart</p>
-                    </ng-template>
                 </div>
             </div>
-        </div>
-    </ul>
+        </ul>
+    </div>
 </div>

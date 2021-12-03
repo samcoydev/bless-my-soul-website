@@ -15,7 +15,15 @@
             <input id="description" type="text" formControlName="description" [ngClass]="{ 'is-invalid': isSubmitted && f.description.errors }">
             <div *ngIf="isSubmitted && f.description.errors" class="invalid-feedback">
                 <div *ngIf="f.description.errors.maxLength">The description must be less than 500 characters.</div>
-            </div>>
+            </div>
+            
+            <label for="category">Category: </label>
+            <select id="category" formControlName="category" [ngClass]="{ 'is-invalid': isSubmitted && f._category.errors }">
+                <option *ngFor="let _category of categories" [value]="category">{{_category.name}}</option>
+            </select>
+            <div *ngIf="isSubmitted && f._category.errors" class="invalid-feedback">
+                <div *ngIf="f._category.errors.required">A category is required.</div>
+            </div>
 
             <label for="state">State: </label>
             <select id="state" formControlName="state" [ngClass]="{ 'is-invalid': isSubmitted && f.state.errors }">
@@ -25,7 +33,6 @@
                 <div *ngIf="f.state.errors.required">A state is required.</div>
             </div>
 
-            
             <button [disabled]="isLoading" class="btn btn-primary" type="submit">
                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
                 Update

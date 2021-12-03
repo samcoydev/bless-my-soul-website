@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { OrderType } from 'src/app/helpers/order-type';
-import { CartItem } from 'src/app/models/cart-item';
-import { Order } from 'src/app/models/order';
+import { CartItem } from 'src/app/models/cart-item.model';
+import { Order } from 'src/app/models/order.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -51,7 +51,7 @@ export class NewOrderComponent implements OnInit {
     this.isSubmitted = true;
     this.isLoading = true;
 
-    let newOrder = new Order(-1, this.userService.currentUserValue, this.cartItems, this.notes, OrderType.Requested);
+    let newOrder: Order = {id: -1, user: this.userService.currentUserValue, cartItems: this.cartItems, notes: this.notes, state: OrderType.Requested};
 
     this.orderService.postOrder(newOrder)
       .pipe(first())

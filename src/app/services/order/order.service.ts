@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Order } from 'src/app/models/order';
+import { Order } from 'src/app/models/order.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

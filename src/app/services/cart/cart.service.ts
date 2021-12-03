@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { CartItem } from 'src/app/models/cart-item';
-import { Item } from 'src/app/models/item';
+import { CartItem } from 'src/app/models/cart-item.model';
+import { Item } from 'src/app/models/item.model';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
 
@@ -33,27 +33,28 @@ export class CartService {
 
   postCartItem(cartItem: CartItem): Observable<CartItem> {
     return this.httpClient.post<CartItem>(this.url, cartItem).pipe(
-      tap((newItem: CartItem) => {
+      tap((newCartItem: CartItem) => {
         this.announceCartItemsUpdated('Cart Items updated - New Record');
       }));
   }
 
   updateCartItem(cartItem: CartItem): Observable<CartItem> {
     return this.httpClient.put<CartItem>(this.url + '/' + `${cartItem.id}`, cartItem).pipe(
-      tap((newItem: CartItem) => {
+      tap((newCartItem: CartItem) => {
         this.announceCartItemsUpdated('Cart Items updated - Updated Record');
       }));
   }
 
   deleteCartItem(id: number): Observable<CartItem> {
     return this.httpClient.delete<CartItem>(this.url + '/' + `${id}`).pipe(
-      tap((newItem: CartItem) => {
+      tap((newCartItem: CartItem) => {
         this.announceCartItemsUpdated('Cart Items updated - Deleted Record');
       }));
   }
 
-  convertItemToCartItem(item: Item): CartItem {
-    return new CartItem(-1, item, this.userService.currentUserValue, 1);
+  convertItemToCartItem(_item: Item): CartItem {
+    let convertedItem: CartItem = {id: -1, item: _item, user: this.userService.currentUserValue, qty: 1};
+    return convertedItem;
   }
 
 }

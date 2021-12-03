@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Item } from 'src/app/models/item';
+import { Item } from 'src/app/models/item.model';
 import { ItemService } from 'src/app/services/item/item.service';
 import { Location } from '@angular/common';
 import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { Category } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-item',
@@ -13,12 +15,14 @@ import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
 })
 export class ItemComponent implements OnInit {
   
-  item: Item = new Item(-1, '', -1, '', StateType.Draft);
+  category: Category = {id: 0, name: "No Category"};
+  item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: {id: 0, name: "No Category"}};
 
   itemForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(1)]),
     price: new FormControl(0.0),
     description: new FormControl('', Validators.maxLength(500)),
+    category: new FormControl(this.category.name, Validators.required),
     state: new FormControl(StateType.Draft, Validators.required)
   });
 
@@ -27,11 +31,13 @@ export class ItemComponent implements OnInit {
 
   stateLabelMapping = StateTypeLabelMapping;
   states = Object.values(StateType);
+  categories: Category[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private categoryService: CategoryService,
     ) { }
 
   ngOnInit(): void {
@@ -39,6 +45,14 @@ export class ItemComponent implements OnInit {
     const itemIdFromRoute = Number(routeParams.get('itemId'));
 
     this.getItem(itemIdFromRoute);
+    this.getCategories;
+  }
+
+  getCategories(): void {
+    this.categoryService.getAllCategories()
+      .subscribe(response => {
+        this.categories = response;
+      })
   }
 
   get f() { return this.itemForm.controls; }

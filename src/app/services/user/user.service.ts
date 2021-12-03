@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { RoleType } from 'src/app/helpers/role-type';
 
 @Injectable({
   providedIn: 'root'
@@ -90,7 +91,7 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem('user');
-    this.currentUserSubject.next(new User);
+    this.currentUserSubject.next({id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User});
     this.router.navigate(['/account/login']);
   }
 

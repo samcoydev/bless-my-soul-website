@@ -2,7 +2,7 @@ import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrderType, OrderTypeLabelMapping } from 'src/app/helpers/order-type';
-import { Order } from 'src/app/models/order';
+import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({

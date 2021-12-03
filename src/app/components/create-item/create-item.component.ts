@@ -3,7 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state-type';
-import { Item } from 'src/app/models/item';
+import { Category } from 'src/app/models/category.model';
+import { Item } from 'src/app/models/item.model';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { ItemService } from 'src/app/services/item/item.service';
 
 @Component({
@@ -13,42 +15,43 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class CreateItemComponent implements OnInit {
 
-  item: Item = new Item(-1, '', -1, '', StateType.Draft);
-
-  newItemForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    price: new FormControl(0.0),
-    description: new FormControl('', Validators.maxLength(500)),
-    state: new FormControl(StateType.Draft, Validators.required)
-  });
+  catTest: any;
+  newItem: Item = {id: -1, name: '', price: 0.00, description: '', state: StateType.Draft, category: {id: 0, name: "lol"}};
 
   isSubmitted = false;
   isLoading = false;
 
   stateLabelMapping = StateTypeLabelMapping;
   states = Object.values(StateType);
+  categories: Category[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private categoryService: CategoryService,
   ) { }
 
   ngOnInit(): void {
-    this.item = new Item(-1, '', -1, '', StateType.Draft);
+    this.getCategories();
+  }
+  
+  changeCategory(): void {
+    console.log("CATTEST: ", this.catTest)
   }
 
-  get f() { return this.newItemForm.controls; }
+  getCategories(): void {
+    this.categoryService.getAllCategories()
+      .subscribe(response => {
+        this.categories = response;
+      })
+  }
 
   createItem(): void {
     this.isSubmitted = true;
-
-    if (this.newItemForm.invalid)
-      return;
-
     this.isLoading = true;
 
-    this.itemService.postItem(this.newItemForm.value)
+    this.itemService.postItem(this.newItem)
       .pipe(first())
       .subscribe({
         next: () => {
@@ -56,6 +59,7 @@ export class CreateItemComponent implements OnInit {
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {
+          console.error(error)
           this.isLoading = false;
         }
       })

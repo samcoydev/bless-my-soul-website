@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({

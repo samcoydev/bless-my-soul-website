@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StateType } from 'src/app/helpers/state-type';
-import { CartItem } from 'src/app/models/cart-item';
-import { Item } from 'src/app/models/item';
+import { CartItem } from 'src/app/models/cart-item.model';
+import { Category } from 'src/app/models/category.model';
+import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ItemService } from 'src/app/services/item/item.service';
 
 @Component({
   selector: 'app-cart-item',
@@ -13,12 +13,11 @@ import { ItemService } from 'src/app/services/item/item.service';
 export class CartItemComponent implements OnInit {
   
   @Input() cartItem!: CartItem;
-  item = new Item(-1, '', -1, '', StateType.Draft);
+  item: Item = {id: -1, name: '', price: -1, description: '', state: StateType.Draft, category: {id: 0, name: "No Category"}};
 
   isLoading = false;
 
   constructor(
-    private itemService: ItemService,
     private cartService: CartService) {
   }
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { Location } from '@angular/common';
+import { RoleType } from 'src/app/helpers/role-type';
 
 @Component({
   selector: 'app-user',
@@ -11,7 +12,7 @@ import { Location } from '@angular/common';
 })
 export class UserComponent implements OnInit {
 
-  user: User = new User;
+  user: User = {id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User};
 
   constructor(
     private route: ActivatedRoute,

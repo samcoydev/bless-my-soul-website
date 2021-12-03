@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleType } from 'src/app/helpers/role-type';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -12,8 +12,7 @@ export class NavBarComponent implements OnInit {
 
   public showAdminMenus = false;
   public isLoggedIn = false;
-  
-  private currentUser: User = new User;
+  private currentUser: User = {id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User};
 
   constructor(
     private userService: UserService

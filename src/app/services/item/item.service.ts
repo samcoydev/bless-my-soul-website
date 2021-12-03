@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Item } from 'src/app/models/item';
+import { Item } from 'src/app/models/item.model';
 import { environment } from 'src/environments/environment';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Category } from 'src/app/models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class ItemService {
 
   getItemByID(id: number): Observable<Item> {
     return this.httpClient.get<Item>(this.url + '/' + `${id}`);
+  }
+
+  getItemByCategory(category: Category): Observable<Item[]> {
+    return this.httpClient.get<Item[]>(this.url + '/by-category/' + `${category.id}`);
   }
 
   postItem(item: Item): Observable<Item> {
