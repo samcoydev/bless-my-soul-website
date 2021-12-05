@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AllOrdersListComponent } from './components/all-orders-list/all-orders-list.component';
 import { HomeComponent } from './components/home/home.component';
-import { NewOrderComponent } from './components/new-order/new-order.component';
+import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { AdminGuard } from './guards/admin/admin.guard';
@@ -17,9 +16,9 @@ const routes: Routes = [
   { path: 'user', loadChildren: userModule },
   { path: 'item', loadChildren: itemModule },
   { path: 'cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
-  { path: 'new-order', component: NewOrderComponent, canActivate: [AuthGuard] },
+  { path: 'new-order', component: OrderCreateComponent, canActivate: [AuthGuard] },
   { path: 'order-list', component: OrderListComponent, canActivate: [AuthGuard] },
-  { path: 'all-orders-list', component: AllOrdersListComponent, canActivate: [AdminGuard] },
+  { path: 'all-orders-list', component: OrderListComponent, canActivate: [AdminGuard] },
 
   { path: '**', redirectTo: 'home'},
 ];

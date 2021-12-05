@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/cart-item.model';
-import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ItemService } from 'src/app/services/item/item.service';
-import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,14 +17,11 @@ export class ShoppingCartComponent implements OnInit {
   currentUserSubscription = new Subscription;
 
   constructor(
-    private cartService: CartService,
-    private itemService: ItemService
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
-    this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(message => {
-      this.getCart()
-    });
+    this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(this.getCart);
 
     this.getCart();
   }

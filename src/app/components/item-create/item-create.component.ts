@@ -9,11 +9,11 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { ItemService } from 'src/app/services/item/item.service';
 
 @Component({
-  selector: 'app-create-item',
-  templateUrl: './create-item.component.html',
-  styleUrls: ['./create-item.component.css']
+  selector: 'app-item-create',
+  templateUrl: './item-create.component.html',
+  styleUrls: ['./item-create.component.css']
 })
-export class CreateItemComponent implements OnInit {
+export class ItemCreateComponent implements OnInit {
 
   catTest: any;
   newItem: Item = {id: -1, name: '', price: 0.00, description: '', state: StateType.Draft, category: {id: 0, name: "lol"}};

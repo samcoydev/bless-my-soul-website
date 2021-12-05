@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StateType } from 'src/app/helpers/state-type';
 import { CartItem } from 'src/app/models/cart-item.model';
-import { Category } from 'src/app/models/category.model';
 import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 
@@ -13,7 +12,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartItemComponent implements OnInit {
   
   @Input() cartItem!: CartItem;
-  item: Item = {id: -1, name: '', price: -1, description: '', state: StateType.Draft, category: {id: 0, name: "No Category"}};
+  item: Item = {id: -1, name: '', price: -1, description: '', state: StateType.Draft, category: {id: 0, name: "No Category"}}
 
   isLoading = false;
 
@@ -22,24 +21,18 @@ export class CartItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.item = this.cartItem.item;
+    this.item = this.cartItem.item
   }
 
   updateCartItem(cartItem: CartItem): void {
-    this.isLoading = true;
+    this.isLoading = true
     if (cartItem.qty < 1) {
       // TODO: Use an "are you sure" pop-up to confirm this.
       this.cartService.deleteCartItem(cartItem.id)
-        .subscribe(response => {
-          this.isLoading = false;
-          console.log("Cart Item deleted");
-        });
+        .subscribe(response => this.isLoading = false)
     } else {
     this.cartService.updateCartItem(cartItem)
-      .subscribe(response => {
-        this.isLoading = false;
-        console.log(response);
-      });
+      .subscribe(response => this.isLoading = false)
     }
   }
 

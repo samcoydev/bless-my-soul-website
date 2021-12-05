@@ -1,19 +1,18 @@
 <div class="container">
-    <h3>Your Orders</h3>
-    <ul>
-        <div *ngFor="let order of orders" class="card">
-            <div class="card">
-                <div class="card-body">
-                    <p>Items</p>
-                    <ul>
-                        <div *ngFor="let cartItem of order.cartItems" class="card">
-                            <app-cart-item [cartItem]="cartItem"></app-cart-item>
-                        </div>
-                    </ul>
-                    <p>Order Status: {{orderLabelMapping[order.state]}}</p>
-                    <p>Order Notes: {{order.notes}}</p>
-                </div>
+    <div *ngIf="!viewAllOrders">
+        <h3>Your Orders</h3>
+        <ul>
+            <div *ngFor="let order of userOrders">
+                <app-order [order]="order"></app-order>
             </div>
-        </div>
-    </ul>
+        </ul>
+    </div>
+    <div *ngIf="viewAllOrders">
+        <h3>All Orders</h3>
+        <ul>
+            <div *ngFor="let order of orders">
+                <app-order [order]="order"></app-order>
+            </div>
+        </ul>
+    </div>
 </div>

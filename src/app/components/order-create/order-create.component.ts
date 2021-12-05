@@ -9,11 +9,11 @@ import { OrderService } from 'src/app/services/order/order.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
-  selector: 'app-new-order',
-  templateUrl: './new-order.component.html',
-  styleUrls: ['./new-order.component.css']
+  selector: 'app-order-create',
+  templateUrl: './order-create.component.html',
+  styleUrls: ['./order-create.component.css']
 })
-export class NewOrderComponent implements OnInit {
+export class OrderCreateComponent implements OnInit {
 
   cartItems: CartItem[] = [];
   notes: string = '';

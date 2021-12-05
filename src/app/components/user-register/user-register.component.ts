@@ -5,11 +5,11 @@ import { first } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-user-register',
+  templateUrl: './user-register.component.html',
+  styleUrls: ['./user-register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class UserRegisterComponent implements OnInit {
 
   newUserForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

@@ -11,9 +11,9 @@ import { ItemModule } from './modules/item/item.module';
 import { UserModule } from './modules/user/user.module';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
-import { NewOrderComponent } from './components/new-order/new-order.component';
+import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { AllOrdersListComponent } from './components/all-orders-list/all-orders-list.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
@@ -21,9 +21,9 @@ import { AllOrdersListComponent } from './components/all-orders-list/all-orders-
     NavBarComponent,
     ShoppingCartComponent,
     CartItemComponent,
-    NewOrderComponent,
+    OrderCreateComponent,
     OrderListComponent,
-    AllOrdersListComponent
+    OrderComponent
   ],
   imports: [
     BrowserModule,

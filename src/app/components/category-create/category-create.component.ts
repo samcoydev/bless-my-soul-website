@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/services/category/category.service';
 
 @Component({
-  selector: 'app-create-category',
-  templateUrl: './create-category.component.html',
-  styleUrls: ['./create-category.component.css']
+  selector: 'app-category-create',
+  templateUrl: './category-create.component.html',
+  styleUrls: ['./category-create.component.css']
 })
-export class CreateCategoryComponent implements OnInit {
+export class CategoryCreateComponent implements OnInit {
 
-  category: Category = { id: 0, name: "No Category" };
+  category: Category = { id: 0, name: "" };
 
   isSubmitted = false;
   isLoading = false;
@@ -36,9 +35,7 @@ export class CreateCategoryComponent implements OnInit {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
         },
-        error: error => {
-          this.isLoading = false;
-        }
+        error: error => this.isLoading = false
       })
   }
 
