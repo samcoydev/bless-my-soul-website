@@ -13,15 +13,15 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class OrderListComponent implements OnInit {
 
-  orders: Order[] = [];
-  userOrders: Order[] = [];
+  orders: Order[] = []
+  userOrders: Order[] = []
   
-  orderListSubscription = new Subscription;
-  orderLabelMapping = OrderTypeLabelMapping;
+  orderListSubscription = new Subscription
+  orderLabelMapping = OrderTypeLabelMapping
 
-  isLoading = false;
-  isSessionAuthed = false;
-  viewAllOrders = false;
+  isLoading = false
+  isSessionAuthed = false
+  viewAllOrders = false
 
   constructor(
     private orderService: OrderService,
@@ -32,26 +32,22 @@ export class OrderListComponent implements OnInit {
    ngOnInit(): void {
     this.checkIfViewingAllOrders()
     
-    this.orderListSubscription = this.orderService.ordersUpdated$.subscribe(message => {
-      this.getOrders();
-    });
-
-    // NOTE (Sam): Why am I running this twice?
-    this.getOrders();
+    this.orderListSubscription = this.orderService.ordersUpdated$.subscribe(message => this.getOrders())
+    this.getOrders()
   }
   
   checkIfViewingAllOrders(): void {
     if (this.router.url === "/all-orders-list") {
-      this.viewAllOrders = true;
+      this.viewAllOrders = true
     } else {
-      this.viewAllOrders = false;
+      this.viewAllOrders = false
     }
   }
 
   getOrders(): void {
     this.orderService.getAllOrders()
       .subscribe(response => {
-        this.orders = response;
+        this.orders = response
         this.userOrders = this.orders.filter(order => order.user.id == this.userService.currentUserValue.id)
       })
   }
@@ -59,8 +55,8 @@ export class OrderListComponent implements OnInit {
   deleteOrder(order: Order): void {
     this.orderService.deleteOrder(order.id)
       .subscribe(error => {
-        this.isLoading = false;
-        console.log(error);
+        this.isLoading = false
+        console.log(error)
       });
   }
 }

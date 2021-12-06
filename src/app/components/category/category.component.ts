@@ -1,4 +1,3 @@
-import { FactoryGenerator } from '@angular/compiler-cli/src/ngtsc/shims'
 import { Component, Input, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/category.model'
 
@@ -9,7 +8,7 @@ import { Category } from 'src/app/models/category.model'
 })
 export class CategoryComponent implements OnInit {
   
-  @Input() category!: Category;
+  @Input() category: Category = { id: -1, name: '' };
 
   constructor() { }
 

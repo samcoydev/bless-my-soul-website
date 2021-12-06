@@ -10,33 +10,33 @@ import { CartService } from 'src/app/services/cart/cart.service';
 })
 export class CartItemListComponent implements OnInit {
 
-  cartItems: CartItem[] = [];
-  subtotal: number = 0;
+  cartItems: CartItem[] = []
+  subtotal: number = 0
   
-  cartItemListSubscription = new Subscription;
-  currentUserSubscription = new Subscription;
+  cartItemListSubscription = new Subscription
+  currentUserSubscription = new Subscription
 
   constructor(
     private cartService: CartService
   ) { }
 
   ngOnInit(): void {
-    this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(this.getCart);
+    this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(this.getCart)
 
-    this.getCart();
+    this.getCart()
   }
 
   getCart(): void {
     this.cartService.getCart()
       .subscribe(response => {
-        this.cartItems = response;
-        this.getSubtotal();
-      });
+        this.cartItems = response
+        this.getSubtotal()
+      })
   }
 
   getSubtotal(): void {
-    this.subtotal = 0;
-    this.cartItems.forEach(cartItem => this.subtotal += cartItem.item.price * cartItem.qty);
+    this.subtotal = 0
+    this.cartItems.forEach(cartItem => this.subtotal += cartItem.item.price * cartItem.qty)
   }
 
 }

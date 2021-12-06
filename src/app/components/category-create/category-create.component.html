@@ -4,8 +4,7 @@
             <form (ngSubmit)="createCategory()" #newCategoryForm="ngForm">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name"
-                        required
+                    <input type="text" class="form-control" id="name" required
                         [(ngModel)]="category.name" name="name">
                 </div>
                 <button [disabled]="isLoading" class="btn btn-primary" type="submit">
