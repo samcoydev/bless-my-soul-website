@@ -11,7 +11,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 })
 export class CategoryCreateComponent implements OnInit {
 
-  category: Category = { id: 0, name: "" };
+  category: Category = { id: 0, name: '' };
 
   isSubmitted = false;
   isLoading = false;
@@ -25,15 +25,15 @@ export class CategoryCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   createCategory(): void {
-    this.isSubmitted = true;
-    this.isLoading = true;
+    this.isSubmitted = true
+    this.isLoading = true
 
     this.categoryService.postCategory(this.category)
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
+          this.router.navigateByUrl(returnUrl)
         },
         error: error => this.isLoading = false
       })

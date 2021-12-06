@@ -4,11 +4,11 @@ import { CartItem } from 'src/app/models/cart-item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
-  selector: 'app-shopping-cart',
-  templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.css']
+  selector: 'app-cart-item-list',
+  templateUrl: './cart-item-list.component.html',
+  styleUrls: ['./cart-item-list.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
+export class CartItemListComponent implements OnInit {
 
   cartItems: CartItem[] = [];
   subtotal: number = 0;

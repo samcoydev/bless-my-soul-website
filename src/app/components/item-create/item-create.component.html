@@ -1,23 +1,6 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <!--
-                TODO: Please add these errors:
-                <div *ngIf="isSubmitted && f.name.errors" class="invalid-feedback">
-                    <div *ngIf="f.name.errors.required">A name is required.</div>
-                    <div *ngIf="f.name.errors.minLength">A name is required.</div>
-                </div>
-                <div *ngIf="isSubmitted && f.description.errors" class="invalid-feedback">
-                    <div *ngIf="f.description.errors.maxLength">The description must be less than 500 characters.</div>
-                </div>
-                <div *ngIf="isSubmitted && f.category.errors" class="invalid-feedback">
-                    <div *ngIf="f.category.errors.required">A category is required.</div>
-                </div>
-                <div *ngIf="isSubmitted && f.state.errors" class="invalid-feedback">
-                    <div *ngIf="f.state.errors.required">A state is required.</div>
-                </div>
-            </form>
-            -->
             <h1>Create Item</h1>
             <form (ngSubmit)="createItem()" #newItemForm="ngForm">
                 <div class="form-group">
@@ -42,7 +25,6 @@
                     <label for="category">Category</label>
                     <select class="form-control" id="category"
                             required
-                            (change)="changeCategory()"
                             [(ngModel)]="newItem.category" name="category">
                       <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
                     </select>

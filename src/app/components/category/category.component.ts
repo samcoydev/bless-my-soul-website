@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { FactoryGenerator } from '@angular/compiler-cli/src/ngtsc/shims'
+import { Component, Input, OnInit } from '@angular/core';
+import { Category } from 'src/app/models/category.model'
 
 @Component({
   selector: 'app-category',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
+  
+  @Input() category!: Category;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

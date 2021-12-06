@@ -12,7 +12,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartItemComponent implements OnInit {
   
   @Input() cartItem!: CartItem;
-  item: Item = {id: -1, name: '', price: -1, description: '', state: StateType.Draft, category: {id: 0, name: "No Category"}}
+  item: Item = {id: -1, name: '', price: -1, description: "", state: StateType.Draft, category: {id: 0, name: "No Category"}}
 
   isLoading = false;
 
@@ -21,7 +21,7 @@ export class CartItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.item = this.cartItem.item
+    this.item = this.cartItem.item;
   }
 
   updateCartItem(cartItem: CartItem): void {

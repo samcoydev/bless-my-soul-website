@@ -9,7 +9,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 import { ItemModule } from './modules/item/item.module';
 import { UserModule } from './modules/user/user.module';
-import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { CartItemListComponent } from './components/cart-item-list/cart-item-list.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
@@ -19,7 +19,7 @@ import { OrderComponent } from './components/order/order.component';
   declarations: [
     AppComponent,
     NavBarComponent,
-    ShoppingCartComponent,
+    CartItemListComponent,
     CartItemComponent,
     OrderCreateComponent,
     OrderListComponent,

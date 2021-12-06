@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
-import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
+import { CartItemListComponent } from './components/cart-item-list/cart-item-list.component';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
 
@@ -15,7 +15,7 @@ const routes: Routes = [
 
   { path: 'user', loadChildren: userModule },
   { path: 'item', loadChildren: itemModule },
-  { path: 'cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'cart', component: CartItemListComponent, canActivate: [AuthGuard] },
   { path: 'new-order', component: OrderCreateComponent, canActivate: [AuthGuard] },
   { path: 'order-list', component: OrderListComponent, canActivate: [AuthGuard] },
   { path: 'all-orders-list', component: OrderListComponent, canActivate: [AdminGuard] },

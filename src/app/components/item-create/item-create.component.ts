@@ -15,15 +15,15 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class ItemCreateComponent implements OnInit {
 
-  catTest: any;
-  newItem: Item = {id: -1, name: '', price: 0.00, description: '', state: StateType.Draft, category: {id: 0, name: "lol"}};
+  category: Category = {id: 0, name: "No Category"}
+  newItem: Item = {id: -1, name: '', price: 0.00, description: '', state: StateType.Draft, category: this.category}
 
-  isSubmitted = false;
-  isLoading = false;
+  isSubmitted = false
+  isLoading = false
 
-  stateLabelMapping = StateTypeLabelMapping;
-  states = Object.values(StateType);
-  categories: Category[] = [];
+  stateLabelMapping = StateTypeLabelMapping
+  states = Object.values(StateType)
+  categories: Category[] = []
 
   constructor(
     private route: ActivatedRoute,
@@ -33,34 +33,28 @@ export class ItemCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCategories();
-  }
-  
-  changeCategory(): void {
-    console.log("CATTEST: ", this.catTest)
+    this.getCategories()
   }
 
   getCategories(): void {
     this.categoryService.getAllCategories()
-      .subscribe(response => {
-        this.categories = response;
-      })
+      .subscribe(response => this.categories = response)
   }
 
   createItem(): void {
-    this.isSubmitted = true;
-    this.isLoading = true;
+    this.isSubmitted = true
+    this.isLoading = true
 
     this.itemService.postItem(this.newItem)
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
+          this.router.navigateByUrl(returnUrl)
         },
         error: error => {
           console.error(error)
-          this.isLoading = false;
+          this.isLoading = false
         }
       })
   }

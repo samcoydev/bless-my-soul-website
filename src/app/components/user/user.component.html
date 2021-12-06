@@ -1,14 +1,26 @@
-<div class="row">
-    <div class="col-6">
-        <p>ID: {{user.id}}</p>
-        <p>Email: {{user.email}}</p>
-        <p>First Name: {{user.firstname}}</p>
-        <p>Last Name: {{user.lastname}}</p>
-        <p>Role: {{user.role}}</p>
+<div class="card-body">
+    <div class="row">
+        <div class="col-6">
+            <label for="id">ID</label>
+            <p id="id">{{user.id}}</p>
+
+            <label for="email">Email</label>
+            <p id="email">{{user.email}}</p>
+
+            <label for="role">Role</label>
+            <p id="role">{{user.role}}</p>
+        </div>
+        <div class="col-6">
+            <label for="firstname">First Name</label>
+            <p id="firstname">{{user.firstname}}</p>
+
+            <label for="lastname">Last Name</label>            
+            <p id="lastname">{{user.lastname}}</p>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class='col-3'>
-        <button (click)="deleteUser()">Delete</button>
+    <div class="row">
+        <div class='col-3'>
+            <button (click)="deleteUser()">Delete</button>
+        </div>
     </div>
 </div>

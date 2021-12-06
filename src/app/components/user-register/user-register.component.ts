@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { RoleType } from 'src/app/helpers/role-type'
+import { User } from 'src/app/models/user.model'
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -11,15 +13,10 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class UserRegisterComponent implements OnInit {
 
-  newUserForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    firstname: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    lastname: new FormControl('', [Validators.required, Validators.maxLength(20)])
-  });
+  newUserInfo: User = { id: -1, email: '', password: '', firstname: '', lastname: '', role: RoleType.User }
 
-  isSubmitted = false;
-  isLoading = false;
+  isSubmitted = false
+  isLoading = false
 
   constructor(
     private route: ActivatedRoute,
@@ -27,27 +24,20 @@ export class UserRegisterComponent implements OnInit {
     private userService: UserService
     ) { }
 
-  ngOnInit(): void {
-  }
-
-  get f() { return this.newUserForm.controls; }
+  ngOnInit(): void { }
 
   registerUser(): void {
-    this.isSubmitted = true;
+    this.isSubmitted = true
+    this.isLoading = true
 
-    if (this.newUserForm.invalid) 
-      return;
-
-    this.isLoading = true;
-
-    this.userService.register(this.newUserForm.value)
+    this.userService.register(this.newUserInfo)
       .pipe(first())
       .subscribe({
         next: () => {
-          this.router.navigate(['../login'], {relativeTo: this.route});
+          this.router.navigate(['../login'], {relativeTo: this.route})
         },
         error: error => {
-          this.isLoading = false;
+          this.isLoading = false
         }
       })
   }

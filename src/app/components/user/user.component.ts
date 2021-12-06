@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
@@ -12,7 +12,7 @@ import { RoleType } from 'src/app/helpers/role-type';
 })
 export class UserComponent implements OnInit {
 
-  user: User = {id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User};
+  @Input() user: User = {id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User}
 
   constructor(
     private route: ActivatedRoute,
@@ -21,23 +21,21 @@ export class UserComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const userIdFromRoute = Number(routeParams.get('userId'));
-
-    this.getUser(userIdFromRoute);
+    const routeParams = this.route.snapshot.paramMap
+    if (routeParams.get('userId')) {
+      this.getUser(Number(routeParams.get('userId')))
+    }
   }
 
   getUser(id: number): void {
     this.userService.getUserByID(id)
-      .subscribe(response => {
-        this.user = response;
-      });
+      .subscribe(response => this.user = response)
   }
 
   deleteUser(): void {
     this.userService.deleteUser(this.user.id)
-      .subscribe(error => console.log(error));
-    this.location.back();
+      .subscribe(error => console.log(error))
+    this.location.back()
   }
 
 }

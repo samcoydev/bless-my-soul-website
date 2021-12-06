@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user/user.service';
@@ -11,40 +10,31 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class UserLoginComponent implements OnInit {
 
-  isSubmitted = false;
-  isLoading = false;
+  isSubmitted = false
+  isLoading = false
 
-  newUserForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(1)])
-  });
+  userInfo = { email: '', password: '' }
 
   constructor(
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-  }
-
-  get f() { return this.newUserForm.controls; }
+  ngOnInit(): void { }
 
   login(): void {
-    this.isSubmitted = true;
+    this.isSubmitted = true
+    this.isLoading = true
 
-    if (this.newUserForm.invalid) 
-      return;
-
-    this.isLoading = true;
-    this.userService.login(this.f.email.value, this.f.password.value)
+    this.userService.login(this.userInfo.email, this.userInfo.password)
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
+          this.router.navigateByUrl(returnUrl)
         },
         error: error => {
-          this.isLoading = false;
+          this.isLoading = false
         }
       })
   }

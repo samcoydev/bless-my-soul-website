@@ -1,47 +1,32 @@
-<div class="row">
-    <div class="col-6">
-        <form [formGroup]="itemForm" (ngSubmit)="updateItem()">
-            <label for="name">Name: </label>
-            <input id="name" type="text" formControlName="name" [ngClass]="{ 'is-invalid': isSubmitted && f.name.errors }">
-            <div *ngIf="isSubmitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors.required">A name is required.</div>
-                <div *ngIf="f.name.errors.minLength">A name is required.</div>
-            </div>
-
-            <label for="price">Price: </label>
-            <input id="price" type="number" formControlName="price" [ngClass]="{ 'is-invalid': isSubmitted && f.price.errors }">
-
-            <label for="description">Description: </label>
-            <input id="description" type="text" formControlName="description" [ngClass]="{ 'is-invalid': isSubmitted && f.description.errors }">
-            <div *ngIf="isSubmitted && f.description.errors" class="invalid-feedback">
-                <div *ngIf="f.description.errors.maxLength">The description must be less than 500 characters.</div>
-            </div>
-            
-            <label for="category">Category: </label>
-            <select id="category" formControlName="category" [ngClass]="{ 'is-invalid': isSubmitted && f._category.errors }">
-                <option *ngFor="let _category of categories" [value]="category">{{_category.name}}</option>
-            </select>
-            <div *ngIf="isSubmitted && f._category.errors" class="invalid-feedback">
-                <div *ngIf="f._category.errors.required">A category is required.</div>
-            </div>
-
-            <label for="state">State: </label>
-            <select id="state" formControlName="state" [ngClass]="{ 'is-invalid': isSubmitted && f.state.errors }">
-                <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}</option>
-            </select>
-            <div *ngIf="isSubmitted && f.state.errors" class="invalid-feedback">
-                <div *ngIf="f.state.errors.required">A state is required.</div>
-            </div>
-
-            <button [disabled]="isLoading" class="btn btn-primary" type="submit">
-                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                Update
-            </button>
-        </form>
-    </div>
+<div class="card-header">
+    <h5 routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
 </div>
-<div class="row">
-    <div class='col-3'>
-        <button (click)="deleteItem()">Delete</button>
+<div class="card-body">
+    <label for="price">Price</label>
+    <p>{{item.price | currency}}</p>
+
+    <label for="state">Status</label>
+    <p id="state">{{stateLabelMapping[item.state]}}</p>
+
+    <label for="category">Category</label>
+    <app-category id="category" [category]="item.category"></app-category>
+
+    <label for="description">Description</label>
+    <p id="description">{{item.description}}</p>
+
+    <!-- If the user is logged in -->
+    <div *ngIf="isSessionAuthed; else sessionNotAuthed">
+        <div *ngIf="!checkIfItemIsInCart(); else itemInCart">
+            <button class="btn btn-primary" [disabled]="isLoading" (click)="addToCart()">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                Add To Cart
+            </button>
+        </div>
+        <ng-template #itemInCart>
+            <p>This item is in your cart</p>
+        </ng-template>
     </div>
+    <ng-template #sessionNotAuthed>
+        <p>Please log in to your account to add to your cart</p>
+    </ng-template>
 </div>

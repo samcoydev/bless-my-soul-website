@@ -6,6 +6,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserListComponent } from 'src/app/components/user-list/user-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from 'src/app/components/user/user.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { UserComponent } from 'src/app/components/user/user.component';
   imports: [
     CommonModule,
     UserRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class UserModule { }

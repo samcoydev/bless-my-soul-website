@@ -12,41 +12,38 @@ import { CategoryService } from 'src/app/services/category/category.service';
 })
 export class CategoryListComponent implements OnInit {
 
-  categories: Category[] = [];
+  categories: Category[] = []
+  isLoading = false
+  isSessionAuthed = false
 
-  categories$: Observable<Category[]> = new Observable;
-  filter: FormControl = new FormControl('');
+  categories$: Observable<Category[]> = new Observable
+  categoryListSubscription = new Subscription
+
+  filter: FormControl = new FormControl('')
   
-  categoryListSubscription = new Subscription;
-
-  isLoading = false;
-  isSessionAuthed = false;
-
   constructor(
     private categoryService: CategoryService,
     ) {
-    this.categories$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)));
+    this.categories$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)))
    }
 
   ngOnInit(): void {
-    this.categoryListSubscription = this.categoryService.categoriesUpdated$.subscribe(message => {
-      this.getCategories();
-    });
+    this.categoryListSubscription = this.categoryService.categoriesUpdated$.subscribe(this.getCategories);
 
-    this.getCategories();
+    this.getCategories()
   }
 
   getCategories(): void {
     this.categoryService.getAllCategories()
       .subscribe(response => {
-        this.categories = response;
+        this.categories = response
       })
   }
 
   search(text: string): Category[] {
     return this.categories.filter(category => {
-      const term = text.toLowerCase();
+      const term = text.toLowerCase()
       return category.name.toLowerCase().includes(term)
-    });
+    })
   }
 }

@@ -3,21 +3,19 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <form [formGroup]="newUserForm" (ngSubmit)="login()">
-            <label for="email">Email: </label>
-            <input id="email" type="text" formControlName="email" [ngClass]="{ 'is-invalid': isSubmitted && f.email.errors }" />
-            <div *ngIf="isSubmitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">An email is required.</div>
-                <div *ngIf="f.email.errors.email">An email is required.</div>
+        <form (ngSubmit)="login()" #userLoginForm="ngForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" 
+                    required
+                    [(ngModel)]="userInfo.email" name="email">    
             </div>
-
-            <label for="password">Password: </label>
-            <input id="password" type="text" formControlName="password" [ngClass]="{ 'is-invalid': isSubmitted && f.password.errors }" />
-            <div *ngIf="isSubmitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.password.errors.required">A password is required.</div>
-                <div *ngIf="f.password.errors.minLength">A password is required.</div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" class="form-control" id="password" 
+                    required
+                    [(ngModel)]="userInfo.password" name="password">  
             </div>
-
             <div class="form-group">
                 <button [disabled]="isLoading" class="btn btn-primary">
                     <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
