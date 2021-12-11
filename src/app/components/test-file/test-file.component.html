@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label for="file">Choose File</label>
+    <input type="file"
+           id="file"
+           (change)="handleFileInput($event)">
+</div>
+<button (click)="upload()">Upload</button>
+<img [src]="previewURL" height="200" *ngIf="previewURL">

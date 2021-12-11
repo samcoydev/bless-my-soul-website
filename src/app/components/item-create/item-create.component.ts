@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state-type';
@@ -15,8 +14,15 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class ItemCreateComponent implements OnInit {
 
-  category: Category = {id: 0, name: "No Category"}
-  newItem: Item = {id: -1, name: '', price: 0.00, description: '', state: StateType.Draft, category: this.category}
+  category: Category = { id: 0, name: "No Category" }
+  newItem: Item = { 
+    id: -1, 
+    name: '', 
+    price: 0.00, 
+    description: '', 
+    state: StateType.Draft, 
+    category: this.category
+  }
 
   isSubmitted = false
   isLoading = false
