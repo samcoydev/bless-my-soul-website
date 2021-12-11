@@ -6,3 +6,4 @@
 </div>
 <button (click)="upload()">Upload</button>
 <img [src]="previewURL" height="200" *ngIf="previewURL">
+<img *ngFor="let image of previewImages" height="200" [src]="image">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'
 import { TestFileService } from 'src/app/services/test-file/test-file.service'
 
 @Component({
@@ -9,25 +10,41 @@ import { TestFileService } from 'src/app/services/test-file/test-file.service'
 export class TestFileComponent implements OnInit {
   
   fileToUpload!: File;
+  rawFiles: any[] = [];
+  previewImages: any[] = [];
   previewURL: any;
 
-  constructor(private fileService: TestFileService) { }
+  constructor(private fileService: TestFileService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.getFiles();
+  }
 
+  getFiles() : void {
+    this.fileService.getFiles().subscribe((files : any) => {
+      this.rawFiles = files;
+      this.convertRawFilesToImages();
+    });
+  }
+
+  convertRawFilesToImages() {
+    this.rawFiles.forEach((file: any) => {
+      let objectURL = 'data:image/jpeg;base64,' + file.data;
+      this.previewImages.push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
+    });
   }
 
   handleFileInput(e: any) {
     this.fileToUpload = e.target.files.item(0)
-    this.getUrl()
+    this.previewURL = this.getUrl(this.fileToUpload)
   }
 
-  getUrl() {
+  getUrl(image: File) {
     var reader = new FileReader();
-    if (this.fileToUpload) {
-      reader.readAsDataURL(this.fileToUpload); 
+    if (image) {
+      reader.readAsDataURL(image); 
       reader.onload = (_event) => { 
-        this.previewURL = reader.result; 
+        return reader.result; 
       }
     }
   }

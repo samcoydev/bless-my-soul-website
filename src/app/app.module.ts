@@ -15,6 +15,7 @@ import { OrderCreateComponent } from './components/order-create/order-create.com
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderComponent } from './components/order/order.component';
 import { TestFileComponent } from './components/test-file/test-file.component';
+import { SafeUrlPipe } from './pipes/safe-url/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TestFileComponent } from './components/test-file/test-file.component';
     OrderCreateComponent,
     OrderListComponent,
     OrderComponent,
-    TestFileComponent
+    TestFileComponent,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,
