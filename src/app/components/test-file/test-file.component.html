@@ -2,8 +2,12 @@
     <label for="file">Choose File</label>
     <input type="file"
            id="file"
-           (change)="handleFileInput($event)">
+           (change)="onImageChange($event)">
 </div>
-<button (click)="upload()">Upload</button>
-<img [src]="previewURL" height="200" *ngIf="previewURL">
-<img *ngFor="let image of previewImages" height="200" [src]="image">
+<button *ngIf="!isFileInvalid" (click)="upload()">Upload</button>
+<img [src]="previewUrl" height="200" *ngIf="previewUrl">
+<ul>
+    <li *ngFor="let image of imageUrls">
+        <img height="200" [src]="image">
+    </li>
+</ul>

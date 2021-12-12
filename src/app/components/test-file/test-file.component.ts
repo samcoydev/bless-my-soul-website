@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
-import { TestFileService } from 'src/app/services/test-file/test-file.service'
+import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-test-file',
@@ -9,51 +9,62 @@ import { TestFileService } from 'src/app/services/test-file/test-file.service'
 })
 export class TestFileComponent implements OnInit {
   
-  fileToUpload!: File;
-  rawFiles: any[] = [];
-  previewImages: any[] = [];
-  previewURL: any;
+  fileToUpload!: File
+  imageUrls: any[] = []
+  previewUrl: any
 
-  constructor(private fileService: TestFileService, private sanitizer: DomSanitizer) { }
+  isFileInvalid: Boolean = false
+
+  constructor(
+    private fileService: ImageService, 
+    private sanitizer: DomSanitizer) 
+    { }
 
   ngOnInit(): void {
-    this.getFiles();
+    this.getImages()
   }
 
-  getFiles() : void {
-    this.fileService.getFiles().subscribe((files : any) => {
-      this.rawFiles = files;
-      this.convertRawFilesToImages();
-    });
+  getImages() : void {
+    this.fileService.getFiles().subscribe((files : any[]) => {
+      this.convertRawFilesToImages(files)
+    })
+  }
+  
+  upload(): void {
+    this.fileService.postImage(this.fileToUpload).subscribe(data => {
+      console.log(data)
+    }, error => {
+      console.log(error)
+    })
   }
 
-  convertRawFilesToImages() {
-    this.rawFiles.forEach((file: any) => {
-      let objectURL = 'data:image/jpeg;base64,' + file.data;
-      this.previewImages.push(this.sanitizer.bypassSecurityTrustUrl(objectURL));
-    });
+  onImageChange(_event: any): void {
+    if (_event.target.files.item(0).type == "image/jpeg" && _event.target.files.length == 1) {
+      this.isFileInvalid = false
+      this.fileToUpload = _event.target.files.item(0)
+      this.getPreviewUrl()
+    } else {
+      this.isFileInvalid = true
+      this.previewUrl = ''
+      console.log("File either wasn't a JPEG, or you've uploaded more than one.")
+    }
   }
 
-  handleFileInput(e: any) {
-    this.fileToUpload = e.target.files.item(0)
-    this.previewURL = this.getUrl(this.fileToUpload)
+  convertRawFilesToImages(rawFiles: any[]): void {
+    rawFiles.forEach((file: any) => {
+      let objectURL = 'data:image/jpeg;base64,' + file.data
+      this.imageUrls.push(this.sanitizer.bypassSecurityTrustUrl(objectURL))
+    })
   }
 
-  getUrl(image: File) {
-    var reader = new FileReader();
-    if (image) {
-      reader.readAsDataURL(image); 
+  getPreviewUrl(): void {
+    var reader = new FileReader()
+    if (this.fileToUpload) {
+      reader.readAsDataURL(this.fileToUpload);
       reader.onload = (_event) => { 
-        return reader.result; 
+        this.previewUrl = reader.result
       }
     }
   }
 
-  upload(): void {
-    this.fileService.upload(this.fileToUpload).subscribe(data => {
-      console.log("it worked");
-    }, error => {
-      console.log(error);
-    })
-  }
 }

@@ -9,6 +9,7 @@ import { CategoryCreateComponent } from 'src/app/components/category-create/cate
 import { CategoryListComponent } from 'src/app/components/category-list/category-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from 'src/app/components/image/image.component'
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     ItemCreateComponent,
     CategoryComponent,
     CategoryCreateComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule,
