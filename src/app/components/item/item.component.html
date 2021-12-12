@@ -2,17 +2,24 @@
     <h5 routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
 </div>
 <div class="card-body">
-    <label for="price">Price</label>
-    <p>{{item.price | currency}}</p>
+    <div class="row">
+        <div class="col-6">  
+            <label for="price">Price</label>
+            <p>{{item.price | currency}}</p>
 
-    <label for="state">Status</label>
-    <p id="state">{{stateLabelMapping[item.state]}}</p>
+            <label for="state">Status</label>
+            <p id="state">{{stateLabelMapping[item.state]}}</p>
 
-    <label for="category">Category</label>
-    <app-category id="category" [category]="item.category"></app-category>
+            <label for="category">Category</label>
+            <app-category id="category" [category]="item.category"></app-category>
 
-    <label for="description">Description</label>
-    <p id="description">{{item.description}}</p>
+            <label for="description">Description</label>
+            <p id="description">{{item.description}}</p>
+        </div>
+        <div class="col-6">
+            <app-image [itemImage]="item.image"></app-image>
+        </div>
+    </div>
 
     <!-- If the user is logged in -->
     <div *ngIf="isSessionAuthed; else sessionNotAuthed">

@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser'
+import { Image } from 'src/app/models/image.model'
 
 @Component({
   selector: 'app-image',
@@ -7,15 +9,19 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class ImageComponent implements OnInit {
   
-  @Input() selectedImage?: File
+  @Input() itemImage?: Image;
+  @Input() editMode: Boolean = false;
+  selectedImage?: File
   previewUrl: any
   isFileInvalid: Boolean = false
   @Output() selectedImageEvent = new EventEmitter<any>();
 
-  constructor() { 
+  constructor(private sanitizer: DomSanitizer) { 
   }
 
   ngOnInit(): void { 
+    if (this.itemImage)
+      this.convertImageToViewableUrl(this.itemImage)
   }
   
   getPreviewUrl(): void {
@@ -26,6 +32,11 @@ export class ImageComponent implements OnInit {
         this.previewUrl = reader.result
       }
     }
+  }
+
+  convertImageToViewableUrl(image: Image): void {
+    let objectURL = 'data:image/jpeg;base64,' + image.data
+    this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
   }
 
   onImageChange(_event: any): void {

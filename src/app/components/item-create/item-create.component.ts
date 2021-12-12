@@ -40,8 +40,7 @@ export class ItemCreateComponent implements OnInit {
     private router: Router,
     private itemService: ItemService,
     private categoryService: CategoryService,
-    private imageService: ImageService,
-    private sanitizer: DomSanitizer
+    private imageService: ImageService
   ) { }
 
   ngOnInit(): void {
@@ -69,12 +68,13 @@ export class ItemCreateComponent implements OnInit {
       this.imageService.postImage(this.rawImage)
         .subscribe(data => {
           console.log("[POST]: ", data)
-          //this.postItem();
+          this.newItem.image = data
+          this.postItem();
         }, error => {
           console.log(error)
         })
     } else {
-      //this.postItem();
+      this.postItem();
     }
   }
 

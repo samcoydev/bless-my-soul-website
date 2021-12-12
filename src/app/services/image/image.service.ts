@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs'
+import { Image } from 'src/app/models/image.model'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
@@ -16,11 +17,12 @@ export class ImageService {
     return this.httpClient.get<any[]>(this.url);
   }
 
-  postImage(image: File): Observable<File> {
+  postImage(image: File): Observable<Image> {
     const formData: FormData = new FormData();
-    formData.append('file', image);
-    console.log(image)
-    return this.httpClient.post<File>(this.url, formData);
+    // The name here must match the MultipartFile variable name in
+    // saveImage on the API.
+    formData.append('image', image);
+    return this.httpClient.post<Image>(this.url, formData);
   }
 
 }
