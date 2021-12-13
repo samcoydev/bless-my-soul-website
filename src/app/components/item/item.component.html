@@ -1,39 +1,40 @@
-<div class="card-header">
-    <h5 routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
-</div>
-<div class="card-body">
-    <div class="row">
-        <div class="col-6">  
-            <label for="price">Price</label>
-            <p>{{item.price | currency}}</p>
-
-            <label for="state">Status</label>
-            <p id="state">{{stateLabelMapping[item.state]}}</p>
-
-            <label for="category">Category</label>
-            <app-category id="category" [category]="item.category"></app-category>
-
-            <label for="description">Description</label>
-            <p id="description">{{item.description}}</p>
-        </div>
-        <div class="col-6">
+<div class="col mb-5">
+    <div class="card h-100">
+        <div routerLink="/item/id/{{item.id}}">
             <app-image [itemImage]="item.image"></app-image>
+            <div class="card-body">
+                <div class="text-center">
+                    <p>{{item.name}}</p>
+                    <p>{{item.price | currency}}</p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- If the user is logged in -->
-    <div *ngIf="isSessionAuthed; else sessionNotAuthed">
-        <div *ngIf="!checkIfItemIsInCart(); else itemInCart">
-            <button class="btn btn-primary" [disabled]="isLoading" (click)="addToCart()">
-                <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                Add To Cart
-            </button>
+        <div class="card-footer border-top-0 bg-transparent text-center">
+            <!-- If the user is logged in -->
+            <div *ngIf="isSessionAuthed; else sessionNotAuthed">
+                <div *ngIf="!checkIfItemIsInCart(); else itemInCart">
+                    <button class="btn btn-outline-primary mt-auto" [disabled]="isLoading" (click)="addToCart()">
+                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Add To Cart
+                    </button>
+                </div>
+                <ng-template #itemInCart>
+                    <p>This item is in your cart</p>
+                </ng-template>
+            </div>
+            <ng-template #sessionNotAuthed>
+                <p>Please log in to your account to add to your cart</p>
+            </ng-template>
         </div>
-        <ng-template #itemInCart>
-            <p>This item is in your cart</p>
-        </ng-template>
+        <!-- Add back in for debug mode
+        <label for="state">Status</label>
+        <p id="state">{{stateLabelMapping[item.state]}}</p>
+    
+        <label for="category">Category</label>
+        <app-category id="category" [category]="item.category"></app-category>
+    
+        <label for="description">Description</label>
+        <p id="description">{{item.description}}</p>
+        -->
     </div>
-    <ng-template #sessionNotAuthed>
-        <p>Please log in to your account to add to your cart</p>
-    </ng-template>
 </div>

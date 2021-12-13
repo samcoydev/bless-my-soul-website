@@ -1,10 +1,13 @@
+<div class="jumbotron jumbotron-fluid py-5">
+    <div class="container text-center px-4 px-lg-5 my-5">
+        <h1 class="display-4">Catalog</h1>
+        <p class="lead">Handcrafted products, just for you.</p>
+    </div>
+</div>
 <div class="container">
-    <h3>Items</h3>
     <div class="row">
-        <ul>
-            <div *ngFor="let item of items" class="card">
-                <app-item [item]="item"></app-item>
-            </div>
-        </ul>
+        <div class="row row-cols-1 row-cols-md-4">
+            <app-item *ngFor="let item of items" [item]="item"></app-item>
+        </div>
     </div>
 </div>

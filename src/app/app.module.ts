@@ -14,7 +14,6 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderComponent } from './components/order/order.component';
-import { TestFileComponent } from './components/test-file/test-file.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { TestFileComponent } from './components/test-file/test-file.component';
     CartItemComponent,
     OrderCreateComponent,
     OrderListComponent,
-    OrderComponent,
-    TestFileComponent
+    OrderComponent
   ],
   imports: [
     BrowserModule,

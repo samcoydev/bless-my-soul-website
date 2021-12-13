@@ -26,7 +26,7 @@ export class ImageComponent implements OnInit {
   
   getPreviewUrl(): void {
     var reader = new FileReader()
-    if (this.selectedImage) {
+    if (this.selectedImage && this.editMode) {
       reader.readAsDataURL(this.selectedImage);
       reader.onload = (_event) => { 
         this.previewUrl = reader.result

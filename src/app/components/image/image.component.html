@@ -1,14 +1,7 @@
-<div class="card">
-    <div class="card-title">
-        <p>Image</p>
-    </div>
-    <div class="card-body">
-        <img [src]="previewUrl" height="200" *ngIf="previewUrl">
-        <div class="form-group" *ngIf="editMode">
-            <label for="file">Choose Image</label>
-            <input type="file"
-                   id="file"
-                   (change)="onImageChange($event)">
-        </div>
-    </div>
+<img [src]="previewUrl" class="card-img-top" *ngIf="previewUrl">
+<div class="form-group" *ngIf="editMode">
+    <label for="file">Choose Image</label>
+    <input type="file"
+            id="file"
+            (change)="onImageChange($event)">
 </div>
