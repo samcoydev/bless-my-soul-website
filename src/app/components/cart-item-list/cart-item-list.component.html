@@ -1,11 +1,11 @@
-<div class="container">
-    <h3 class="row">Cart</h3>
-    <div class="row">
+<div class="container py-5">
+    <div class="row text-center">
+        <h1>Shopping Cart</h1>
+    </div>
+    <div class="row py-lg-5">
         <ul>
-            <div *ngFor="let cartItem of cartItems" class="card">
-                <div class="card">
-                    <app-cart-item [cartItem]="cartItem"></app-cart-item>
-                </div>
+            <div *ngFor="let cartItem of cartItems" class="mb-2">
+                <app-cart-item [cartItem]="cartItem"></app-cart-item>
             </div>
         </ul>
     </div>
@@ -13,6 +13,6 @@
         <p>Subtotal: {{subtotal | currency}}</p>
     </div>
     <div *ngIf="cartItems.length >= 1" class="row">
-        <button class="btn btn-primary col-2" routerLink="/new-order">Make an Order</button>
+        <button class="btn btn-success col-2" routerLink="/new-order">Place an Order</button>
     </div>
 </div>

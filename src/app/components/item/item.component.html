@@ -13,7 +13,7 @@
             <!-- If the user is logged in -->
             <div *ngIf="isSessionAuthed; else sessionNotAuthed">
                 <div *ngIf="!isItemInCart; else itemInCart">
-                    <button class="btn btn-outline-primary mt-auto" [disabled]="isLoading" (click)="addToCart()">
+                    <button class="btn btn-outline-success mt-auto" [disabled]="isLoading" (click)="addToCart()">
                         <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
                         Add To Cart
                     </button>

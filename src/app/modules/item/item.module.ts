@@ -10,7 +10,6 @@ import { CategoryListComponent } from 'src/app/components/category-list/category
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ImageComponent } from 'src/app/components/image/image.component';
-import { AppModule } from 'src/app/app.module'
 import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
 
 
@@ -30,6 +29,10 @@ import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
     ItemRoutingModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  exports: [
+    ImageComponent,
+    ShortenPipe
   ]
 })
 export class ItemModule { }

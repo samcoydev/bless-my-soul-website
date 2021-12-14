@@ -1,11 +1,15 @@
-<div class="card-header">
-    <h5 routerLink="/item/id/{{item.id}}">{{item.name}}</h5>
-</div>
-<div class="card-body">
-    <div><span>Price: </span>{{item.price | currency}}</div>
-    <div>
-        <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-        <label for="quantity">Quantity: </label>
-        <input id="quantity" type="number" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)"/>
+<div class="card card-img">
+    <app-image [itemImage]="item.image" class="rounded"></app-image>
+    <div class="card-body">
+        <h4>{{ item.name }}</h4>
+        <p class="text-muted">{{ item.price | currency }}</p>
+        <p>{{item.description}}</p>
+        <div class="input-group col-5">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+            <div class="input-group-prepend">
+              <span class="input-group-text">Quantity</span>
+            </div>
+            <input type="number" class="form-control" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)">
+          </div>
     </div>
 </div>

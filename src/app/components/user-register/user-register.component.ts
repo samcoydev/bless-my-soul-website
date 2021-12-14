@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { fader } from 'src/app/helpers/animations/fade.animation'
 import { RoleType } from 'src/app/helpers/role-type'
 import { User } from 'src/app/models/user.model'
 import { UserService } from 'src/app/services/user/user.service';
@@ -9,7 +10,8 @@ import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.css']
+  styleUrls: ['./user-register.component.css'],
+  animations: [fader]
 })
 export class UserRegisterComponent implements OnInit {
 
