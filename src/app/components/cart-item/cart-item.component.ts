@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StateType } from 'src/app/helpers/state-type';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Item } from 'src/app/models/item.model';
@@ -16,9 +16,8 @@ export class CartItemComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(
-    private cartService: CartService) {
-  }
+  constructor(private cartService: CartService) 
+  { }
 
   ngOnInit(): void {
     this.item = this.cartItem.item;
@@ -29,10 +28,13 @@ export class CartItemComponent implements OnInit {
     if (cartItem.qty < 1) {
       // TODO: Use an "are you sure" pop-up to confirm this.
       this.cartService.deleteCartItem(cartItem.id)
-        .subscribe(response => this.isLoading = false)
+        .subscribe(response => {
+          this.isLoading = false
+          console.log("Deleting cart item due to quantity being zeroed.")
+        })
     } else {
-    this.cartService.updateCartItem(cartItem)
-      .subscribe(response => this.isLoading = false)
+      this.cartService.updateCartItem(cartItem)
+        .subscribe(response => this.isLoading = false)
     }
   }
 

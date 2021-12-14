@@ -21,6 +21,7 @@ export class ItemComponent implements OnInit {
   
   category: Category = {id: 0, name: "No Category"}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
+  @Input() isItemInCart: boolean = false
   itemsInCart: CartItem[] = [];
   
   isLoading = false
@@ -94,17 +95,20 @@ export class ItemComponent implements OnInit {
     this.isLoading = true
     let convertedItem = this.cartService.convertItemToCartItem(this.item)
     this.cartService.postCartItem(convertedItem).pipe(first())
-      .subscribe(response => this.isLoading = false)
+      .subscribe(response => {
+        this.isItemInCart = true
+        this.isLoading = false
+      })
   }
 
-  checkIfItemIsInCart(): boolean {
+  /*checkIfItemIsInCart(itemId?: number): boolean {
     let wasItemFound = false
     this.itemsInCart.forEach(cartItem => {
       if (cartItem.item.id == this.item.id)
         wasItemFound = true;
     })
     return wasItemFound;
-  }
+  } */
 
   getCart(): void {
     this.cartService.getCart()
