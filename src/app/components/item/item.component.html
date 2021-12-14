@@ -23,7 +23,11 @@
                 </ng-template>
             </div>
             <ng-template #sessionNotAuthed>
-                <p>Please log in to your account to add to your cart</p>
+                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Log in to add this to your cart.">
+                    <button class="btn btn-outline-secondary mt-auto" style="pointer-events: none;" type="button" disabled>
+                        Add To Cart
+                    </button>
+                </span>
             </ng-template>
         </div>
     </div>
