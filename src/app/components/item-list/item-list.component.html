@@ -1,4 +1,4 @@
-<div class="jumbotron jumbotron-fluid py-5">
+<div class="jumbotron jumbotron-fluid py-5" @fade>
     <div class="container text-center px-4 px-lg-5 my-5">
         <h1 class="display-4">Catalog</h1>
         <p class="lead">Handcrafted products, just for you.</p>
@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="row row-cols-1 row-cols-md-5">
-            <app-item *ngFor="let item of items" [item]="item"></app-item>
+            <app-item *ngFor="let item of items" [item]="item" @fade @zoom></app-item>
         </div>
     </div>
 </div>

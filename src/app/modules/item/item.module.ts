@@ -9,7 +9,9 @@ import { CategoryCreateComponent } from 'src/app/components/category-create/cate
 import { CategoryListComponent } from 'src/app/components/category-list/category-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { ImageComponent } from 'src/app/components/image/image.component'
+import { ImageComponent } from 'src/app/components/image/image.component';
+import { AppModule } from 'src/app/app.module'
+import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { ImageComponent } from 'src/app/components/image/image.component'
     CategoryComponent,
     CategoryCreateComponent,
     CategoryListComponent,
-    ImageComponent
+    ImageComponent,
+    ShortenPipe
   ],
   imports: [
     CommonModule,

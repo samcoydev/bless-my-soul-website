@@ -6,6 +6,7 @@ import { OrderListComponent } from './components/order-list/order-list.component
 import { CartItemListComponent } from './components/cart-item-list/cart-item-list.component';
 import { AdminGuard } from './guards/admin/admin.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
+import { BrowserModule } from '@angular/platform-browser'
 
 const userModule = () => import('./modules/user/user.module').then(x => x.UserModule);
 const itemModule = () => import('./modules/item/item.module').then(x => x.ItemModule);
@@ -24,7 +25,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

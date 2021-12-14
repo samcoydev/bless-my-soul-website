@@ -14,6 +14,8 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { OrderCreateComponent } from './components/order-create/order-create.component';
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderComponent } from './components/order/order.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShortenPipe } from './pipes/shorten/shorten.pipe';
 
 @NgModule({
   declarations: [
@@ -27,11 +29,12 @@ import { OrderComponent } from './components/order/order.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ItemModule,
     UserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

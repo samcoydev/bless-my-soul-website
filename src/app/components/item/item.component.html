@@ -4,7 +4,7 @@
             <app-image [itemImage]="item.image"></app-image>
             <div class="card-body">
                 <div class="text-center">
-                    <p>{{item.name}}</p>
+                    <p>{{item.name | shorten:[24, '...'] }}</p>
                     <p>{{item.price | currency}}</p>
                 </div>
             </div>

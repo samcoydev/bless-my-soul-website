@@ -11,11 +11,15 @@ import { UserService } from 'src/app/services/user/user.service'
 import { CartService } from 'src/app/services/cart/cart.service'
 import { first } from 'rxjs/operators'
 import { CartItem } from 'src/app/models/cart-item.model'
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { fader } from 'src/app/helpers/animations/fade.animation'
+
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  styleUrls: ['./item.component.css'],
+  animations: [fader]
 })
 export class ItemComponent implements OnInit {
   

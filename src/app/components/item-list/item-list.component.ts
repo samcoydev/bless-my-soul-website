@@ -7,11 +7,14 @@ import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ItemService } from 'src/app/services/item/item.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { fader, zoom } from 'src/app/helpers/animations/fade.animation'
 
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.css']
+  styleUrls: ['./item-list.component.css'],
+  animations: [fader, zoom],
 })
 export class ItemListComponent implements OnInit {
 

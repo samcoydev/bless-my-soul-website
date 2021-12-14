@@ -1,4 +1,5 @@
 <img [src]="previewUrl" class="card-img-top" *ngIf="previewUrl">
+<img src="../../../assets/img/placeholder-image.png" class="card-img-top" *ngIf="!previewUrl && !editMode">
 <div class="form-group" *ngIf="editMode">
     <label for="file">Choose Image</label>
     <input type="file"
