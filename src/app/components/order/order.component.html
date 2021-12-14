@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card">
+        <div class="card-body">
+            <p>Items</p>
+            <ul>
+                <div *ngFor="let cartItem of order.cartItems" class="card">
+                    <app-cart-item [cartItem]="cartItem"></app-cart-item>
+                </div>
+            </ul>
+            <p>Order Status: {{orderLabelMapping[order.state]}}</p>
+            <p>Order Notes: {{order.notes}}</p>
+        </div>
+    </div>
+</div>

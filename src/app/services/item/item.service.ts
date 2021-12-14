@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Item } from 'src/app/models/item';
+import { HttpClient } from '@angular/common/http';
+import { Item } from 'src/app/models/item.model';
 import { environment } from 'src/environments/environment';
 import { Observable, of, Subject } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
+import { Category } from 'src/app/models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,59 +26,36 @@ export class ItemService {
   // CRUD //
 
   getAllItems(): Observable<Item[]> {
-    return this.httpClient.get<Item[]>(this.url).pipe(
-      tap((items: Item[]) => console.log(`Got Items: ${items}`)),
-      catchError(this.handleError<Item[]>('getAllItems'))
-      );;
+    return this.httpClient.get<Item[]>(this.url);
   }
 
   getItemByID(id: number): Observable<Item> {
-    return this.httpClient.get<Item>(this.url + '/' + `${id}`).pipe(
-      tap((item: Item) => console.log(`Got Item: ${item.id}`)),
-      catchError(this.handleError<Item>('getItemByID'))
-      );
+    return this.httpClient.get<Item>(this.url + '/' + `${id}`);
+  }
+
+  getItemByCategory(category: Category): Observable<Item[]> {
+    return this.httpClient.get<Item[]>(this.url + '/by-category/' + `${category.id}`);
   }
 
   postItem(item: Item): Observable<Item> {
     return this.httpClient.post<Item>(this.url, item).pipe(
       tap((newItem: Item) => {
-        console.log(`Posted Item: ${newItem}`);
         this.announceItemsUpdated('Items updated - New Record');
-      }),
-      catchError(this.handleError<Item>('postItem'))
-    );
+      }));
   }
 
   updateItem(item: Item): Observable<Item> {
     return this.httpClient.put<Item>(this.url + '/' + `${item.id}`, item).pipe(
       tap((updatedItem: Item) => {
-        console.log(`Updated Item: ${updatedItem}`);
         this.announceItemsUpdated('Items updated - Updated Record');
-      }),
-      catchError(this.handleError<Item>('updateItem'))
-    );
+      }));
   }
 
   deleteItem(id: number): Observable<Item> {
     return this.httpClient.delete<Item>(this.url + '/' + `${id}`).pipe(
-      tap(_ => {
-        console.log(`Deleted Item with ID: ${id}`);
+      tap((updatedItem: Item) => {
         this.announceItemsUpdated('Items updated - Deleted Record');
-      }),
-      catchError(this.handleError<Item>('deleteItem'))
-    );
-  }
-
-  private handleError<T>(operation = 'Operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      console.error(error);
-
-      console.log(`${operation} Failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+      }));
   }
   
 }

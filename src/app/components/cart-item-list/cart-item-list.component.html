@@ -1,0 +1,18 @@
+<div class="container py-5">
+    <div class="row text-center">
+        <h1>Shopping Cart</h1>
+    </div>
+    <div class="row py-lg-5">
+        <ul>
+            <div *ngFor="let cartItem of cartItems" class="mb-2">
+                <app-cart-item [cartItem]="cartItem"></app-cart-item>
+            </div>
+        </ul>
+    </div>
+    <div class="row">
+        <p>Subtotal: {{subtotal | currency}}</p>
+    </div>
+    <div *ngIf="cartItems.length >= 1" class="row">
+        <button class="btn btn-success col-2" routerLink="/new-order">Place an Order</button>
+    </div>
+</div>

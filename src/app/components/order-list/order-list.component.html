@@ -1,0 +1,26 @@
+<div class="container py-5">
+    <div *ngIf="!viewAllOrders">
+        <div class="row text-center">
+            <h1>Your Orders</h1>
+        </div>
+        <div class="row py-lg-5">
+            <ul>
+                <div *ngFor="let order of userOrders">
+                    <app-order [order]="order"></app-order>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="viewAllOrders">
+        <div class="row text-center">
+            <h1>All Orders</h1>
+        </div>
+        <div class="row py-lg-5">
+            <ul>
+                <div *ngFor="let order of orders">
+                    <app-order [order]="order"></app-order>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>

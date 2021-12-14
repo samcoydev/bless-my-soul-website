@@ -1,0 +1,24 @@
+<div class="container">
+    <h3 class="row">Order Overview</h3>
+    <div class="row">
+        <ul>
+            <div *ngFor="let cartItem of cartItems" class="card">
+                <div class="card">
+                    <div class="card-body">
+                        <app-cart-item [cartItem]="cartItem"></app-cart-item>
+                    </div>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="row">
+        <label for="notes">Order Notes</label>
+        <textarea class="form-control" [disabled]="isLoading" [(ngModel)]="notes" id="notes" rows="3"></textarea>
+    </div>
+    <div class="row">
+        <p>Subtotal: {{subtotal | currency}}</p>
+    </div>
+    <div *ngIf="cartItems.length >= 1" class="row">
+        <button class="btn btn-primary col-2" (click)="createOrder()">Request Order</button>
+    </div>
+</div>
