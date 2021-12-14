@@ -1,32 +1,53 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto justify-content-center"> 
-            <!-- Base Menus -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation"> 
+    <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
+        <!-- Left of brand -->
+        <ul class="navbar-nav ms-auto text-center">
             <li class="nav-item">
                 <a class="nav-link active" routerLink="/item/list">Catalog</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" *ngIf="isLoggedIn">Contact</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Center brand logo -->
+    <div class="mx-auto my-2 order-0 order-md-1 position-relative">
+        <a class="mx-auto" href="#">
+            <img src="../../../assets/img/placeholder-logo.png" alt="" width="30" height="30">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <!-- Right of brand -->
+    <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
+        <ul class="navbar-nav me-auto text-center">
             <li class="nav-item" *ngIf="isLoggedIn">
                 <a class="nav-link active" routerLink="/cart">Cart</a>
             </li>
-       
-            <a class="navbar-brand" routerLink="">
-                <img src="../../../assets/img/placeholder-logo.png" alt="" width="30" height="30">
-            </a>
-
+            <li class="nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link active" routerLink="/order-list">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/login">Sign In</a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/register">Register</a>
+            </li> 
             <li class="nav-item dropdown" *ngIf="isLoggedIn">
                 <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                 </a>
                 <div class="dropdown-menu" aria-labelledby="accountDropdown">
                     <a class="nav-link active" routerLink="/profile">Profile</a>
-                    <a class="nav-link active" routerLink="/order-list">Orders</a>
                 </div>
-            </li> 
-
+            </li>
+        </ul>
+        <!-- Far right -->
+        <ul class="navbar-nav navbar-right">
             <li class="nav-item dropdown" *ngIf="showAdminMenus">
                 <a class="nav-link dropdown-toggle active" href="#" id="adminDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Admin
@@ -36,15 +57,7 @@
                     <a class="nav-link active" routerLink="/item/create">Create Item</a>
                     <a class="nav-link active" routerLink="/user/list">User List</a>
                 </div>
-            </li> 
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item">
-                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/login">Sign In</a>
-            </li> 
-            <li class="nav-item">
-                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/register">Register</a>
-            </li> 
+            </li>
             <li class="nav-item">
                 <a class="nav-link active" *ngIf="isLoggedIn" (click)="logout()">Log Out</a>
             </li> 
