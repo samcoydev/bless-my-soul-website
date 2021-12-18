@@ -26,7 +26,6 @@ export class ItemComponent implements OnInit {
   category: Category = {id: 0, name: "No Category"}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
   @Input() isItemInCart: boolean = false
-  itemsInCart: CartItem[] = [];
   
   isLoading = false
   isSubmitted = false
@@ -34,26 +33,21 @@ export class ItemComponent implements OnInit {
 
   stateLabelMapping = StateTypeLabelMapping
   states = Object.values(StateType)
-  categories: Category[] = []
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private itemService: ItemService,
     private cartService: CartService,
-    private categoryService: CategoryService,
     private userService: UserService,
     ) { }
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap
-    if (routeParams.get('itemId')) {
+    if (routeParams.get('itemId'))
       this.getItemById(Number(routeParams.get('itemId')))
-    }
 
     this.isSessionAuthed = this.userService.isSessionAuthenticated()
-    this.getCategories()
-    this.getCart()
   }
 
   //////////////////
@@ -82,15 +76,6 @@ export class ItemComponent implements OnInit {
     this.location.back()
   }
 
-  //////////////////////
-  // Category Methods //
-  //////////////////////
-
-  getCategories(): void {
-    this.categoryService.getAllCategories()
-      .subscribe(response => this.categories = response)
-  }
-
   //////////////////
   // Cart Methods //
   //////////////////
@@ -103,19 +88,5 @@ export class ItemComponent implements OnInit {
         this.isItemInCart = true
         this.isLoading = false
       })
-  }
-
-  /*checkIfItemIsInCart(itemId?: number): boolean {
-    let wasItemFound = false
-    this.itemsInCart.forEach(cartItem => {
-      if (cartItem.item.id == this.item.id)
-        wasItemFound = true;
-    })
-    return wasItemFound;
-  } */
-
-  getCart(): void {
-    this.cartService.getCart()
-      .subscribe(response => this.itemsInCart = response)
   }
 }
