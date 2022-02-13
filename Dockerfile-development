@@ -4,7 +4,7 @@ FROM node:lts
 RUN npm i -g @angular/cli
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy and install local npm packages
 COPY package.json* package-lock.json* ./
