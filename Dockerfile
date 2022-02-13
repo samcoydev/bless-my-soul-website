@@ -1,8 +1,14 @@
-#stage 1
-FROM node:latest as node
-WORKDIR /app
-COPY . .
+FROM node:14.15-alpine AS builder
+
+WORKDIR /opt/web
+COPY package.json package-lock.json ./
 RUN npm install
-RUN npm run build --prod#stage 2
-FROM nginx:alpine
-COPY --from=node /app/dist/bless-my-soul-website /usr/share/nginx/html
+
+ENV PATH="./node_modules/.bin:$PATH"
+
+COPY . ./
+RUN ng build --configuration=development
+
+FROM nginx:1.17-alpine
+COPY nginx.config /etc/nginx/conf.d/default.conf
+COPY --from=builder /opt/web/dist /usr/share/nginx/html
