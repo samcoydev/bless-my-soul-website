@@ -8,6 +8,6 @@ export interface Item {
         price: number;
         description: string;
         state: StateType;
-        category: Category;
+        category?: Category;
         image?: Image;
 }

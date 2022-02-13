@@ -75,7 +75,8 @@
               "browserTarget": "bless-my-soul-website:build:production"
             },
             "development": {
-              "browserTarget": "bless-my-soul-website:build:development"
+              "browserTarget": "bless-my-soul-website:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

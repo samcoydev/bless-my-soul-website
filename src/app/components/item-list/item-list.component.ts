@@ -55,16 +55,14 @@ export class ItemListComponent implements OnInit {
 
   getCart(): void {
     this.cartService.getCart()
-      .subscribe(response => this.itemsInCart = response)
+      .subscribe(response => {
+        this.itemsInCart = response
+      })
   }
 
   checkIfItemIsInCart(item: Item): boolean {
-    let wasItemFound = false
-    this.itemsInCart.forEach(cartItem => {
-      if (cartItem.item == item)
-        wasItemFound = true
-    })
-    return wasItemFound
+    if (this.itemsInCart.find(el => el.item.id == item.id)) return true
+    return false
   }
 
   addToCart(item: Item): void {

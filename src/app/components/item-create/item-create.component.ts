@@ -17,15 +17,13 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class ItemCreateComponent implements OnInit {
 
-  category: Category = { id: 0, name: "No Category" }
   rawImage?: File;
   newItem: Item = { 
     id: -1, 
     name: '', 
     price: 0.00, 
     description: '', 
-    state: StateType.Draft, 
-    category: this.category
+    state: StateType.Draft,
   }
 
   isSubmitted = false
