@@ -1,5 +1,8 @@
 FROM node:14.15-alpine AS builder
 
+# Install global npm packages
+RUN npm i -g @angular/cli
+
 WORKDIR /opt/web
 COPY package.json package-lock.json ./
 
