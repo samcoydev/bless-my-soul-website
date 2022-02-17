@@ -1,0 +1,38 @@
+.vertical-center {
+    min-height: 80%;  /* Fallback for browsers that don't support the vh unit */
+    min-height: 80vh;
+  
+    display: flex;
+    align-items: center;
+}
+
+.padded {
+    padding-top: 30px;
+}
+
+/* Turn off the incremental arrows on the number input 
+   This is for Opera, Exporer, etc. */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.img-container {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.img-item-preview {
+  height: 100%;
+  width: auto;
+  display: block;
+}

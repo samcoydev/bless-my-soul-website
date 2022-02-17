@@ -1,0 +1,53 @@
+<div class="vertical-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <div class="card border-0 img-container">
+                    <img [src]="previewUrl" class="img-item-preview" *ngIf="previewUrl">
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="card mb-3 border-0">
+                    <div class="card-body">
+                        <p class="card-subtitle mb-2 text-muted">Category / Test</p>
+                        <h2 class="card-title">{{item.name}}</h2>
+                        <h5 class="card-subtitle mb-2 text-muted padded">{{item.price | currency}}</h5>
+                        <div class="row padded">
+                            <div class="col-2">
+                                <input type="number" class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <!-- If the user is logged in -->
+                                <div *ngIf="isSessionAuthed; else sessionNotAuthed">
+                                    <div *ngIf="!isItemInCart; else itemInCart">
+                                        <button class="btn btn-outline-success mt-auto" [disabled]="isLoading" (click)="addToCart()">
+                                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                                            Add To Cart
+                                        </button>
+                                    </div>
+                                    <ng-template #itemInCart>
+                                        <p>This item is in your cart</p>
+                                    </ng-template>
+                                </div>
+                                <ng-template #sessionNotAuthed>
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Log in to add this to your cart.">
+                                        <button class="btn btn-outline-secondary mt-auto" style="pointer-events: none;" type="button" disabled>
+                                            Add To Cart
+                                        </button>
+                                    </span>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Details</h5>
+                        <p class="card-text">{{item.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -19,7 +19,8 @@ export class ImageComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) { 
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    console.log("yessir", this.itemImage)
     if (this.itemImage)
       this.convertImageToViewableUrl(this.itemImage)
   }

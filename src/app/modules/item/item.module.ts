@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ImageComponent } from 'src/app/components/image/image.component';
 import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
+import { ItemOverviewComponent } from 'src/app/components/item-overview/item-overview.component'
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
     ItemComponent,
     ItemListComponent,
     ItemCreateComponent,
+    ItemOverviewComponent,
     CategoryComponent,
     CategoryCreateComponent,
     CategoryListComponent,
