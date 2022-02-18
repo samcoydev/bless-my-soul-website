@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartItem } from 'src/app/models/cart-item.model';
+import { Image } from 'src/app/models/image.model'
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-cart-item-list',
@@ -17,7 +19,8 @@ export class CartItemListComponent implements OnInit {
   currentUserSubscription = new Subscription
 
   constructor(
-    private cartService: CartService
+    private cartService: CartService,
+    private imageService: ImageService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,10 @@ export class CartItemListComponent implements OnInit {
   getSubtotal(): void {
     this.subtotal = 0
     this.cartItems.forEach(cartItem => this.subtotal += cartItem.item.price * cartItem.qty)
+  }
+
+  getImageUrl(image?: Image) {
+    return this.imageService.convertImageToViewableUrl(image)
   }
 
 }

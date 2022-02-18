@@ -1,15 +1,3 @@
-.vertical-center {
-    min-height: 80%;  /* Fallback for browsers that don't support the vh unit */
-    min-height: 80vh;
-  
-    display: flex;
-    align-items: center;
-}
-
-.padded {
-    padding-top: 30px;
-}
-
 /* Turn off the incremental arrows on the number input 
    This is for Opera, Exporer, etc. */
 input::-webkit-outer-spin-button,
@@ -21,6 +9,18 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.vertical-center {
+  min-height: 80%;  /* Fallback for browsers that don't support the vh unit */
+  min-height: 80vh;
+
+  display: flex;
+  align-items: center;
+}
+
+.padded {
+    padding-top: 30px;
 }
 
 .img-container {

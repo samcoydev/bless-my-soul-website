@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { Observable, Observer } from 'rxjs'
 import { Image } from 'src/app/models/image.model'
 import { environment } from 'src/environments/environment'
@@ -11,7 +12,10 @@ export class ImageService {
 
   private url = environment.apiUrl + '/image';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer
+    ) { }
 
   getFiles(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url);
@@ -23,6 +27,20 @@ export class ImageService {
     // saveImage on the API.
     formData.append('image', image);
     return this.httpClient.post<Image>(this.url, formData);
+  }
+
+  getPreviewUrl(selectedImage: any): void {
+    var reader = new FileReader()
+    reader.readAsDataURL(selectedImage);
+    reader.onload = (_event) => { 
+      return reader.result
+    }
+  }
+
+  convertImageToViewableUrl(image?: Image) {
+    if (image == undefined) { return }
+    let objectURL = 'data:image/jpeg;base64,' + image.data
+    return this.sanitizer.bypassSecurityTrustUrl(objectURL)
   }
 
 }

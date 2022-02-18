@@ -3,6 +3,7 @@ import { StateType } from 'src/app/helpers/state-type';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-cart-item',
@@ -16,8 +17,7 @@ export class CartItemComponent implements OnInit {
 
   isLoading = false;
 
-  constructor(private cartService: CartService) 
-  { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
     this.item = this.cartItem.item;
