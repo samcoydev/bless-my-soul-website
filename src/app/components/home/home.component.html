@@ -1,9 +1,74 @@
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto" @fade @slideDown>
-            <h1>Bless My Soul Creations</h1>
-            <p class="text-muted">Handcrafted to bless the soul of both the giver and receiver.</p>
+<section class="landing-section bg-light">
+    <div class="text-center container">
+        <div class="row">
+            <div class="col-lg-8 col-md-6 mx-auto" @fade @slideDown>
+                <h1 class="display-2">Bless My Soul Creations</h1>
+                <p class="text-muted">Handcrafted to bless the soul of both the giver and receiver.</p>
+            </div>
         </div>
     </div>
 </section>
 
+<section>
+    <div class="py-4 text-center container">
+        <div class="row py-lg-5">
+            <div class="mx-auto">
+                <h4 @fade @slideDown>Featured Categories</h4>
+                <div class="row justify-content-center">
+                    <hr style="width: 20%;" class="bg-success"/>
+                </div>
+                <div class="row justify-content-center py-5 img-container">
+                    <img src="../../../assets/img/bag.jpg" class="img-item-preview hoverable px-0 mx-3">
+                    <img src="../../../assets/img/shirt.jpg" class="img-item-preview hoverable px-0 mx-3">
+                    <img src="../../../assets/img/card.jpg" class="img-item-preview hoverable px-0 mx-3">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="py-4 text-center container">
+        <div class="row py-lg-5">
+            <div class="mx-auto">
+                <h4 @fade @slideDown>Featured Products</h4>
+                <div class="row justify-content-center">
+                    <hr style="width: 20%;" class="bg-success"/>
+                </div>
+                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5">
+                    <app-item *ngFor="let item of featuredItems" [item]="item" [isItemInCart]="false" @fade @zoom></app-item>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="py-4 text-center container">
+        <div class="row py-lg-5">
+            <div class="mx-auto">
+                <h4 @fade @slideDown>Newest Releases</h4>
+                <div class="row justify-content-center">
+                    <hr style="width: 20%;" class="bg-success"/>
+                </div>
+                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5">
+                    <app-item *ngFor="let item of newestReleases" [item]="item" [isItemInCart]="false" @fade @zoom></app-item>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--
+    
+<div class="jumbotron-fluid py-5 bg-light">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto" @fade @slideDown>
+                <h1 class="display-4">Bless My Soul Creations</h1>
+                <p class="text-muted">Handcrafted to bless the soul of both the giver and receiver.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+-->

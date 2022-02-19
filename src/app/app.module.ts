@@ -15,6 +15,8 @@ import { OrderCreateComponent } from './components/order-create/order-create.com
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderComponent } from './components/order/order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +26,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CartItemComponent,
     OrderCreateComponent,
     OrderListComponent,
-    OrderComponent
+    OrderComponent,
+    HomeComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
