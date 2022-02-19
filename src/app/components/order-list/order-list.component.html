@@ -1,16 +1,92 @@
-<div class="container py-5">
-    <div *ngIf="!viewAllOrders">
-        <div class="row text-center">
-            <h1>Your Orders</h1>
-        </div>
-        <div class="row py-lg-5">
-            <ul>
-                <div *ngFor="let order of userOrders">
-                    <app-order [order]="order"></app-order>
+<div class="jumbotron py-5">
+    <div *ngIf="!viewAllOrders" class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Your Orders</h4>
                 </div>
-            </ul>
+            </div>
+            <div class="row">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-muted" scope="col">Status</th>
+                            <th class="text-muted" scope="col">Items</th>
+                            <th class="text-muted" scope="col">Notes</th>
+                            <th class="text-muted" scope="col">Total</th>
+                            <th class="text-muted" scope="col">Date Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of userOrders">
+                            <td>
+                                <p>{{orderLabelMapping[order.state]}}</p>
+                            </td>
+                            <td>
+                                <p>{{order.cartItems.length}}</p>
+                            </td>
+                            <td>
+                                <p>{{order.notes | shorten:[24, '...']}}</p>
+                            </td>
+                            <td>
+                                <p>{{getTotal(order.cartItems) | currency}}</p>
+                            </td>
+                            <td>
+                                <p>10/25/2022</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <div *ngIf="viewAllOrders" class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>All Orders</h4>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-muted" scope="col">Status</th>
+                            <th class="text-muted" scope="col">Items</th>
+                            <th class="text-muted" scope="col">Notes</th>
+                            <th class="text-muted" scope="col">Total</th>
+                            <th class="text-muted" scope="col">Date Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of userOrders">
+                            <td>
+                                <p>{{orderLabelMapping[order.state]}}</p>
+                            </td>
+                            <td>
+                                <p>{{order.cartItems.length}}</p>
+                            </td>
+                            <td>
+                                <p>{{order.notes | shorten:[24, '...']}}</p>
+                            </td>
+                            <td>
+                                <p>{{getTotal(order.cartItems) | currency}}</p>
+                            </td>
+                            <td>
+                                <p>10/25/2022</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+>
+<!--
+<div class="container py-5">
     <div *ngIf="viewAllOrders">
         <div class="row text-center">
             <h1>All Orders</h1>
@@ -23,4 +99,4 @@
             </ul>
         </div>
     </div>
-</div>
+</div> -->

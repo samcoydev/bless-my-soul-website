@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import { CartItem } from 'src/app/models/cart-item.model'
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -50,6 +51,12 @@ export class OrderListComponent implements OnInit {
         this.orders = response
         this.userOrders = this.orders.filter(order => order.user.id == this.userService.currentUserValue.id)
       })
+  }
+
+  getTotal(cartItems: CartItem[]): number {
+    let total = 0
+    cartItems.forEach(cartItem => total += cartItem.item.price * cartItem.qty)
+    return total
   }
 
   deleteOrder(order: Order): void {

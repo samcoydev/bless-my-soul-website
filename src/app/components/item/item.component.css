@@ -2,3 +2,8 @@
     box-shadow: 0 4px 7px 0 rgba(0,0,0,0.2), 0 6px 5px 0 rgba(0,0,0,0.19);
     transition: all .2s ease-in-out;
 }
+
+.item-rounded {
+    overflow: hidden;
+    border-radius: 10px;
+}
