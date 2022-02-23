@@ -9,6 +9,7 @@ import { ItemService } from 'src/app/services/item/item.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fader, zoom } from 'src/app/helpers/animations/fade.animation'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-item-list',
@@ -30,6 +31,7 @@ export class ItemListComponent implements OnInit {
   cartItemListSubscription = new Subscription
 
   constructor(
+    private route: ActivatedRoute,
     private itemService: ItemService,
     private cartService: CartService,
     private userService: UserService,
@@ -37,10 +39,23 @@ export class ItemListComponent implements OnInit {
     this.items$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)))
    }
 
+   // TODO: Get by category
+   // TODO: Only search by category
+
   ngOnInit(): void {
+    const routeParams = this.route.snapshot.paramMap
     this.isSessionAuthed = this.userService.isSessionAuthenticated();
-    this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItems())
-    this.getItems()
+
+    if (routeParams.get('categoryId')) {
+      this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => {
+        this.getItemsByCategoryId(Number(routeParams.get('categoryId')))
+      })
+      this.getItemsByCategoryId(Number(routeParams.get('categoryId')))
+    }
+    else {
+      this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItems())
+      this.getItems()
+    }
 
     if (this.isSessionAuthed) {
       this.cartItemListSubscription = this.cartService.cartItemsUpdated$.subscribe(message => this.getCart())
@@ -50,6 +65,11 @@ export class ItemListComponent implements OnInit {
 
   getItems(): void {
     this.itemService.getAllItems()
+      .subscribe(response => this.items = response)
+  }
+
+  getItemsByCategoryId(categoryId: number): void {
+    this.itemService.getItemByCategoryId(categoryId)
       .subscribe(response => this.items = response)
   }
 

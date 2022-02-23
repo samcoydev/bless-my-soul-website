@@ -20,7 +20,6 @@ export class ImageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("yessir", this.itemImage)
     if (this.itemImage)
       this.convertImageToViewableUrl(this.itemImage)
   }

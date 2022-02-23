@@ -62,7 +62,7 @@ export class ItemCreateComponent implements OnInit {
     console.log("[CREATE]: ", this.rawImage)
 
     // First we have to post the new Image
-    if (this.rawImage){
+    if (this.rawImage) {
       this.imageService.postImage(this.rawImage)
         .subscribe(data => {
           console.log("[POST]: ", data)

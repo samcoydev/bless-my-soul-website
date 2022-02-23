@@ -36,6 +36,10 @@ export class ItemService {
   getItemByCategory(category: Category): Observable<Item[]> {
     return this.httpClient.get<Item[]>(this.url + '/by-category/' + `${category.id}`);
   }
+  
+  getItemByCategoryId(categoryId: number): Observable<Item[]> {
+    return this.httpClient.get<Item[]>(this.url + '/by-category/' + `${categoryId}`);
+  }
 
   postItem(item: Item): Observable<Item> {
     return this.httpClient.post<Item>(this.url, item).pipe(

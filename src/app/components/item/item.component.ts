@@ -19,7 +19,7 @@ import { fader } from 'src/app/helpers/animations/fade.animation'
 })
 export class ItemComponent implements OnInit {
   
-  category: Category = {id: 0, name: "No Category"}
+  category: Category = {id: 0, name: "No Category", sequence: 0}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
   @Input() isItemInCart: boolean = false
   

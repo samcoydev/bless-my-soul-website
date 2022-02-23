@@ -10,6 +10,7 @@ import { ItemOverviewComponent } from 'src/app/components/item-overview/item-ove
 
 const routes: Routes = [
   { path: 'list', component: ItemListComponent },
+  { path: 'list/:categoryId', component: ItemListComponent },
   { path: 'id/:itemId', component: ItemOverviewComponent },
   { path: 'create', component: ItemCreateComponent, canActivate: [AdminGuard] },
   { path: 'category', component: CategoryComponent },

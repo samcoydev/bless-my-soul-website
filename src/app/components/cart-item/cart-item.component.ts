@@ -13,7 +13,7 @@ import { ImageService } from 'src/app/services/image/image.service'
 export class CartItemComponent implements OnInit {
   
   @Input() cartItem!: CartItem;
-  item: Item = {id: -1, name: '', price: -1, description: "", state: StateType.Draft, category: {id: 0, name: "No Category"}}
+  item: Item = {id: -1, name: '', price: -1, description: "", state: StateType.Draft, category: {id: 0, name: "No Category", sequence: 0}}
 
   isLoading = false;
 

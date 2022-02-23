@@ -34,6 +34,7 @@ import { ItemOverviewComponent } from 'src/app/components/item-overview/item-ove
   ],
   exports: [
     ImageComponent,
+    CategoryComponent,
     ItemComponent,
     ShortenPipe
   ]

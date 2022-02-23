@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.model';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-category-create',
@@ -11,7 +12,8 @@ import { CategoryService } from 'src/app/services/category/category.service';
 })
 export class CategoryCreateComponent implements OnInit {
 
-  category: Category = { id: 0, name: '' };
+  rawImage?: File
+  category: Category = { id: 0, name: '', sequence: 0 }
 
   isSubmitted = false;
   isLoading = false;
@@ -19,7 +21,8 @@ export class CategoryCreateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private imageService: ImageService
   ) { }
 
   ngOnInit(): void {}
@@ -28,6 +31,23 @@ export class CategoryCreateComponent implements OnInit {
     this.isSubmitted = true
     this.isLoading = true
 
+    if (this.rawImage) {
+      this.imageService.postImage(this.rawImage)
+        .subscribe(data => {
+          console.log("[POST]: ", data)
+          this.category.image = data
+          this.postCategory();
+        }, error => {
+          console.log(error)
+        })
+    } else {
+      this.postCategory();
+    }
+
+   
+  }
+
+  postCategory(): void {
     this.categoryService.postCategory(this.category)
       .pipe(first())
       .subscribe({
@@ -36,7 +56,12 @@ export class CategoryCreateComponent implements OnInit {
           this.router.navigateByUrl(returnUrl)
         },
         error: error => this.isLoading = false
-      })
+    })
+  }
+
+  setRawImage(image: any): void {
+    if (image)
+      this.rawImage = image
   }
 
 }

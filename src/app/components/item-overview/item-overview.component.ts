@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 })
 export class ItemOverviewComponent implements OnInit {
 
-  category: Category = {id: 0, name: "No Category"}
+  category: Category = {id: 0, name: "No Category", sequence: 0}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
   @Input() isItemInCart: boolean = false
   
@@ -46,10 +46,8 @@ export class ItemOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap
-    if (routeParams.get('itemId')) {
+    if (routeParams.get('itemId'))
       this.getItemById(Number(routeParams.get('itemId')))
-
-    }
 
     this.isSessionAuthed = this.userService.isSessionAuthenticated()
   }

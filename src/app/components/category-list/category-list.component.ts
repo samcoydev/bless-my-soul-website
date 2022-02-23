@@ -3,12 +3,16 @@ import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.model';
+import { Image } from 'src/app/models/image.model'
 import { CategoryService } from 'src/app/services/category/category.service';
+import { ImageService } from 'src/app/services/image/image.service'
+import { fader, slideDown } from 'src/app/helpers/animations/fade.animation'
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css']
+  styleUrls: ['./category-list.component.css'],
+  animations: [fader, slideDown]
 })
 export class CategoryListComponent implements OnInit {
 
@@ -23,6 +27,7 @@ export class CategoryListComponent implements OnInit {
   
   constructor(
     private categoryService: CategoryService,
+    private imageService: ImageService
     ) {
     this.categories$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)))
    }
@@ -33,10 +38,14 @@ export class CategoryListComponent implements OnInit {
     this.getCategories()
   }
 
+  getImageUrl(image?: Image) {
+    return this.imageService.convertImageToViewableUrl(image)
+  }
+
   getCategories(): void {
     this.categoryService.getAllCategories()
       .subscribe(response => {
-        this.categories = response
+        this.categories = response.sort((a, b) => a.sequence - b.sequence)
       })
   }
 
