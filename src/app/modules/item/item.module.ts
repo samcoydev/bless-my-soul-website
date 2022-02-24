@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { ImageComponent } from 'src/app/components/image/image.component';
 import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
 import { ItemOverviewComponent } from 'src/app/components/item-overview/item-overview.component'
+import { TableCategoryComponent } from 'src/app/components/table-category/table-category.component'
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ItemOverviewComponent } from 'src/app/components/item-overview/item-ove
     CategoryCreateComponent,
     CategoryListComponent,
     ImageComponent,
-    ShortenPipe
+    ShortenPipe,
+    TableCategoryComponent
   ],
   imports: [
     CommonModule,

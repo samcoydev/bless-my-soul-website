@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fader, zoom } from 'src/app/helpers/animations/fade.animation'
 import { ActivatedRoute } from '@angular/router'
+import { CategoryService } from 'src/app/services/category/category.service'
 
 @Component({
   selector: 'app-item-list',
@@ -35,23 +36,16 @@ export class ItemListComponent implements OnInit {
     private itemService: ItemService,
     private cartService: CartService,
     private userService: UserService,
+    private categoryService: CategoryService,
     ) {
     this.items$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)))
    }
-
-   // TODO: Get by category
-   // TODO: Only search by category
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap
     this.isSessionAuthed = this.userService.isSessionAuthenticated();
 
-    if (routeParams.get('categoryId')) {
-      this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => {
-        this.getItemsByCategoryId(Number(routeParams.get('categoryId')))
-      })
-      this.getItemsByCategoryId(Number(routeParams.get('categoryId')))
-    }
+    if (routeParams.get('categoryId')) { this.getCategory(Number(routeParams.get('categoryId')))}
     else {
       this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItems())
       this.getItems()
@@ -71,6 +65,18 @@ export class ItemListComponent implements OnInit {
   getItemsByCategoryId(categoryId: number): void {
     this.itemService.getItemByCategoryId(categoryId)
       .subscribe(response => this.items = response)
+  }
+
+  getCategory(categoryId: number): void {
+    this.categoryService.getCategoryByID(categoryId).subscribe(category => {
+      if (category.allProducts) {
+        this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItems())
+        this.getItems()
+      } else {
+        this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItemsByCategoryId(category.id))
+        this.getItemsByCategoryId(category.id)
+      }
+    })
   }
 
   getCart(): void {

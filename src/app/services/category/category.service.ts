@@ -32,6 +32,10 @@ export class CategoryService {
     return this.httpClient.get<Category>(this.url + '/' + `${id}`);
   }
 
+  getFeaturedCategories(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>(this.url + '/featured')
+  }
+
   postCategory(category: Category): Observable<Category> {
     return this.httpClient.post<Category>(this.url, category).pipe(
       tap((newItem: Category) => {

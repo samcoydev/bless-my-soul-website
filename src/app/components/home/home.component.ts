@@ -33,7 +33,8 @@ export class HomeComponent implements OnInit {
   }
 
   getFeaturedCategories(): void {
-    this.categoryService.getAllCategories().subscribe(data => {
+    this.categoryService.getFeaturedCategories().subscribe(data => {
+      console.log(this.featuredCategories)
       this.featuredCategories = data.slice(0, 3)
     })
   }

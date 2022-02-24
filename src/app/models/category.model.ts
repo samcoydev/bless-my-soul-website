@@ -5,4 +5,6 @@ export interface Category {
         name: string;
         image?: Image;
         sequence: number;
+        featuredCategory?: boolean;
+        allProducts?: boolean;
 }

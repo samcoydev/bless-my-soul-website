@@ -1,0 +1,59 @@
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Categories Table</h4>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="text-muted col-1" scope="col">Selected</th>
+                            <th class="text-muted col-1" scope="col">#</th>
+                            <th class="text-muted col-1" scope="col">Picture</th>
+                            <th class="text-muted col-3" scope="col">Name</th>
+                            <th class="text-muted col-4" scope="col">Sequence</th>
+                            <th class="text-muted col-1" scope="col">Featured</th>
+                            <th class="text-muted col-1" scope="col">All Products?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-flex" *ngFor="let category of categoryCopies">
+                            <td class="col-1">
+                                <input type="checkbox" (change)="onSelect($event, category.id)">
+                            </td>
+                            <td class="col-1">
+                                <p>{{category.id}}<span class="text-warning" *ngIf="!areCategoriesEqual(category)">*</span></p>
+                            </td>
+                            <td class="col-1">
+                                <img [src]="getImageUrl(category.image)" class="rounded img-table-preview" *ngIf="getImageUrl(category.image)">
+                            </td>
+                            <td class="col-3">
+                                <input class="form-control" type="text" [(ngModel)]="category.name">
+                            </td>
+                            <td class="col-4">
+                                <input class="form-control" type="number" [(ngModel)]="category.sequence">
+                            </td>
+                            <td class="col-1">
+                                <input type="checkbox" [(ngModel)]="category.featuredCategory">
+                            </td>
+                            <td class="col-1">
+                                <input type="checkbox" [(ngModel)]="category.allProducts">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row my-2">
+                <div class="col-6 btn-group" role="group">
+                    <button class="btn btn-outline-success" routerLink="/category/create">Create</button>
+                    <button class="btn btn-outline-warning" (click)="saveChanges()">Save Changes</button>
+                    <button class="btn btn-outline-danger" (click)="resetChanges()">Reset Changes</button>
+                    <button class="btn btn-outline-danger" *ngIf="selectedCategoryIds.length > 0" (click)="deleteSelected()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

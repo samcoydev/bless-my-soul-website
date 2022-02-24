@@ -1,0 +1,31 @@
+th{
+    font-weight: normal;
+}
+
+input.form-control {
+    width: auto;
+}
+
+.container-padding {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.img-table-preview {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all .1s ease-in-out;
+}
+
+.img-table-preview:hover {
+    box-shadow: 0 4px 7px 0 rgba(0,0,0,0.2), 0 6px 5px 0 rgba(0,0,0,0.19);
+    width: 80px;
+    height: 80px;
+    transition: all .3s ease-in-out;
+}

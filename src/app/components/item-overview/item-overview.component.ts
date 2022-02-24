@@ -111,7 +111,6 @@ export class ItemOverviewComponent implements OnInit {
     if (image == undefined) { return }
     let objectURL = 'data:image/jpeg;base64,' + image.data
     this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-    console.log("biyatch", this.previewUrl)
   }
 
 }
