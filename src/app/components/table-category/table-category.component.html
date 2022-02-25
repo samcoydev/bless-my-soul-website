@@ -51,11 +51,11 @@
                     </table>
                 </div>
             </div>
-            <div class="col-3 col-center text-center">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-1"></div>
-                    <div class="col-10 mx-auto" *ngIf="findCategory(editCategoryId) as category">
-                        <form [formGroup]="currentCategoryToEdit">
+                    <div class="col-10 mx-auto" *ngIf="editedCategory as category">
+                        <form>
                             <div class="form-group mb-3">
                                 <label class="form-label" for="name">Name</label>
                                 <input name="name" id="name" class="form-control" type="text" [(ngModel)]="category.name">
@@ -72,8 +72,7 @@
                                 <input class="form-check-input" name="all-products" id="all-products" type="checkbox" [(ngModel)]="category.allProducts">
                                 <label class="form-check-label" for="all-products">All Products?</label>
                             </div>
-                            <!-- (click)="saveChanges()" -->
-                            <button class="btn btn-outline-primary">Save Changes</button>
+                            <button class="btn btn-outline-primary" (click)="saveChanges()">Save Changes</button>
                         </form>
                     </div>
                 </div>

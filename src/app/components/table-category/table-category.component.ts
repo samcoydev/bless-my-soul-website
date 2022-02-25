@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms'
+import { FormControl } from '@angular/forms'
 import { Observable, Subscription } from 'rxjs'
 import { startWith, map } from 'rxjs/operators'
 import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
+import { ThrowStmt } from '@angular/compiler'
 
 @Component({
   selector: 'app-table-category',
@@ -16,12 +17,6 @@ export class TableCategoryComponent implements OnInit {
 
   categories: Category[] = []
   editedCategory?: Category
-  currentCategoryToEdit: FormGroup = new FormGroup({
-    name: new FormControl(''),
-    sequence: new FormControl(''),
-    featuredCategory: new FormControl(false),
-    allProducts: new FormControl(false),
-  });
   selectedCategoryIds: number[] = []
   editCategoryId: number = -1
   
@@ -39,23 +34,16 @@ export class TableCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryListSubscription = this.categoryService.categoriesUpdated$.subscribe(this.getCategories);
-
     this.getCategories()
   }
 
-    /*
   saveChanges(): void {
-    let updatedCategories = this.categoryCopies.filter(c => !this.areCategoriesEqual(c));
-    let updatedCount = 0
-
-    for(let categoryIndex = 0; categoryIndex < updatedCategories.length; categoryIndex++) {
-      this.categoryService.updateCategory(updatedCategories[categoryIndex]).subscribe(data => {
-        updatedCount++
-        if (updatedCount == updatedCategories.length)
-          this.getCategories()
-      })
-    }
-  } */
+    if (!this.editedCategory) { return }
+    this.categoryService.updateCategory(this.editedCategory).subscribe(data => {
+      this.editedCategory = undefined
+      this.getCategories()
+    })
+  }
 
   deleteSelected(): void {
     let updatedCount = 0
@@ -72,10 +60,7 @@ export class TableCategoryComponent implements OnInit {
   viewCategory(category: Category) {
     this.editCategoryId = category.id
 
-    this.currentCategoryToEdit.value.name = category.name
-    this.currentCategoryToEdit.value.sequence = category.sequence
-    this.currentCategoryToEdit.value.featuredCategory = category.featuredCategory
-    this.currentCategoryToEdit.value.allProducts = category.allProducts
+    this.editedCategory = JSON.parse(JSON.stringify(category))
   }
 
   findCategory(categoryId: number): Category | undefined {
@@ -86,10 +71,10 @@ export class TableCategoryComponent implements OnInit {
     if (event.target.checked) {
       this.selectedCategoryIds.push(categoryId)
     } else {
-      this.selectedCategoryIds.splice(categoryId, 1)
+      this.selectedCategoryIds.splice(this.selectedCategoryIds.indexOf(categoryId), 1)
     }
   }
-
+  
   getCategories(): void {
     this.categoryService.getAllCategories()
       .subscribe(response => {
