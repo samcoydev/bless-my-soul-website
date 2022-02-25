@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms'
+import { FormControl, FormGroup } from '@angular/forms'
 import { Observable, Subscription } from 'rxjs'
 import { startWith, map } from 'rxjs/operators'
 import { Category } from 'src/app/models/category.model'
@@ -15,8 +15,15 @@ import { ImageService } from 'src/app/services/image/image.service'
 export class TableCategoryComponent implements OnInit {
 
   categories: Category[] = []
-  categoryCopies: Category[] = []
+  editedCategory?: Category
+  currentCategoryToEdit: FormGroup = new FormGroup({
+    name: new FormControl(''),
+    sequence: new FormControl(''),
+    featuredCategory: new FormControl(false),
+    allProducts: new FormControl(false),
+  });
   selectedCategoryIds: number[] = []
+  editCategoryId: number = -1
   
   categories$: Observable<Category[]> = new Observable
   categoryListSubscription = new Subscription
@@ -36,6 +43,7 @@ export class TableCategoryComponent implements OnInit {
     this.getCategories()
   }
 
+    /*
   saveChanges(): void {
     let updatedCategories = this.categoryCopies.filter(c => !this.areCategoriesEqual(c));
     let updatedCount = 0
@@ -47,11 +55,7 @@ export class TableCategoryComponent implements OnInit {
           this.getCategories()
       })
     }
-  }
-
-  resetChanges(): void {
-    this.categoryCopies = this.categories.map(object => ({ ...object }))
-  }
+  } */
 
   deleteSelected(): void {
     let updatedCount = 0
@@ -65,6 +69,19 @@ export class TableCategoryComponent implements OnInit {
     }
   }
 
+  viewCategory(category: Category) {
+    this.editCategoryId = category.id
+
+    this.currentCategoryToEdit.value.name = category.name
+    this.currentCategoryToEdit.value.sequence = category.sequence
+    this.currentCategoryToEdit.value.featuredCategory = category.featuredCategory
+    this.currentCategoryToEdit.value.allProducts = category.allProducts
+  }
+
+  findCategory(categoryId: number): Category | undefined {
+    return this.categories.find(c => c.id == categoryId)
+  }
+
   onSelect(event: any, categoryId: number): void {
     if (event.target.checked) {
       this.selectedCategoryIds.push(categoryId)
@@ -73,17 +90,10 @@ export class TableCategoryComponent implements OnInit {
     }
   }
 
-  areCategoriesEqual(category: Category): boolean {
-    let categoryTwo = this.categories.find(c => c.id == category.id)
-    if (JSON.stringify(category) !== JSON.stringify(categoryTwo)) { return false }
-    return true
-  }
-
   getCategories(): void {
     this.categoryService.getAllCategories()
       .subscribe(response => {
         this.categories = response.sort((a, b) => a.sequence - b.sequence)
-        this.categoryCopies = this.categories.map(object => ({ ...object }))
       })
   }
 

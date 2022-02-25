@@ -13,6 +13,7 @@ import { ImageComponent } from 'src/app/components/image/image.component';
 import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
 import { ItemOverviewComponent } from 'src/app/components/item-overview/item-overview.component'
 import { TableCategoryComponent } from 'src/app/components/table-category/table-category.component'
+import { ImagePipe } from 'src/app/pipes/image/image.pipe'
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { TableCategoryComponent } from 'src/app/components/table-category/table-
     CategoryListComponent,
     ImageComponent,
     ShortenPipe,
+    ImagePipe,
     TableCategoryComponent
   ],
   imports: [
@@ -38,6 +40,7 @@ import { TableCategoryComponent } from 'src/app/components/table-category/table-
     ImageComponent,
     CategoryComponent,
     ItemComponent,
+    ImagePipe,
     ShortenPipe
   ]
 })

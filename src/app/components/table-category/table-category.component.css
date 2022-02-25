@@ -6,6 +6,10 @@ input.form-control {
     width: auto;
 }
 
+input[type="checkbox"][readonly] {
+    pointer-events: none;
+}
+
 .container-padding {
     padding-left: 3%;
     padding-right: 3%;

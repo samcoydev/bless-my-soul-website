@@ -6,51 +6,80 @@
                     <h4>Categories Table</h4>
                 </div>
             </div>
-            <div class="row">
-                <table class="table table-hover table-sm">
-                    <thead>
-                        <tr class="d-flex">
-                            <th class="text-muted col-1" scope="col">Selected</th>
-                            <th class="text-muted col-1" scope="col">#</th>
-                            <th class="text-muted col-1" scope="col">Picture</th>
-                            <th class="text-muted col-3" scope="col">Name</th>
-                            <th class="text-muted col-4" scope="col">Sequence</th>
-                            <th class="text-muted col-1" scope="col">Featured</th>
-                            <th class="text-muted col-1" scope="col">All Products?</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="d-flex" *ngFor="let category of categoryCopies">
-                            <td class="col-1">
-                                <input type="checkbox" (change)="onSelect($event, category.id)">
-                            </td>
-                            <td class="col-1">
-                                <p>{{category.id}}<span class="text-warning" *ngIf="!areCategoriesEqual(category)">*</span></p>
-                            </td>
-                            <td class="col-1">
-                                <img [src]="getImageUrl(category.image)" class="rounded img-table-preview" *ngIf="getImageUrl(category.image)">
-                            </td>
-                            <td class="col-3">
-                                <input class="form-control" type="text" [(ngModel)]="category.name">
-                            </td>
-                            <td class="col-4">
-                                <input class="form-control" type="number" [(ngModel)]="category.sequence">
-                            </td>
-                            <td class="col-1">
-                                <input type="checkbox" [(ngModel)]="category.featuredCategory">
-                            </td>
-                            <td class="col-1">
-                                <input type="checkbox" [(ngModel)]="category.allProducts">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-9">
+                <div class="row">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr class="d-flex">
+                                <th class="text-muted col-1" scope="col">Selected</th>
+                                <th class="text-muted col-1" scope="col">#</th>
+                                <th class="text-muted col-2" scope="col">Picture</th>
+                                <th class="text-muted col-2" scope="col">Name</th>
+                                <th class="text-muted col-2" scope="col">Sequence</th>
+                                <th class="text-muted col-2" scope="col">Featured</th>
+                                <th class="text-muted col-2" scope="col">All Products?</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="this.categories.length > 0">
+                            <tr class="d-flex" *ngFor="let category of categories" (click)="viewCategory(category)">
+                                <td class="col-1">
+                                    <input type="checkbox" (change)="onSelect($event, category.id)">
+                                </td>
+                                <td class="col-1">
+                                    <p>{{category.id}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <img [src]="(category.image | image | async)" class="rounded img-table-preview">
+                                </td>
+                                <td class="col-2">
+                                    <p>{{category.name}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{category.sequence}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <input type="checkbox" readonly [ngModel]="category.featuredCategory">
+                                </td>
+                                <td class="col-2">
+                                    <input type="checkbox" readonly [ngModel]="category.allProducts">
+                                </td>
+                            </tr>
+                            <tr routerLink="/category/create">
+                                <td class="text-muted">Create New Category...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-3 col-center text-center">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10 mx-auto" *ngIf="findCategory(editCategoryId) as category">
+                        <form [formGroup]="currentCategoryToEdit">
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="name">Name</label>
+                                <input name="name" id="name" class="form-control" type="text" [(ngModel)]="category.name">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="sequence">Sequence</label>
+                                <input name="sequence" id="sequence" class="form-control" type="number" [(ngModel)]="category.sequence">
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" name="featured" id="featured" type="checkbox" [(ngModel)]="category.featuredCategory">
+                                <label class="form-check-label" for="featured">Featured?</label>
+                            </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" name="all-products" id="all-products" type="checkbox" [(ngModel)]="category.allProducts">
+                                <label class="form-check-label" for="all-products">All Products?</label>
+                            </div>
+                            <!-- (click)="saveChanges()" -->
+                            <button class="btn btn-outline-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="row my-2">
-                <div class="col-6 btn-group" role="group">
-                    <button class="btn btn-outline-success" routerLink="/category/create">Create</button>
-                    <button class="btn btn-outline-warning" (click)="saveChanges()">Save Changes</button>
-                    <button class="btn btn-outline-danger" (click)="resetChanges()">Reset Changes</button>
+                <div class="col-2">
                     <button class="btn btn-outline-danger" *ngIf="selectedCategoryIds.length > 0" (click)="deleteSelected()">Delete</button>
                 </div>
             </div>
