@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs'
 import { Item } from 'src/app/models/item.model'
-import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
+import { StateTypeLabelMapping, StateType } from 'src/app/helpers/enums/state-type';
 import { ItemService } from 'src/app/services/item/item.service'
 import { FormControl } from '@angular/forms'
 import { map, startWith } from 'rxjs/operators'
@@ -73,6 +73,9 @@ export class ItemTableComponent implements OnInit {
   }
 
   deleteItem(itemId: number): void {
+    if (this.selectedItemIds.indexOf(itemId))
+      this.selectedItemIds.splice(this.selectedItemIds.indexOf(itemId), 1)
+
     this.itemService.deleteItem(itemId).subscribe(data => {
       this.editedItem = undefined
       this.getItems()
@@ -87,6 +90,10 @@ export class ItemTableComponent implements OnInit {
         updatedCount++
         if (updatedCount == this.selectedItemIds.length)
           this.getItems()
+
+        
+        if (this.selectedItemIds.indexOf(i))
+          this.selectedItemIds.splice(this.selectedItemIds.indexOf(i), 1)
       })
     }
   }

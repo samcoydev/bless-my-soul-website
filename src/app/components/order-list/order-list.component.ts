@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import { OrderTypeLabelMapping } from 'src/app/helpers/enums/order-type';
 import { CartItem } from 'src/app/models/cart-item.model'
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';

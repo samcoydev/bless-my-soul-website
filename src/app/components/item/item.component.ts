@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from 'src/app/models/item.model';
 import { ItemService } from 'src/app/services/item/item.service';
 import { Location } from '@angular/common';
-import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
+import { StateTypeLabelMapping, StateType } from 'src/app/helpers/enums/state-type';
 import { Category } from 'src/app/models/category.model';
 import { UserService } from 'src/app/services/user/user.service'
 import { CartService } from 'src/app/services/cart/cart.service'

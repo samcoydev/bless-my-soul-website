@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import { OrderTypeLabelMapping } from 'src/app/helpers/enums/order-type';
 
 @Component({
   selector: 'app-order',

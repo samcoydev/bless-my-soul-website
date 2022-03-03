@@ -1,5 +1,5 @@
 import { Category } from "./category.model";
-import { StateType } from "../helpers/state-type";
+import { StateType } from "../helpers/enums/state-type";
 import { Image } from './image.model'
 
 export interface Item {

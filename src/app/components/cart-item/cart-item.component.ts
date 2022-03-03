@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { StateType } from 'src/app/helpers/state-type';
+import { StateType } from 'src/app/helpers/enums/state-type';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Item } from 'src/app/models/item.model';
 import { CartService } from 'src/app/services/cart/cart.service';

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { RoleType } from 'src/app/helpers/role-type';
+import { RoleType } from 'src/app/helpers/enums/role-type';
 
 @Injectable({
   providedIn: 'root'

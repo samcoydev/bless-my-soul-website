@@ -17,6 +17,7 @@ import { OrderComponent } from './components/order/order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
+import { PlaceholderObjectComponent } from './components/placeholder-object/placeholder-object.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { HomeComponent } from './components/home/home.component';
     OrderCreateComponent,
     OrderListComponent,
     OrderComponent,
-    HomeComponent
+    HomeComponent,
+    PlaceholderObjectComponent
   ],
   imports: [
     CommonModule,

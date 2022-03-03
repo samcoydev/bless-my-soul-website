@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state-type';
+import { StateType, StateTypeLabelMapping } from 'src/app/helpers/enums/state-type';
 import { Category } from 'src/app/models/category.model';
 import { Image } from 'src/app/models/image.model'
 import { Item } from 'src/app/models/item.model';
