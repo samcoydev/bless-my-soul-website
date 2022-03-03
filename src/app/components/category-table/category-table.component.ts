@@ -6,14 +6,13 @@ import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
-import { ThrowStmt } from '@angular/compiler'
 
 @Component({
-  selector: 'app-table-category',
-  templateUrl: './table-category.component.html',
-  styleUrls: ['./table-category.component.css']
+  selector: 'app-category-table',
+  templateUrl: './category-table.component.html',
+  styleUrls: ['./category-table.component.css']
 })
-export class TableCategoryComponent implements OnInit {
+export class CategoryTableComponent implements OnInit {
 
   categories: Category[] = []
   editedCategory?: Category

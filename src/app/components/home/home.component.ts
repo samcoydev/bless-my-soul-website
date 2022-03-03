@@ -22,13 +22,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFeaturedItems()
+    this.getNewestItems()
     this.getFeaturedCategories()
   }
 
   getFeaturedItems(): void {
-    this.itemService.getAllItems().subscribe(data => {
-      this.featuredItems = data.slice(0, 4)
-      this.newestReleases = data.slice(-4)
+    this.itemService.getFeaturedItems().subscribe(data => {
+      this.featuredItems = data
+    })
+  }
+
+  getNewestItems(): void {
+    this.itemService.getNewestItems().subscribe(data => {
+      this.newestReleases = data
     })
   }
 

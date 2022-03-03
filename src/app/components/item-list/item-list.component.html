@@ -7,8 +7,13 @@
 <div class="container">
     <div class="row">
         <div *ngIf="items.length == 0" class="container text-center px-4 px-lg-5 my-5">
-            <span class="spinner-grow spinner-grow-lg mr-1"></span>
-            <p>Loading the Catalog...</p>
+            <div *ngIf="isLoading">
+                <span class="spinner-grow spinner-grow-lg mr-1"></span>
+                <p>Fetching the sheep...</p>
+            </div>
+            <div *ngIf="!isLoading">
+                <p>We're sorry. It looks like there are no products under this category.</p>
+            </div>
         </div>
         <div class="row row-cols-1 row-cols-md-5">
             <app-item *ngFor="let item of items" [item]="item" [isItemInCart]="checkIfItemIsInCart(item)" @fade @zoom></app-item>

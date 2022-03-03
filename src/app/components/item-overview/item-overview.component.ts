@@ -107,6 +107,16 @@ export class ItemOverviewComponent implements OnInit {
     }
   }
 
+  getCategoryName(): string {
+    if (this.item.category === undefined || this.item.category === null) { return "All Products" }
+    return this.item.category.name
+  }
+
+  getCategoryUrl(): string {
+    if (this.item.category === undefined || this.item.category === null) { return "/category/list" }
+    return "/item/list/" + `${this.item.category.id}`
+  }
+
   convertImageToViewableUrl(image?: Image): void {
     if (image == undefined) { return }
     let objectURL = 'data:image/jpeg;base64,' + image.data

@@ -10,4 +10,5 @@ export interface Item {
         state: StateType;
         category?: Category;
         image?: Image;
+        featured?: boolean;
 }

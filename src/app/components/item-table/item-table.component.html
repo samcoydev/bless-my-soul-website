@@ -1,0 +1,110 @@
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Product Table</h4>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr class="d-flex">
+                                <th class="text-muted col-1" scope="col">Selected</th>
+                                <th class="text-muted col-1" scope="col">#</th>
+                                <th class="text-muted col-2" scope="col">Name</th>
+                                <th class="text-muted col-1" scope="col">Price</th>
+                                <th class="text-muted col-2" scope="col">Description</th>
+                                <th class="text-muted col-1" scope="col">State</th>
+                                <th class="text-muted col-2" scope="col">Category</th>
+                                <th class="text-muted col-2" scope="col">Featured</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="this.items.length > 0">
+                            <tr class="d-flex" *ngFor="let item of items" (click)="viewItem(item)">
+                                <td class="col-1">
+                                    <input type="checkbox" (change)="onSelect($event, item.id)">
+                                </td>
+                                <td class="col-1">
+                                    <p>{{item.id}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{item.name}}</p>
+                                </td>
+                                <td class="col-1">
+                                    <p>{{item.price | currency}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{item.description | shorten:[10, "..."]}}</p>
+                                </td>
+                                <td class="col-1">
+                                    <p>{{stateLabelMapping[item.state]}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p *ngIf="item.category">{{item.category.name | shorten:[10, "..."]}}</p>
+                                    <p *ngIf="!item.category">No Category</p>
+                                </td>
+                                <td class="col-2">
+                                    <input type="checkbox" readonly [ngModel]="item.featured">
+                                </td>
+                            </tr>
+                            <tr routerLink="/item/create">
+                                <td class="text-muted">Create New item...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10 mx-auto" *ngIf="editedItem as item">
+                        <form>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="name">Name</label>
+                                <input name="name" id="name" class="form-control" type="text" [(ngModel)]="item.name">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="price">Price</label>
+                                <input name="price" id="price" class="form-control" type="number" [(ngModel)]="item.price">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-check-label" for="description">Description</label>
+                                <textarea class="form-control" name="description" id="description" rows=2 [(ngModel)]="item.description"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="state">State</label>
+                                <select class="form-control" id="state"
+                                        required
+                                        [(ngModel)]="item.state" name="state">
+                                    <option *ngFor="let state of states" [ngValue]="state">{{stateLabelMapping[state]}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="category">Category</label>
+                                <select class="form-control" id="category" [value]="item.category" [(ngModel)]="item.category" name="category">
+                                    <option *ngIf="item.category" [value]="item.category">{{item.category.name}}</option>
+                                    <option *ngFor="let category of categories" [value]="category">{{category.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-check mb-3">
+                                <label class="form-check-label" for="is_featured">Featured?</label>
+                                <input class="form-check-input" name="is_featured" id="is_featured" type="checkbox" [(ngModel)]="item.featured">
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-outline-primary" (click)="saveChanges()">Save Changes</button>
+                                <button class="btn btn-outline-danger" (click)="deleteItem(item.id)">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-2">
+                    <button class="btn btn-outline-danger" *ngIf="selectedItemIds.length > 0" (click)="deleteSelected()">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

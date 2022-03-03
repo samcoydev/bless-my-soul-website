@@ -58,8 +58,12 @@ export class ItemListComponent implements OnInit {
   }
 
   getItems(): void {
+    this.isLoading = true
     this.itemService.getAllItems()
-      .subscribe(response => this.items = response)
+      .subscribe(response => {
+        this.items = response
+        this.isLoading = false
+      })
   }
 
   getItemsByCategoryId(categoryId: number): void {
