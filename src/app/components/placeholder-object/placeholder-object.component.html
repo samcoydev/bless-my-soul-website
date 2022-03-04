@@ -1,1 +1,30 @@
-<p>placeholder-object works!</p>
+<div *ngIf="type === placeHolderTypes.Category" @fade>
+    <div class="px-0 mx-3 category-container bg-placeholder-light">
+        <div class="category-placeholder-text"></div>
+    </div>
+</div>
+
+<div *ngIf="type === placeHolderTypes.Item" @fade>
+    <div class="col mb-4">
+        <div class="card h-100 item-rounded bg-placeholder-light item-rounded">
+            <div>
+                <div class="card-img-top"></div>
+                <div class="card-body item-body">
+                    <div class="justify-content-center">
+                        <div class="item-placeholder-text"></div>
+                        <div class="item-placeholder-text"></div>
+                    </div>
+                </div>
+                <div class="card-footer border-top-0 bg-transparent text-center">
+                    <div class="item-placeholder-text"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<tr class="d-flex" *ngIf="type === placeHolderTypes.TableRow">
+    <td class="col-5">
+        <p class="text-muted">Fetching the sheep... <span class="spinner-border spinner-border-sm mr-1"></span></p>
+    </td>
+</tr>

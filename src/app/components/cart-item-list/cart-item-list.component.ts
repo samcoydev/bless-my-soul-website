@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Image } from 'src/app/models/image.model'
 import { CartService } from 'src/app/services/cart/cart.service';
@@ -17,6 +18,8 @@ export class CartItemListComponent implements OnInit {
   
   cartItemListSubscription = new Subscription
   currentUserSubscription = new Subscription
+
+  placeHolderTypes = PlaceholderType
 
   constructor(
     private cartService: CartService,
@@ -44,6 +47,11 @@ export class CartItemListComponent implements OnInit {
 
   getImageUrl(image?: Image) {
     return this.imageService.convertImageToViewableUrl(image)
+  }
+
+  deleteCartItem(cartItem: CartItem): void {
+    this.cartService.deleteCartItem(cartItem.id).subscribe(data => console.log(data))
+    this.cartItems.splice(this.cartItems.indexOf(cartItem), 1)
   }
 
 }

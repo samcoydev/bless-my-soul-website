@@ -7,6 +7,7 @@ import { FormControl } from '@angular/forms'
 import { map, startWith } from 'rxjs/operators'
 import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 
 @Component({
   selector: 'app-item-table',
@@ -27,6 +28,7 @@ export class ItemTableComponent implements OnInit {
   states = Object.values(StateType)
 
   stateLabelMapping = StateTypeLabelMapping
+  placeHolderTypes = PlaceholderType
 
   constructor(
     private itemService: ItemService,
@@ -90,8 +92,7 @@ export class ItemTableComponent implements OnInit {
         updatedCount++
         if (updatedCount == this.selectedItemIds.length)
           this.getItems()
-
-        
+          
         if (this.selectedItemIds.indexOf(i))
           this.selectedItemIds.splice(this.selectedItemIds.indexOf(i), 1)
       })

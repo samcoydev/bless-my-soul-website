@@ -6,6 +6,7 @@ import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 
 @Component({
   selector: 'app-category-table',
@@ -23,6 +24,7 @@ export class CategoryTableComponent implements OnInit {
   categoryListSubscription = new Subscription
 
   filter: FormControl = new FormControl('')
+  placeHolderTypes = PlaceholderType
   
   constructor(
     private categoryService: CategoryService,
@@ -49,6 +51,8 @@ export class CategoryTableComponent implements OnInit {
 
     for(let i = 0; i < this.selectedCategoryIds.length; i++) {
       this.categoryService.deleteCategory(this.selectedCategoryIds[i]).subscribe(data => {
+        this.categories.splice(this.categories.findIndex(c => c.id == this.selectedCategoryIds[i]))
+        this.selectedCategoryIds.splice(i, 1)
         updatedCount++
         if (updatedCount == this.selectedCategoryIds.length)
           this.getCategories()

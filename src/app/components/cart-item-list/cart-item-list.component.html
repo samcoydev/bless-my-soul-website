@@ -33,7 +33,7 @@
                                     <th class="text-muted float-end" scope="col">Subtotal</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody *ngIf="cartItems.length > 0">
                                 <tr *ngFor="let cartItem of cartItems">
                                     <td>
                                         <div class="product-info">
@@ -41,7 +41,7 @@
                                             <div>
                                                 <p class="product-info-details">{{cartItem.item.name}}</p>
                                                 <p class="text-muted product-info-details">{{cartItem.item.price | currency}}</p>
-                                                <p class="text-danger product-info-details">Remove</p>
+                                                <p class="text-danger product-info-details" (click)="deleteCartItem(cartItem)">Remove</p>
                                             </div>
                                         </div>
                                     </td>
@@ -52,7 +52,10 @@
                                     </td>
                                     <td class="float-end">{{cartItem.item.price * cartItem.qty | currency}}</td>
                                 </tr>
-                                </tbody>
+                            </tbody>    
+                            <tbody *ngIf="cartItems.length == 0">
+                                <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+                            </tbody>
                         </table>
                     </div>
                 </div>

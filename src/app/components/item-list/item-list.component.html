@@ -10,6 +10,13 @@
             <div *ngIf="isLoading">
                 <span class="spinner-grow spinner-grow-lg mr-1"></span>
                 <p>Fetching the sheep...</p>
+                <div class="row row-cols-1 row-cols-md-5">
+                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+                </div>
             </div>
             <div *ngIf="!isLoading">
                 <p>We're sorry. It looks like there are no products under this category.</p>

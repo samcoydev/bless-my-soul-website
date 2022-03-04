@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fader, zoom } from 'src/app/helpers/animations/fade.animation'
 import { ActivatedRoute } from '@angular/router'
 import { CategoryService } from 'src/app/services/category/category.service'
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 
 @Component({
   selector: 'app-item-list',
@@ -22,7 +23,9 @@ export class ItemListComponent implements OnInit {
 
   items: Item[] = []
   itemsInCart: CartItem[] = []
+  
   filter: FormControl = new FormControl('')
+  placeHolderTypes = PlaceholderType
   
   isLoading = false
   isSessionAuthed = false

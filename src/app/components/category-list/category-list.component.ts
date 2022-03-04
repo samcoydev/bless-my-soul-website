@@ -7,6 +7,7 @@ import { Image } from 'src/app/models/image.model'
 import { CategoryService } from 'src/app/services/category/category.service';
 import { ImageService } from 'src/app/services/image/image.service'
 import { fader, slideDown } from 'src/app/helpers/animations/fade.animation'
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 
 @Component({
   selector: 'app-category-list',
@@ -24,6 +25,7 @@ export class CategoryListComponent implements OnInit {
   categoryListSubscription = new Subscription
 
   filter: FormControl = new FormControl('')
+  placeHolderTypes = PlaceholderType
   
   constructor(
     private categoryService: CategoryService,

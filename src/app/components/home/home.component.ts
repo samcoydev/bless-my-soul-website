@@ -4,6 +4,7 @@ import { Category } from 'src/app/models/category.model'
 import { Item } from 'src/app/models/item.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { ItemService } from 'src/app/services/item/item.service'
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,8 @@ export class HomeComponent implements OnInit {
 
   featuredItems: Item[] = []
   featuredCategories: Category[] = []
+
+  placeHolderTypes = PlaceholderType
 
   newestReleases: Item[] = []
 
