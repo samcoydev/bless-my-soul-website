@@ -37,7 +37,7 @@
                                 <tr *ngFor="let cartItem of cartItems">
                                     <td>
                                         <div class="product-info">
-                                            <img [src]="getImageUrl(cartItem.item.image)" class="rounded img-table-preview" *ngIf="getImageUrl(cartItem.item.image)">
+                                            <img [src]="(cartItem.item.image | image | async)" class="rounded img-table-preview">
                                             <div>
                                                 <p class="product-info-details">{{cartItem.item.name}}</p>
                                                 <p class="text-muted product-info-details">{{cartItem.item.price | currency}}</p>
@@ -47,7 +47,7 @@
                                     </td>
                                     <td>
                                         <div class="col-2">
-                                            <input type="number" class="form-control" [(ngModel)]="cartItem.qty">
+                                            <input type="number" class="form-control" [disabled]="isLoading" [(ngModel)]="cartItem.qty" (change)="updateCartItem(cartItem)">
                                         </div>
                                     </td>
                                     <td class="float-end">{{cartItem.item.price * cartItem.qty | currency}}</td>
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <textarea class="form-control" rows=3></textarea>
+                            <textarea class="form-control" [(ngModel)]="notes" rows=3></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -72,7 +72,7 @@
                     <div *ngIf="cartItems.length >= 1" class="row">
                         <div class="col-2"></div>
                         <div class="col-8">
-                            <button class="btn btn-success" routerLink="/new-order">Create an Order</button>
+                            <button class="btn btn-success" (click)="createOrder()">Create an Order</button>
                         </div>
                     </div>
                 </div>

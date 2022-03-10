@@ -1,4 +1,73 @@
-<div class="card">
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Order Overview</h4>
+                </div>
+            </div>
+            <div class="row">
+                <hr/>
+            </div>
+            <div class="row" *ngIf="order">
+                <div class="col-6">
+                    <div style="display: flex;">
+                        <p>{{order.user.firstname}} {{order.user.lastname}}</p>
+                        <p class="text-muted mx-2">-</p>
+                        <p class="text-muted">{{order.user.email}}</p>
+                    </div>
+
+                    
+                    <div style="display: flex;">
+                        <p>Current Order Status</p>
+                        <p class="text-muted mx-2">-</p>
+                        <p class="text-muted">{{orderLabelMapping[order.state]}}</p>
+                    </div>
+
+                    <label for="notes">Notes</label>
+                    <div name="notes" class="card">
+                        <div class="card-body">
+                            <p>{{order.notes}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th class="text-muted" scope="col">Item</th>
+                                <th class="text-muted" scope="col">Price</th>
+                                <th class="text-muted" scope="col">Quantity</th>
+                                <th class="text-muted" scope="col">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="order.cartItems.length > 0">
+                            <tr *ngFor="let cartItem of order.cartItems">
+                                <td>
+                                    <p>{{cartItem.item.name}}</p>
+                                </td>
+                                <td>
+                                    <p>{{cartItem.item.price}}</p>
+                                </td>
+                                <td>
+                                    <p>{{cartItem.qty}}</p>
+                                </td>
+                                <td>
+                                    <p>{{cartItem.item.price * cartItem.qty | currency}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" *ngIf="!order">
+                <p class="text-muted">Fetching the sheep... <span class="spinner-border spinner-border-sm mr-1"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="card">
     <div class="card">
         <div class="card-body">
             <p>Items</p>
@@ -11,4 +80,4 @@
             <p>Order Notes: {{order.notes}}</p>
         </div>
     </div>
-</div>
+</div>-->

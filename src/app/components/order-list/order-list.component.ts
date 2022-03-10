@@ -3,6 +3,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrderTypeLabelMapping } from 'src/app/helpers/enums/order-type';
 import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
+import { RoleType } from 'src/app/helpers/enums/role-type'
 import { CartItem } from 'src/app/models/cart-item.model'
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';
@@ -16,9 +17,7 @@ import { UserService } from 'src/app/services/user/user.service';
 export class OrderListComponent implements OnInit {
 
   orders: Order[] = []
-  userOrders: Order[] = []
   
-  orderListSubscription = new Subscription
   orderLabelMapping = OrderTypeLabelMapping
   placeHolderTypes = PlaceholderType
 
@@ -34,25 +33,26 @@ export class OrderListComponent implements OnInit {
 
    ngOnInit(): void {
     this.checkIfViewingAllOrders()
-    
-    this.orderListSubscription = this.orderService.ordersUpdated$.subscribe(message => this.getOrders())
-    this.getOrders()
   }
   
   checkIfViewingAllOrders(): void {
-    if (this.router.url === "/all-orders-list") {
+    if (this.router.url === "/all-orders-list" && this.userService.currentUserValue.role === RoleType.Admin) {
       this.viewAllOrders = true
+      this.getAllOrders()
     } else {
       this.viewAllOrders = false
+      this.getUserOrders()
     }
   }
 
-  getOrders(): void {
+  getAllOrders(): void {
     this.orderService.getAllOrders()
-      .subscribe(response => {
-        this.orders = response
-        this.userOrders = this.orders.filter(order => order.user.id == this.userService.currentUserValue.id)
-      })
+      .subscribe(response => this.orders = response)
+  }
+
+  getUserOrders(): void {
+    this.orderService.getOrdersByUserID(this.userService.currentUserValue.id)
+      .subscribe(response => this.orders = response)
   }
 
   getTotal(cartItems: CartItem[]): number {

@@ -1,16 +1,3 @@
-/* Turn off the incremental arrows on the number input 
-   This is for Opera, Exporer, etc. */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
 th{
     font-weight: normal;
 }
