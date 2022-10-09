@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://bless-my-soul.herokuapp.com/api/v1/'
+  apiUrl: 'http://coycafe.ddns.net:8787/api/v1'
 };
