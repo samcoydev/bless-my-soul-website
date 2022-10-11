@@ -16,6 +16,8 @@ import { CategoryTableComponent } from 'src/app/components/category-table/catego
 import { ImagePipe } from 'src/app/pipes/image/image.pipe'
 import { ItemTableComponent } from 'src/app/components/item-table/item-table.component'
 import { PlaceholderObjectComponent } from 'src/app/components/placeholder-object/placeholder-object.component'
+import { ImageTableComponent } from 'src/app/components/image-table/image-table.component'
+import { ImageCreateComponent } from 'src/app/components/image-create/image-create.component'
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { PlaceholderObjectComponent } from 'src/app/components/placeholder-objec
     ShortenPipe,
     ImagePipe,
     CategoryTableComponent,
-    PlaceholderObjectComponent
+    PlaceholderObjectComponent,
+    ImageTableComponent,
+    ImageCreateComponent
   ],
   imports: [
     CommonModule,

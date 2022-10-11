@@ -9,6 +9,8 @@ import { CategoryComponent } from 'src/app/components/category/category.componen
 import { ItemOverviewComponent } from 'src/app/components/item-overview/item-overview.component'
 import { CategoryTableComponent } from 'src/app/components/category-table/category-table.component'
 import { ItemTableComponent } from 'src/app/components/item-table/item-table.component'
+import { ImageTableComponent } from 'src/app/components/image-table/image-table.component'
+import { ImageCreateComponent } from 'src/app/components/image-create/image-create.component'
 
 const routes: Routes = [
   { path: 'list', component: ItemListComponent },
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: 'create', component: ItemCreateComponent, canActivate: [AdminGuard] },
   { path: 'category/create', component: CategoryCreateComponent, canActivate: [AdminGuard] },
   { path: 'category/table', component: CategoryTableComponent, canActivate: [AdminGuard] },
-  { path: 'category/list', component: CategoryListComponent }
+  { path: 'category/list', component: CategoryListComponent },
+  { path: 'image/table', component: ImageTableComponent, canActivate: [AdminGuard] },
+  { path: 'image/create', component: ImageCreateComponent, canActivate: [AdminGuard] },
 ];
 
 @NgModule({

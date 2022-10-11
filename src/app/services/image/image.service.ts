@@ -17,8 +17,8 @@ export class ImageService {
     private sanitizer: DomSanitizer
     ) { }
 
-  getFiles(): Observable<any[]> {
-    return this.httpClient.get<any[]>(this.url);
+  getImages(): Observable<Image[]> {
+    return this.httpClient.get<Image[]>(this.url);
   }
 
   postImage(image: File): Observable<Image> {
@@ -27,6 +27,14 @@ export class ImageService {
     // saveImage on the API.
     formData.append('image', image);
     return this.httpClient.post<Image>(this.url, formData);
+  }
+
+  updateImage(image: Image): Observable<Image> {
+    return this.httpClient.put<Image>(this.url, image)
+  }
+
+  deleteImage(id: number): Observable<Image> {
+    return this.httpClient.delete<Image>(this.url + "/" + `${id}`)
   }
 
   getPreviewUrl(selectedImage: any): void {
