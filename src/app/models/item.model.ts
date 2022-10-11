@@ -8,7 +8,7 @@ export interface Item {
         price: number;
         description: string;
         state: StateType;
-        category?: Category;
-        image?: Image;
+        category: Category;
+        image: Image;
         featured?: boolean;
 }

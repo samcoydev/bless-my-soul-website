@@ -50,6 +50,9 @@
                         </tbody>
                         <tbody *ngIf="this.categories.length == 0">
                             <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+                            <tr routerLink="/category/create">
+                                <td class="text-muted">Create New Category...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

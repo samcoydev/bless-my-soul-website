@@ -3,6 +3,7 @@ import { Category } from 'src/app/models/category.model'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
 import { fader } from 'src/app/helpers/animations/fade.animation'
+import { ImageType } from 'src/app/helpers/enums/image-type'
 
 @Component({
   selector: 'app-category',
@@ -12,14 +13,17 @@ import { fader } from 'src/app/helpers/animations/fade.animation'
 })
 export class CategoryComponent implements OnInit {
   
-  @Input() category: Category = { id: -1, name: '', sequence: 0 };
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  @Input() category: Category = { id: -1, name: '', sequence: 0, image: this.image};
 
   constructor(private imageService: ImageService) { }
 
   ngOnInit(): void { }
 
   getImageUrl(image?: Image) {
-    return this.imageService.convertImageToViewableUrl(image)
+    let res = this.imageService.convertImageToViewableUrl(image)
+    console.log("WEEWEE", res)
+    return res
   }
 
 }

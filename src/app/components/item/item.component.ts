@@ -9,7 +9,8 @@ import { UserService } from 'src/app/services/user/user.service'
 import { CartService } from 'src/app/services/cart/cart.service'
 import { first } from 'rxjs/operators'
 import { fader } from 'src/app/helpers/animations/fade.animation'
-
+import { ImageType } from 'src/app/helpers/enums/image-type'
+import { Image } from 'src/app/models/image.model'
 
 @Component({
   selector: 'app-item',
@@ -19,8 +20,9 @@ import { fader } from 'src/app/helpers/animations/fade.animation'
 })
 export class ItemComponent implements OnInit {
   
-  category: Category = {id: 0, name: "No Category", sequence: 0}
-  @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  category: Category = {id: 0, name: "No Category", sequence: 0, image: this.image}
+  @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, image: this.image, category: this.category}
   @Input() isItemInCart: boolean = false
   
   isLoading = false

@@ -39,8 +39,7 @@ export class ImageService {
 
   convertImageToViewableUrl(image?: Image) {
     if (image == undefined) { return }
-    let objectURL = 'data:image/jpeg;base64,' + image.data
-    return this.sanitizer.bypassSecurityTrustUrl(objectURL)
+    return this.sanitizer.bypassSecurityTrustUrl(image.url)
   }
 
 }

@@ -55,6 +55,9 @@
                         </tbody>
                         <tbody *ngIf="items.length == 0">
                             <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+                            <tr routerLink="/item/create">
+                                <td class="text-muted">Create New item...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

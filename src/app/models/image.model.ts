@@ -1,6 +1,8 @@
+import { ImageType } from '../helpers/enums/image-type'
+
 export interface Image {
         id: number;
         name: string;
-        type: string;
-        data: any;
+        type: ImageType;
+        url: string;
 }

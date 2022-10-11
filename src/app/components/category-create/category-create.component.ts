@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { ImageType } from 'src/app/helpers/enums/image-type'
 import { Category } from 'src/app/models/category.model';
+import { Image } from 'src/app/models/image.model'
 import { CategoryService } from 'src/app/services/category/category.service';
 import { ImageService } from 'src/app/services/image/image.service'
 
@@ -13,7 +15,8 @@ import { ImageService } from 'src/app/services/image/image.service'
 export class CategoryCreateComponent implements OnInit {
 
   rawImage?: File
-  category: Category = { id: 0, name: '', sequence: 0 }
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  category: Category = { id: 0, name: '', sequence: 0, image: this.image}
 
   isSubmitted = false;
   isLoading = false;

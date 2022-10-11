@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ImageType } from 'src/app/helpers/enums/image-type'
 import { StateType } from 'src/app/helpers/enums/state-type';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Item } from 'src/app/models/item.model';
+import { Image } from 'src/app/models/image.model';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-cart-item',
@@ -13,7 +14,8 @@ import { ImageService } from 'src/app/services/image/image.service'
 export class CartItemComponent implements OnInit {
   
   @Input() cartItem!: CartItem;
-  item: Item = {id: -1, name: '', price: -1, description: "", state: StateType.Draft, category: {id: 0, name: "No Category", sequence: 0}}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  item: Item = {id: -1, name: '', price: -1, description: "", state: StateType.Draft, image: this.image, category: {id: 0, name: "No Category", sequence: 0, image: this.image}}
 
   isLoading = false;
 

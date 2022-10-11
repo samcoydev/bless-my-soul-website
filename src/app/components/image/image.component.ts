@@ -35,8 +35,7 @@ export class ImageComponent implements OnInit {
   }
 
   convertImageToViewableUrl(image: Image): void {
-    let objectURL = 'data:image/jpeg;base64,' + image.data
-    this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+    this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(image.url)
   }
 
   onImageChange(_event: any): void {

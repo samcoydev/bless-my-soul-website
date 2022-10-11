@@ -1,6 +1,6 @@
 <div class="px-0 mx-3" routerLink="/item/list/{{category.id}}" @fade>
     <div class="img-container">
-        <img [src]="getImageUrl(category.image)" class="hover-shadow img-item-preview">
+        <img [src]="(category.image | image | async)" class="hover-shadow img-item-preview">
         <div class="container-fluid overlay-text overlay-text-hover img-container">
             <h4 class="text text-light">{{category.name}}</h4>
         </div>

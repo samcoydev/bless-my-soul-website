@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { ImageType } from 'src/app/helpers/enums/image-type'
 import { StateType, StateTypeLabelMapping } from 'src/app/helpers/enums/state-type';
 import { Category } from 'src/app/models/category.model';
 import { Image } from 'src/app/models/image.model'
@@ -18,12 +19,16 @@ import { ItemService } from 'src/app/services/item/item.service';
 export class ItemCreateComponent implements OnInit {
 
   rawImage?: File;
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  category: Category = { id: -1, name: '', sequence: 0, image: this.image};
   newItem: Item = { 
     id: -1, 
     name: '', 
     price: 0.00, 
     description: '', 
     state: StateType.Draft,
+    image: this.image,
+    category: this.category
   }
 
   isSubmitted = false
@@ -47,7 +52,10 @@ export class ItemCreateComponent implements OnInit {
 
   getCategories(): void {
     this.categoryService.getAllCategories()
-      .subscribe(response => this.categories = response)
+      .subscribe(response => {
+        this.categories = response
+        this.newItem.category = response[0]
+      })
   }
 
   setRawImage(image: any): void {

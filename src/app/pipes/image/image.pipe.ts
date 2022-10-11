@@ -10,9 +10,8 @@ export class ImagePipe implements PipeTransform {
 
   constructor(private sanitizer: DomSanitizer) { }
 
-  transform(image?: Image, ...args: unknown[]): Observable<SafeUrl> {
-    //this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + image.data)
-    return new Observable<SafeUrl>((observer) => observer.next(this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + image?.data)))
+  transform(image: Image, ...args: unknown[]): Observable<SafeUrl> {
+    return new Observable<SafeUrl>((observer) => observer.next(this.sanitizer.bypassSecurityTrustUrl(image.url)))
   }
 
 }
