@@ -1,13 +1,84 @@
-<div class="container">
-    <h3>Users</h3>
-    <ul>
-        <div *ngFor="let user of users">
-            <div class="card" routerLink="/user/id/{{user.id}}">
-                <div class="card-header">
-                    User
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Users Table</h4>
                 </div>
-                <app-user [user]="user"></app-user>
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                            <tr class="d-flex">
+                                <th class="text-muted col-1" scope="col">Selected</th>
+                                <th class="text-muted col-1" scope="col">#</th>
+                                <th class="text-muted col-4" scope="col">Email</th>
+                                <th class="text-muted col-2" scope="col">First Name</th>
+                                <th class="text-muted col-2" scope="col">Last Name</th>
+                                <th class="text-muted col-2" scope="col">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="this.users.length > 0">
+                            <tr class="d-flex" *ngFor="let user of users" (click)="viewUser(user)">
+                                <td class="col-1">
+                                    <input type="checkbox" (change)="onSelect($event, user.id)">
+                                </td>
+                                <td class="col-1">
+                                    <p>{{user.id}}</p>
+                                </td>
+                                <td class="col-4">
+                                    <p>{{user.email}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{user.firstname}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{user.lastname}}</p>
+                                </td>
+                                <td class="col-2">
+                                    <p>{{roleTypeLabelMapping[user.role]}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10 mx-auto" *ngIf="editedUser as user">
+                        <form>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input readonly name="email" id="email" class="form-control" type="text" [(ngModel)]="user.email">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="firstname">First Name</label>
+                                <input readonly name="firstname" id="firstname" class="form-control" type="text" [(ngModel)]="user.firstname">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label" for="lastname">Last Name</label>
+                                <input readonly name="lastname" id="lastname" class="form-control" type="text" [(ngModel)]="user.lastname">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="role">Role</label>
+                                <select readonly class="form-control" id="role"
+                                        required
+                                        [(ngModel)]="user.role" name="role">
+                                    <option *ngFor="let role of roles" [ngValue]="role">{{roleTypeLabelMapping[role]}}</option>
+                                </select>
+                            </div>
+                            <button readonly class="btn btn-outline-primary btn-disabled" (click)="saveChanges()">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-2">
+                    <button class="btn btn-outline-danger" *ngIf="selectedUserIds.length > 0" (click)="deleteSelected()">Delete</button>
+                </div>
             </div>
         </div>
-    </ul>
+    </div>
 </div>
