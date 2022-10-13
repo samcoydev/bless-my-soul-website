@@ -1,23 +1,55 @@
-<div class="container">
-    <div class="row">
-        <div class="col-6">
-            <form (ngSubmit)="createCategory()" #newCategoryForm="ngForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" required
-                        [(ngModel)]="category.name" name="name">
-                    <label for="sequence">Sequence</label>
-                    <input type="number" class="form-control" id="sequence"
-                        [(ngModel)]="category.sequence">
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Create Category</h4>
                 </div>
-                <button [disabled]="isLoading" class="btn btn-primary" type="submit">
-                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Create
-                </button>
+            </div>
+            <form (ngSubmit)="createCategory()" #newCategoryForm="ngForm" class="row">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" required [(ngModel)]="category.name"
+                                name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="sequence">Sequence</label>
+                            <input type="number" class="form-control" id="sequence" [(ngModel)]="category.sequence">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label for="image">Select an Image</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <select class="form-control" id="image" required [(ngModel)]="category.image"
+                                    name="image">
+                                    <option *ngFor="let image of images" [ngValue]="image">{{image.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <button name="button" class="btn btn-primary" routerLink="/image/create">Upload New
+                                    Image</button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="category.image.url != ''">
+                            <label for="preview">Preview</label>
+                            <img [src]="category.image.url" name="preview" class="img-table-side-preview" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group py-3">
+                        <button [disabled]="isLoading" class="btn btn-success float-end" type="submit">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Create
+                        </button>
+                    </div>
+                </div>
             </form>
-        </div>
-        <div class="col-6">
-            <app-image [editMode]="true" (selectedImageEvent)="setRawImage($event)"></app-image>
         </div>
     </div>
 </div>

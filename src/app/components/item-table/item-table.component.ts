@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs'
 import { Item } from 'src/app/models/item.model'
+import { Image } from 'src/app/models/image.model'
 import { StateTypeLabelMapping, StateType } from 'src/app/helpers/enums/state-type';
 import { ItemService } from 'src/app/services/item/item.service'
 import { FormControl } from '@angular/forms'
@@ -8,6 +9,7 @@ import { map, startWith } from 'rxjs/operators'
 import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
+import { ImageService } from 'src/app/services/image/image.service'
 
 @Component({
   selector: 'app-item-table',
@@ -17,6 +19,7 @@ import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 export class ItemTableComponent implements OnInit {
 
   items: Item[] = []
+  images: Image[] = []
   categories: Category[] = []
   editedItem?: Item
   selectedItemIds: number[] = []
@@ -32,7 +35,8 @@ export class ItemTableComponent implements OnInit {
 
   constructor(
     private itemService: ItemService,
-    private categoryService: CategoryService) {
+    private categoryService: CategoryService,
+    private imageService: ImageService) {
     this.items$ = this.filter.valueChanges.pipe(startWith(''), map(text => this.search(text)))
   }
 
@@ -40,6 +44,14 @@ export class ItemTableComponent implements OnInit {
     this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(this.getItems);
     this.getItems()
     this.getCategories()
+    this.getImages()
+  }
+
+  getImages(): void {
+    this.imageService.getImages()
+      .subscribe(response => {
+        this.images = response
+      })
   }
 
   getItems(): void {

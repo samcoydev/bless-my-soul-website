@@ -16,6 +16,7 @@ import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 export class CategoryTableComponent implements OnInit {
 
   categories: Category[] = []
+  images: Image[] = []
   editedCategory?: Category
   selectedCategoryIds: number[] = []
   editCategoryId: number = -1
@@ -36,6 +37,14 @@ export class CategoryTableComponent implements OnInit {
   ngOnInit(): void {
     this.categoryListSubscription = this.categoryService.categoriesUpdated$.subscribe(this.getCategories);
     this.getCategories()
+    this.getImages()
+  }
+
+  getImages(): void {
+    this.imageService.getImages()
+      .subscribe(response => {
+        this.images = response
+      })
   }
 
   saveChanges(): void {

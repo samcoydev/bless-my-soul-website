@@ -27,6 +27,17 @@ input[type="checkbox"][readonly] {
     transition: all .1s ease-in-out;
 }
 
+.img-table-side-preview {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+ }
+
 .img-table-preview:hover {
     box-shadow: 0 4px 7px 0 rgba(0,0,0,0.2), 0 6px 5px 0 rgba(0,0,0,0.19);
     width: 80px;

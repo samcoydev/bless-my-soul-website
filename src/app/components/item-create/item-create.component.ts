@@ -18,8 +18,8 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class ItemCreateComponent implements OnInit {
 
-  rawImage?: File;
   image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
+  images: Image[] = []
   category: Category = { id: -1, name: '', sequence: 0, image: this.image};
   newItem: Item = { 
     id: -1, 
@@ -48,6 +48,14 @@ export class ItemCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories()
+    this.getImages()
+  }
+
+  getImages(): void {
+    this.imageService.getImages()
+      .subscribe(response => {
+        this.images = response
+      })
   }
 
   getCategories(): void {
@@ -58,33 +66,10 @@ export class ItemCreateComponent implements OnInit {
       })
   }
 
-  setRawImage(image: any): void {
-    if (image)
-      this.rawImage = image
-  }
-
   createItem(): void {
     this.isSubmitted = true
     this.isLoading = true
 
-    console.log("[CREATE]: ", this.rawImage)
-
-    // First we have to post the new Image
-    if (this.rawImage) {
-      this.imageService.postImage(this.rawImage, this.image)
-        .subscribe(data => {
-          console.log("[POST]: ", data)
-          this.newItem.image = data
-          this.postItem();
-        }, error => {
-          console.log(error)
-        })
-    } else {
-      this.postItem();
-    }
-  }
-
-  postItem(): void {
     this.itemService.postItem(this.newItem)
       .pipe(first())
       .subscribe({

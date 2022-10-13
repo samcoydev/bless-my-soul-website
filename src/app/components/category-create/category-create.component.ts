@@ -14,8 +14,8 @@ import { ImageService } from 'src/app/services/image/image.service'
 })
 export class CategoryCreateComponent implements OnInit {
 
-  rawImage?: File
   image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
+  images: Image[] = []
   category: Category = { id: 0, name: '', sequence: 0, image: this.image}
 
   isSubmitted = false;
@@ -28,29 +28,21 @@ export class CategoryCreateComponent implements OnInit {
     private imageService: ImageService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getImages()
+  }
+
+  getImages(): void {
+    this.imageService.getImages()
+      .subscribe(response => {
+        this.images = response
+      })
+  }
 
   createCategory(): void {
     this.isSubmitted = true
     this.isLoading = true
 
-    if (this.rawImage) {
-      this.imageService.postImage(this.rawImage, this.image)
-        .subscribe(data => {
-          console.log("[POST]: ", data)
-          this.category.image = data
-          this.postCategory();
-        }, error => {
-          console.log(error)
-        })
-    } else {
-      this.postCategory();
-    }
-
-   
-  }
-
-  postCategory(): void {
     this.categoryService.postCategory(this.category)
       .pipe(first())
       .subscribe({
@@ -60,11 +52,6 @@ export class CategoryCreateComponent implements OnInit {
         },
         error: error => this.isLoading = false
     })
-  }
-
-  setRawImage(image: any): void {
-    if (image)
-      this.rawImage = image
   }
 
 }

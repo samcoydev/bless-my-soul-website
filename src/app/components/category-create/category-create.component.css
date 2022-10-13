@@ -1,0 +1,11 @@
+.img-table-side-preview {
+   object-fit: cover;
+   width: 215px;
+   height: 215px;
+   margin-right: 10px;
+   border-radius: 15px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   overflow: hidden;
+}
