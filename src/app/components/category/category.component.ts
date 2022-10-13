@@ -13,7 +13,7 @@ import { ImageType } from 'src/app/helpers/enums/image-type'
 })
 export class CategoryComponent implements OnInit {
   
-  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
   @Input() category: Category = { id: -1, name: '', sequence: 0, image: this.image};
 
   constructor(private imageService: ImageService) { }

@@ -4,5 +4,6 @@ export interface Image {
         id: number;
         name: string;
         type: ImageType;
+        fileExtension: string;
         url: string;
 }

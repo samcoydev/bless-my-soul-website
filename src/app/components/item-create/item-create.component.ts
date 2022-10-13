@@ -19,7 +19,7 @@ import { ItemService } from 'src/app/services/item/item.service';
 export class ItemCreateComponent implements OnInit {
 
   rawImage?: File;
-  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
   category: Category = { id: -1, name: '', sequence: 0, image: this.image};
   newItem: Item = { 
     id: -1, 
@@ -71,7 +71,7 @@ export class ItemCreateComponent implements OnInit {
 
     // First we have to post the new Image
     if (this.rawImage) {
-      this.imageService.postImage(this.rawImage)
+      this.imageService.postImage(this.rawImage, this.image)
         .subscribe(data => {
           console.log("[POST]: ", data)
           this.newItem.image = data

@@ -20,7 +20,7 @@ import { Image } from 'src/app/models/image.model'
 })
 export class ItemComponent implements OnInit {
   
-  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
   category: Category = {id: 0, name: "No Category", sequence: 0, image: this.image}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, image: this.image, category: this.category}
   @Input() isItemInCart: boolean = false

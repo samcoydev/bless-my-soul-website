@@ -15,7 +15,7 @@ import { ImageService } from 'src/app/services/image/image.service'
 export class CategoryCreateComponent implements OnInit {
 
   rawImage?: File
-  image: Image = {id: 0, name: '', type: ImageType.Catalog, url: ''}
+  image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
   category: Category = { id: 0, name: '', sequence: 0, image: this.image}
 
   isSubmitted = false;
@@ -35,7 +35,7 @@ export class CategoryCreateComponent implements OnInit {
     this.isLoading = true
 
     if (this.rawImage) {
-      this.imageService.postImage(this.rawImage)
+      this.imageService.postImage(this.rawImage, this.image)
         .subscribe(data => {
           console.log("[POST]: ", data)
           this.category.image = data

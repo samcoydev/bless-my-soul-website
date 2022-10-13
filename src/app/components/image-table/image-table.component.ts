@@ -44,6 +44,8 @@ export class ImageTableComponent implements OnInit {
   viewImage(image: Image) {
     this.editImageId = image.id
     this.editedImage = JSON.parse(JSON.stringify(image))
+    if (this.editedImage)
+      this.editedImage.name = this.editedImage.name.split(".")[0]
   }
 
   onSelect(event: any, imageId: number): void {
@@ -56,11 +58,11 @@ export class ImageTableComponent implements OnInit {
 
   saveChanges(): void {
     if (!this.editedImage) { return }
-    console.log("ITEM: ", this.editedImage)
+    console.log("IMAGE: ", this.editedImage)
     this.imageService.updateImage(this.editedImage).subscribe(data => {
       this.editedImage = undefined
       this.getImages()
-    })
+    }, error => console.error(error))
   }
 
   deleteImage(imageId: number): void {
