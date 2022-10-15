@@ -31,7 +31,25 @@
                </form>
             </div>
             <div class="col-6">
-                <app-image [editMode]="true" (selectedImageEvent)="setRawImage($event)"></app-image>
+                <!-- <app-image [editMode]="true" (selectedImageEvent)="setRawImage($event)"></app-image> -->
+                <input type="file" (change)="setRawImage($event)" />
+                <image-cropper
+                  [imageChangedEvent]="rawImage"
+                  [maintainAspectRatio]="true"
+                  [aspectRatio]="3 / 4"
+                  [canvasRotation]="canvasRotation"
+                  [transform]="imageTransform"
+                  format="png"
+                  (imageCropped)="($event)"
+                  (imageLoaded)="imageLoaded()"
+                  (cropperReady)="initCropper()"
+                  (loadImageFailed)="loadImageFailed()"
+                ></image-cropper>
+                <img [src]="cropPreview" />
+                <button class="btn btn-primary" type="button">
+                  <svg class="bi bi-windows" width="32" height="32" fill="currentColor">
+                   </svg>                   
+                </button>
             </div>
          </div>
       </div>

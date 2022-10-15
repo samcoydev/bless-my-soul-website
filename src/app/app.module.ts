@@ -19,8 +19,6 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { ImageTableComponent } from './components/image-table/image-table.component';
-import { ImageCreateComponent } from './components/image-create/image-create.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +39,7 @@ import { ImageCreateComponent } from './components/image-create/image-create.com
     ItemModule,
     UserModule,
     FormsModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   exports: [
   ],

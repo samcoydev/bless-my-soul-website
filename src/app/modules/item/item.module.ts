@@ -18,6 +18,7 @@ import { ItemTableComponent } from 'src/app/components/item-table/item-table.com
 import { PlaceholderObjectComponent } from 'src/app/components/placeholder-object/placeholder-object.component'
 import { ImageTableComponent } from 'src/app/components/image-table/image-table.component'
 import { ImageCreateComponent } from 'src/app/components/image-create/image-create.component'
+import { ImageCropperModule } from 'ngx-image-cropper'
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ImageCreateComponent } from 'src/app/components/image-create/image-crea
     CommonModule,
     ItemRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ImageCropperModule
   ],
   exports: [
     ImageComponent,
