@@ -4,7 +4,7 @@ import { Item } from 'src/app/models/item.model'
 import { Image } from 'src/app/models/image.model'
 import { StateTypeLabelMapping, StateType } from 'src/app/helpers/enums/state-type';
 import { ItemService } from 'src/app/services/item/item.service'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { map, startWith } from 'rxjs/operators'
 import { Category } from 'src/app/models/category.model'
 import { CategoryService } from 'src/app/services/category/category.service'
@@ -27,7 +27,7 @@ export class ItemTableComponent implements OnInit {
 
   items$: Observable<Item[]> = new Observable
   itemListSubscription = new Subscription
-  filter: FormControl = new FormControl('')
+  filter: UntypedFormControl = new UntypedFormControl('')
   states = Object.values(StateType)
 
   stateLabelMapping = StateTypeLabelMapping

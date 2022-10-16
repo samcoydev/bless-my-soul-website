@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { RoleType, RoleTypeLabelMapping } from 'src/app/helpers/enums/role-type'
@@ -15,7 +15,7 @@ export class UserTableComponent implements OnInit {
 
   users: User[] = []
   users$: Observable<User[]> = new Observable
-  filter: FormControl = new FormControl('')
+  filter: UntypedFormControl = new UntypedFormControl('')
   userListSubscription = new Subscription
 
   editedUser?: User

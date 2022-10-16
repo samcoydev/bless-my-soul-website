@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl } from '@angular/forms';
+import { Form, UntypedFormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { first, map, startWith } from 'rxjs/operators';
 import { CartItem } from 'src/app/models/cart-item.model';
@@ -24,7 +24,7 @@ export class ItemListComponent implements OnInit {
   items: Item[] = []
   itemsInCart: CartItem[] = []
   
-  filter: FormControl = new FormControl('')
+  filter: UntypedFormControl = new UntypedFormControl('')
   placeHolderTypes = PlaceholderType
   
   isLoading = false

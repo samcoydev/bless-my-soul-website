@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { Observable, Subscription } from 'rxjs'
 import { startWith, map } from 'rxjs/operators'
 import { ImageType, ImageTypeLabelMapping } from 'src/app/helpers/enums/image-type'
@@ -21,7 +21,7 @@ export class ImageTableComponent implements OnInit {
   selectedImageIds: number[] = []
   editImageId: number = -1
 
-  filter: FormControl = new FormControl('')
+  filter: UntypedFormControl = new UntypedFormControl('')
   types = Object.values(ImageType)
 
   typeLabelMapping = ImageTypeLabelMapping

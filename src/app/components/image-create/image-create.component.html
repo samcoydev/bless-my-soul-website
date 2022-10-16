@@ -8,7 +8,7 @@
          </div>
          <div class="row">
             <div class="col-6">
-               <form (ngSubmit)="uploadImage()" #newItemForm="ngForm">
+               <form #newItemForm="ngForm">
                   <div class="form-group">
                      <label for="name">Name</label>
                      <div class="input-group mb-3">
@@ -24,32 +24,53 @@
                         <option *ngFor="let type of types" [value]="type">{{typeLabelMapping[type]}}</option>
                      </select>
                   </div>
-                  <button [disabled]="isLoading" class="btn btn-primary" type="submit">
-                     <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                     Upload
+                  <button class="btn btn-primary my-2 col-3" (click)="compressFile()">
+                     <i class="bi bi-file-earmark-image mx-1"></i>Upload
                   </button>
+                  <div class="form-group">
+                     <img class="mx-1 crop-preview" [src]="cropPreview"/>
+                  </div>
                </form>
             </div>
+            <div class="col-6" *ngIf="rawImage">
+               <div class="row">
+                  <image-cropper
+                     [imageBase64]="rawImage"
+                     [maintainAspectRatio]="true"
+                     [aspectRatio]="3 / 4"
+                     [canvasRotation]="canvasRotation"
+                     [transform]="imageTransform"
+                     format="png"
+                     (imageCropped)="imageCropped($event)"
+                     (imageLoaded)="imageLoaded()"
+                     (cropperReady)="initCropper()"
+                     (loadImageFailed)="loadImageFailed()"
+                  ></image-cropper>
+               </div>
+            </div>
+         </div>
+         <div class="row" *ngIf="rawImage">
+            <div class="col-6"></div>
             <div class="col-6">
-                <!-- <app-image [editMode]="true" (selectedImageEvent)="setRawImage($event)"></app-image> -->
-                <input type="file" (change)="setRawImage($event)" />
-                <image-cropper
-                  [imageChangedEvent]="rawImage"
-                  [maintainAspectRatio]="true"
-                  [aspectRatio]="3 / 4"
-                  [canvasRotation]="canvasRotation"
-                  [transform]="imageTransform"
-                  format="png"
-                  (imageCropped)="($event)"
-                  (imageLoaded)="imageLoaded()"
-                  (cropperReady)="initCropper()"
-                  (loadImageFailed)="loadImageFailed()"
-                ></image-cropper>
-                <img [src]="cropPreview" />
-                <button class="btn btn-primary" type="button">
-                  <svg class="bi bi-windows" width="32" height="32" fill="currentColor">
-                   </svg>                   
-                </button>
+               <button class="btn btn-light mx-1 col-1" (click)="rotateLeft()" type="button">
+                  <i class="bi bi-arrow-clockwise"></i>         
+               </button>
+               <button class="btn btn-light mx-1 col-1" (click)="rotateRight()" type="button">
+                  <i class="bi bi-arrow-counterclockwise"></i>         
+               </button>
+               <button class="btn btn-light mx-1 col-1" (click)="flipVertical()" type="button">
+                  <i class="bi bi-symmetry-horizontal"></i>         
+               </button>
+               <button class="btn btn-light mx-1 col-1" (click)="flipHorizontal()" type="button">
+                  <i class="bi bi-symmetry-vertical"></i>         
+               </button>
+               <button class="btn btn-danger mx-1 col-1" (click)="resetImage()" type="button">
+                  <i class="bi bi-arrow-repeat"></i>         
+               </button>
+               <button (click)="uploadImage()" [disabled]="isLoading" class="btn btn-success col-3 float-end" type="submit">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i class="bi bi-file-earmark-arrow-up mx-1"></i>Save
+               </button>
             </div>
          </div>
       </div>

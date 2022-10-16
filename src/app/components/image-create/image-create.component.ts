@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core'
-import { ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { base64ToFile, ImageCroppedEvent, ImageCropperComponent, ImageTransform } from 'ngx-image-cropper'
 import { ImageType, ImageTypeLabelMapping } from 'src/app/helpers/enums/image-type'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
+import { DOC_ORIENTATION, NgxImageCompressService } from "ngx-image-compress"
 
 @Component({
   selector: 'app-image-create',
@@ -11,11 +12,12 @@ import { ImageService } from 'src/app/services/image/image.service'
 })
 export class ImageCreateComponent implements OnInit {
 
-  rawImage?: File
-  cropPreview: any = '';
+  rawImage: any = ''
+  cropPreview: any = ''
   newImage: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: "", url: '' }
 
   imageTransform: ImageTransform = {};
+  imageChangedEvent: any = ''
   canvasRotation = 0;
   rotation = 0;
   scale = 1;
@@ -25,16 +27,58 @@ export class ImageCreateComponent implements OnInit {
 
   isLoading = false
 
-  constructor(private imageService: ImageService) { }
+  // @ViewChild(ImageCropperComponent)
+  // imageCropper!: ImageCropperComponent
 
-  ngOnInit(): void {
+  constructor(
+    private imageService: ImageService,
+    private compressionService: NgxImageCompressService) { }
+
+  ngOnInit(): void { }
+
+  compressFile(): void {
+    this.compressionService.uploadFile().then(
+      ({ image, orientation, fileName }) => {
+        this.compressionService
+          .compressFile(image, orientation, 50, 50) // 50% ratio, 50% quality
+          .then(
+            (compressedImage) => {
+              this.rawImage = compressedImage
+              console.log(this.rawImage)
+              if (fileName) {
+                this.newImage.fileExtension = "." + fileName.split('.').pop()
+                this.newImage.name = fileName
+              }
+            }
+          )
+      }
+    )
   }
 
-  setRawImage(image: any): void {
-    if (image) {
-      this.rawImage = image
-      this.newImage.fileExtension = "." + image.name.split('.').pop()
-    }
+  getMimeType(dataUrl: any): string {
+    return dataUrl.substring(dataUrl.indexOf(":") + 1, dataUrl.indexOf(";"))
+  }
+
+  dataURLtoFile(dataurl: any, fileName: string): Promise<File> {
+    return (fetch(dataurl)
+      .then(function (res) { return res.arrayBuffer() })
+      .then((buf) => { return new File([buf], fileName, { type: this.getMimeType(this.rawImage) }) })
+    )
+  }
+
+  uploadImage(): void {
+    if (!this.rawImage) return
+
+    // If autocrop gets turned off use this: this.imageCropper.crop()
+
+    this.dataURLtoFile(this.cropPreview, this.newImage.name).then(
+      (image) => {
+        this.imageService.postImage(image, this.newImage)
+          .subscribe(
+            data => console.log("[POST] ", data),
+            error => console.error(error))
+      }
+    )
   }
 
   imageCropped(e: ImageCroppedEvent) {
@@ -72,7 +116,6 @@ export class ImageCreateComponent implements OnInit {
       flipV: flippedH
     }
   }
-
 
   flipHorizontal() {
     this.imageTransform = {
@@ -116,15 +159,6 @@ export class ImageCreateComponent implements OnInit {
       ...this.imageTransform,
       rotate: this.rotation
     }
-  }
-
-  uploadImage(): void {
-    if (!this.rawImage) return
-
-    this.imageService.postImage(this.rawImage, this.newImage)
-      .subscribe(
-        data => console.log("[POST] ", data),
-        error => console.error(error))
   }
 
 }

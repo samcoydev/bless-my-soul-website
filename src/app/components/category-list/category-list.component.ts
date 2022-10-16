@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { Category } from 'src/app/models/category.model';
@@ -24,7 +24,7 @@ export class CategoryListComponent implements OnInit {
   categories$: Observable<Category[]> = new Observable
   categoryListSubscription = new Subscription
 
-  filter: FormControl = new FormControl('')
+  filter: UntypedFormControl = new UntypedFormControl('')
   placeHolderTypes = PlaceholderType
   
   constructor(
