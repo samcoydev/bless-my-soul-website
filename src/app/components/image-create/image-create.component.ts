@@ -15,6 +15,7 @@ export class ImageCreateComponent implements OnInit {
   rawImage: any = ''
   cropPreview: any = ''
   newImage: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: "", url: '' }
+  currentFileName: string = '';
 
   imageTransform: ImageTransform = {};
   imageChangedEvent: any = ''
@@ -47,7 +48,7 @@ export class ImageCreateComponent implements OnInit {
               console.log(this.rawImage)
               if (fileName) {
                 this.newImage.fileExtension = "." + fileName.split('.').pop()
-                this.newImage.name = fileName
+                this.currentFileName = fileName
               }
             }
           )
@@ -157,7 +158,7 @@ export class ImageCreateComponent implements OnInit {
   updateRotation() {
     this.imageTransform = {
       ...this.imageTransform,
-      rotate: this.rotation
+      rotate: -this.rotation
     }
   }
 
