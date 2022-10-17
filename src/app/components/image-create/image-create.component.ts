@@ -5,6 +5,9 @@ import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
 import { NgxImageCompressService } from "ngx-image-compress"
 import { Location } from '@angular/common'
+import { Category } from 'src/app/models/category.model'
+import { Item } from 'src/app/models/item.model'
+import { StateType } from 'src/app/helpers/enums/state-type'
 
 @Component({
   selector: 'app-image-create',
@@ -15,7 +18,7 @@ export class ImageCreateComponent implements OnInit {
 
   rawImage: any = ''
   cropPreview: any = ''
-  newImage: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: "", url: '' }
+  newImage: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: "", url: this.cropPreview }
   currentFileName: string = '';
 
   imageTransform: ImageTransform = {};
@@ -29,8 +32,8 @@ export class ImageCreateComponent implements OnInit {
 
   isLoading = false
 
-  // @ViewChild(ImageCropperComponent)
-  // imageCropper!: ImageCropperComponent
+  placeholderCategory: Category = { id: 0, name: "A Category", image: this.newImage, sequence: 0 }
+  placeholderItem: Item = { id: 0, name: "An Item", price: 9.99, description: "", state: StateType.Draft, category: this.placeholderCategory, image: this.newImage }
 
   constructor(
     private location: Location,

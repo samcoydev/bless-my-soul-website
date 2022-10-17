@@ -25,6 +25,7 @@ export class ItemComponent implements OnInit {
   @Input() item: Item = { id: -1, name: '', price: 0, description: '', state: StateType.Draft, image: this.image, category: this.category }
   @Input() isItemInCart: boolean = false
   @Input() isClickable: boolean = true
+  @Input() src: any = ''
 
   isLoading = false
   isSubmitted = false

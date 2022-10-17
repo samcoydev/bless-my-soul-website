@@ -1,6 +1,15 @@
-<div class="px-0 mx-3" routerLink="/item/list/{{category.id}}" @fade>
+<div class="px-0 mx-3" *ngIf="isClickable" routerLink="/item/list/{{category.id}}" @fade>
     <div class="img-container">
         <img [src]="(category.image | image | async)" class="hover-shadow img-item-preview">
+        <div class="container-fluid overlay-text overlay-text-hover img-container">
+            <h4 class="text text-light">{{category.name}}</h4>
+        </div>
+    </div>
+</div>
+<div class="px-0 mx-3" *ngIf="!isClickable">
+    <div class="img-container">
+        <img *ngIf="src == ''" [src]="(category.image | image | async)" class="hover-shadow img-item-preview">
+        <img *ngIf="src != ''" [src]="src" class="hover-shadow img-item-preview">
         <div class="container-fluid overlay-text overlay-text-hover img-container">
             <h4 class="text text-light">{{category.name}}</h4>
         </div>

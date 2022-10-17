@@ -10,7 +10,8 @@
             </div>
         </div>
         <div *ngIf="!isClickable">
-            <img [src]="item.image.url" class="card-img-top">
+            <app-image *ngIf="src == ''" [itemImage]="item.image"></app-image>
+            <img class="card-img-top" *ngIf="src != ''" [src]="src"/>
             <div class="card-body">
                 <div class="text-center">
                     <p>{{item.name | shorten:[24, '...'] }}</p>

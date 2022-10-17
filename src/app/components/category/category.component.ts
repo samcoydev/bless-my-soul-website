@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import { Category } from 'src/app/models/category.model'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
@@ -12,9 +12,11 @@ import { ImageType } from 'src/app/helpers/enums/image-type'
   animations: [fader]
 })
 export class CategoryComponent implements OnInit {
-  
-  image: Image = {id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: ''}
-  @Input() category: Category = { id: -1, name: '', sequence: 0, image: this.image};
+
+  image: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: '' }
+  @Input() category: Category = { id: -1, name: '', sequence: 0, image: this.image };
+  @Input() isClickable: boolean = true
+  @Input() src: any = ''
 
   constructor(private imageService: ImageService) { }
 
@@ -22,7 +24,6 @@ export class CategoryComponent implements OnInit {
 
   getImageUrl(image?: Image) {
     let res = this.imageService.convertImageToViewableUrl(image)
-    console.log("WEEWEE", res)
     return res
   }
 
