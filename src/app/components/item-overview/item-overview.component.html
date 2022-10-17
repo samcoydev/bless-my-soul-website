@@ -4,7 +4,7 @@
             <div class="col-2"></div>
             <div class="col-4">
                 <div class="card border-0 img-container">
-                    <img [src]="previewUrl" class="img-item-preview shadow-sm" *ngIf="previewUrl">
+                    <img [src]="item.image.url" class="img-item-preview shadow-sm" *ngIf="item.image.url">
                 </div>
             </div>
             <div class="col-5 shadow-sm">
@@ -16,8 +16,8 @@
                         <h2 class="card-title">{{item.name}}</h2>
                         <h5 class="card-subtitle mb-2 text-muted padded">{{item.price | currency}}</h5>
                         <div class="row padded">
-                            <div class="col-2">
-                                <input type="number" class="form-control">
+                            <div class="col-3">
+                                <input type="number" placeholder="Quantity..." class="form-control">
                             </div>
                             <div class="col-4">
                                 <!-- If the user is logged in -->
