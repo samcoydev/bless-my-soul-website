@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
-import { base64ToFile, ImageCroppedEvent, ImageCropperComponent, ImageTransform } from 'ngx-image-cropper'
+import { Component, OnInit } from '@angular/core'
+import { ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper'
 import { ImageType, ImageTypeLabelMapping } from 'src/app/helpers/enums/image-type'
 import { Image } from 'src/app/models/image.model'
 import { ImageService } from 'src/app/services/image/image.service'
-import { DOC_ORIENTATION, NgxImageCompressService } from "ngx-image-compress"
+import { NgxImageCompressService } from "ngx-image-compress"
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-image-create',
@@ -32,6 +33,7 @@ export class ImageCreateComponent implements OnInit {
   // imageCropper!: ImageCropperComponent
 
   constructor(
+    private location: Location,
     private imageService: ImageService,
     private compressionService: NgxImageCompressService) { }
 
@@ -76,7 +78,7 @@ export class ImageCreateComponent implements OnInit {
       (image) => {
         this.imageService.postImage(image, this.newImage)
           .subscribe(
-            data => console.log("[POST] ", data),
+            data => this.location.back(),
             error => console.error(error))
       }
     )

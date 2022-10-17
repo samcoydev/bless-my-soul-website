@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { Image } from 'src/app/models/image.model'
 
@@ -8,27 +8,27 @@ import { Image } from 'src/app/models/image.model'
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent implements OnInit {
-  
-  @Input() itemImage?: Image;
+
+  @Input() itemImage?: Image
   @Input() editMode: Boolean = false;
   selectedImage?: File
   previewUrl: any
   isFileInvalid: Boolean = false
   @Output() selectedImageEvent = new EventEmitter<any>();
 
-  constructor(private sanitizer: DomSanitizer) { 
+  constructor(private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
     if (this.itemImage)
       this.convertImageToViewableUrl(this.itemImage)
   }
-  
+
   getPreviewUrl(): void {
     var reader = new FileReader()
     if (this.selectedImage && this.editMode) {
-      reader.readAsDataURL(this.selectedImage);
-      reader.onload = (_event) => { 
+      reader.readAsDataURL(this.selectedImage)
+      reader.onload = (_event) => {
         this.previewUrl = reader.result
       }
     }
@@ -42,12 +42,12 @@ export class ImageComponent implements OnInit {
     if (_event.target.files.item(0).type == "image/jpeg" && _event.target.files.length <= 1) {
       this.isFileInvalid = false
       this.selectedImage = _event.target.files.item(0)
-      this.selectedImageEvent.emit(this.selectedImage);
+      this.selectedImageEvent.emit(this.selectedImage)
       this.getPreviewUrl()
     } else {
       this.isFileInvalid = true
       this.previewUrl = false
-      this.selectedImageEvent.emit(false);
+      this.selectedImageEvent.emit(false)
       console.log("File either wasn't a JPEG, or you've uploaded more than one.")
     }
   }
