@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\bless-my-soul-app"
+		}
+	],
+	"settings": {
+		"editor.defaultFormatter": "ms-vscode.vscode-typescript-tslint-plugin",
+		"editor.formatOnSave": true
+	}
+}
