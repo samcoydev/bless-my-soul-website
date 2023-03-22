@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleType } from 'src/app/helpers/enums/role-type';
 import { User } from 'src/app/models/user.model';
+import { BreakpointService } from 'src/app/services/breakpoint/breakpoint.service'
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class NavBarComponent implements OnInit {
   private currentUser: User = {id: -1, password: '', firstname: '', lastname: '', email: '', role: RoleType.User};
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private breakpointService: BreakpointService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,7 @@ export class NavBarComponent implements OnInit {
   }
 
   getCurrentUser(): void {
+    
     this.userService.currentUser
       .subscribe(response => {
         this.currentUser = response;

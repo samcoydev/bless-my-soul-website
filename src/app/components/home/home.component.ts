@@ -5,11 +5,12 @@ import { Item } from 'src/app/models/item.model'
 import { CategoryService } from 'src/app/services/category/category.service'
 import { ItemService } from 'src/app/services/item/item.service'
 import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
+import { BreakpointService } from 'src/app/services/breakpoint/breakpoint.service'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.scss'],
   animations: [fader, slideDown, zoom]
 })
 export class HomeComponent implements OnInit {
@@ -21,7 +22,10 @@ export class HomeComponent implements OnInit {
 
   newestReleases: Item[] = []
 
-  constructor(private itemService: ItemService, private categoryService: CategoryService) { }
+  constructor(
+    private itemService: ItemService, 
+    private categoryService: CategoryService,
+    private breakpointService: BreakpointService) { }
 
   ngOnInit(): void {
     this.getFeaturedItems()
@@ -46,6 +50,10 @@ export class HomeComponent implements OnInit {
       console.log(this.featuredCategories)
       this.featuredCategories = data.slice(0, 3)
     })
+  }
+
+  getIsLargerScreen() {
+    return this.breakpointService.getIsLargerScreen();
   }
 
 }
