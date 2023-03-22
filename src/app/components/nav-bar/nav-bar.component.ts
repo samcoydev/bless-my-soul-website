@@ -46,4 +46,8 @@ export class NavBarComponent implements OnInit {
     this.userService.logout();
   }
 
+  getIsLargerScreen() {
+    return this.breakpointService.getIsLargerScreen();
+  }
+
 }
