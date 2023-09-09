@@ -13,7 +13,7 @@ import { RoleType } from 'src/app/helpers/enums/role-type';
 export class UserService {
 
   private url = environment.apiUrl + '/user';
-  
+
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
@@ -27,13 +27,14 @@ export class UserService {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(String(localStorage.getItem('user'))));
     this.currentUser = this.currentUserSubject.asObservable();
   }
-  
+
   announceUsersUpdated(message: string): void {
     console.log(message);
     this.usersUpdatedSource.next(message);
   }
 
   public get currentUserValue(): User {
+    console.log("Current user value: ", this.currentUserSubject.value)
     return this.currentUserSubject.value;
   }
 
@@ -62,7 +63,7 @@ export class UserService {
         this.announceUsersUpdated('Users updated - New Record');
       }));
   }
-  
+
   login(email: string, password: string): Observable<User> {
     // TODO: Fix this mess
     return this.httpClient.post<User>(this.url + '/authenticate', {email, password}).pipe(
@@ -77,7 +78,7 @@ export class UserService {
         return null;
     }));
   }
-  
+
   deleteUser(id: number): Observable<Object> {
     return this.httpClient.delete(this.url + '/' + `${id}`)
       .pipe(map(deletedUser => {

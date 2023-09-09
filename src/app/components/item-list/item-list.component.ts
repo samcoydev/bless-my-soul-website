@@ -23,12 +23,14 @@ export class ItemListComponent implements OnInit {
 
   items: Item[] = []
   itemsInCart: CartItem[] = []
-  
+
   filter: UntypedFormControl = new UntypedFormControl('')
   placeHolderTypes = PlaceholderType
-  
+
   isLoading = false
   isSessionAuthed = false
+
+  categoryName: string | null = null;
 
   items$: Observable<Item[]> = new Observable
   itemListSubscription = new Subscription
@@ -82,6 +84,7 @@ export class ItemListComponent implements OnInit {
       } else {
         this.itemListSubscription = this.itemService.itemsUpdated$.subscribe(message => this.getItemsByCategoryId(category.id))
         this.getItemsByCategoryId(category.id)
+        this.categoryName = category.name
       }
     })
   }

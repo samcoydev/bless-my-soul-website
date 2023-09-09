@@ -1,0 +1,6 @@
+<div class="category-container mx-auto shadow-sm" routerLink="/item/list/{{category.id}}">
+  <img [src]="(category.image | image | async)">
+  <div class="bottom-text-container">
+    <p class="text-dark bottom-text">{{category.name}}</p>
+  </div>
+</div>

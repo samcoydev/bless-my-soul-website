@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { first } from 'rxjs/operators'
 import { OrderType } from 'src/app/helpers/enums/order-type'
 import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
 import { CartItem } from 'src/app/models/cart-item.model';
-import { Image } from 'src/app/models/image.model'
 import { Order } from 'src/app/models/order.model'
 import { CartService } from 'src/app/services/cart/cart.service';
-import { ImageService } from 'src/app/services/image/image.service'
 import { OrderService } from 'src/app/services/order/order.service'
 import { UserService } from 'src/app/services/user/user.service'
+import {BreakpointService} from "../../services/breakpoint/breakpoint.service";
 
 @Component({
   selector: 'app-cart-item-list',
@@ -23,7 +22,7 @@ export class CartItemListComponent implements OnInit {
   subtotal: number = 0
   notes: string = ''
   isLoading: boolean = false
-  
+
   cartItemListSubscription = new Subscription
   currentUserSubscription = new Subscription
 
@@ -34,7 +33,8 @@ export class CartItemListComponent implements OnInit {
     private router: Router,
     private cartService: CartService,
     private userService: UserService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private breakpointService: BreakpointService
   ) { }
 
   ngOnInit(): void {
@@ -92,6 +92,10 @@ export class CartItemListComponent implements OnInit {
           this.isLoading = false;
         }
       })
+  }
+
+  isLargeScreen(): Observable<boolean> {
+    return this.breakpointService.getIsLargerScreen();
   }
 
 }

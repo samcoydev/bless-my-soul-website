@@ -11,6 +11,8 @@ import { UserService } from 'src/app/services/user/user.service'
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ImageType } from 'src/app/helpers/enums/image-type'
+import {BreakpointService} from "../../services/breakpoint/breakpoint.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-item-overview',
@@ -23,11 +25,11 @@ export class ItemOverviewComponent implements OnInit {
   category: Category = {id: 0, name: "No Category", sequence: 0, image: this.image}
   @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, image: this.image, category: this.category}
   @Input() isItemInCart: boolean = false
-  
+
   editMode: Boolean = false
   selectedImage?: File
   previewUrl: any
-  
+
   itemLoaded = false
   isFileInvalid: Boolean = false
   isLoading = false
@@ -43,6 +45,7 @@ export class ItemOverviewComponent implements OnInit {
     private itemService: ItemService,
     private cartService: CartService,
     private userService: UserService,
+    private breakpointService: BreakpointService,
     private sanitizer: DomSanitizer,
     ) { }
 
@@ -70,7 +73,7 @@ export class ItemOverviewComponent implements OnInit {
   updateItem(): void{
     this.isSubmitted = true
     this.isLoading = true
-    
+
     let oldId = this.item.id
     this.item.id = oldId
 
@@ -98,12 +101,12 @@ export class ItemOverviewComponent implements OnInit {
       })
   }
 
-    
+
   getPreviewUrl(): void {
     var reader = new FileReader()
     if (this.selectedImage) {
       reader.readAsDataURL(this.selectedImage);
-      reader.onload = (_event) => { 
+      reader.onload = (_event) => {
         this.previewUrl = reader.result
       }
     }
@@ -123,6 +126,10 @@ export class ItemOverviewComponent implements OnInit {
     if (image == undefined) { return }
     let objectURL = 'data:image/jpeg;base64,' + image.url
     this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+  }
+
+  getIsLargeScreen(): Observable<boolean> {
+    return this.breakpointService.getIsLargerScreen()
   }
 
 }

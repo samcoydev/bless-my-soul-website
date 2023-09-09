@@ -19,6 +19,8 @@ import { PlaceholderObjectComponent } from 'src/app/components/placeholder-objec
 import { ImageTableComponent } from 'src/app/components/image-table/image-table.component'
 import { ImageCreateComponent } from 'src/app/components/image-create/image-create.component'
 import { ImageCropperModule } from 'ngx-image-cropper'
+import {MobileCategoryComponent} from "../../components/mobile-category/mobile-category.component";
+import {MobileItemComponent} from "../../components/mobile-item/mobile-item.component";
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { ImageCropperModule } from 'ngx-image-cropper'
     CategoryTableComponent,
     PlaceholderObjectComponent,
     ImageTableComponent,
-    ImageCreateComponent
+    ImageCreateComponent,
+    MobileCategoryComponent,
+    MobileItemComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +52,9 @@ import { ImageCropperModule } from 'ngx-image-cropper'
   ],
   exports: [
     ImageComponent,
+    MobileItemComponent,
     CategoryComponent,
+    MobileCategoryComponent,
     CategoryTableComponent,
     ItemComponent,
     ImagePipe,

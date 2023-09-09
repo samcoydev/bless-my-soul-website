@@ -22,8 +22,10 @@ export class HomeComponent implements OnInit {
 
   newestReleases: Item[] = []
 
+  groupedItems: any[] = [];
+
   constructor(
-    private itemService: ItemService, 
+    private itemService: ItemService,
     private categoryService: CategoryService,
     private breakpointService: BreakpointService) { }
 
@@ -33,9 +35,18 @@ export class HomeComponent implements OnInit {
     this.getFeaturedCategories()
   }
 
+  getGroupedItems(items: any[], countPerGroup: number): any[] {
+    let groupedItems = [];
+    for (let i = 0; i < items.length; i += countPerGroup) {
+      groupedItems.push(items.slice(i, i + countPerGroup));
+    }
+    return groupedItems;
+  }
+
   getFeaturedItems(): void {
     this.itemService.getFeaturedItems().subscribe(data => {
       this.featuredItems = data
+      this.groupedItems = this.getGroupedItems(this.featuredItems, 2);
     })
   }
 
@@ -50,6 +61,10 @@ export class HomeComponent implements OnInit {
       console.log(this.featuredCategories)
       this.featuredCategories = data.slice(0, 3)
     })
+  }
+
+  getIsMobileScreen() {
+    return this.breakpointService.getIsMobileScreen();
   }
 
   getIsLargerScreen() {

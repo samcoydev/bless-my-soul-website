@@ -33,7 +33,7 @@ export class BreakpointService {
         }
       })
     );
-    
+
     this.isLargeScreenOrAbove$ = this.breakpointObserver.observe([CUSTOM_BREAKPOINTS.lg, CUSTOM_BREAKPOINTS.xl])
       .pipe(
         map(result => result.matches)
@@ -42,6 +42,13 @@ export class BreakpointService {
 
   getIsLargerScreen(): Observable<boolean> {
     return this.isLargeScreenOrAbove$;
+  }
+
+  getIsMobileScreen(): Observable<boolean> {
+    return this.breakpointObserver.observe([CUSTOM_BREAKPOINTS.xs, CUSTOM_BREAKPOINTS.sm])
+      .pipe(
+        map(result => result.matches)
+      );
   }
 
   getCurrentBreakpoint(): Observable<string> {

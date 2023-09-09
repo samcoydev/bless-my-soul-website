@@ -19,6 +19,8 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
 
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { MobileItemComponent } from './components/mobile-item/mobile-item.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     OrderCreateComponent,
     OrderListComponent,
     OrderComponent,
-    HomeComponent
+    HomeComponent,
+    CarouselComponent,
   ],
   imports: [
     CommonModule,

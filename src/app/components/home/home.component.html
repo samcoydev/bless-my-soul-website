@@ -1,77 +1,119 @@
 <section class="landing-section bg-light" *ngIf="getIsLargerScreen() | async">
-    <div class="text-center container">
-        <div class="row">
-            <div class="col-lg-8 col-md-6 mx-auto" @fade @slideDown>
-                <h1 class="display-2">Bless My Soul Creations</h1>
-                <p class="text-muted">Handcrafted to bless the soul of both the giver and receiver.</p>
-            </div>
-        </div>
+  <div class="text-center container">
+    <div class="row">
+      <div class="col-lg-8 col-md-6 mx-auto" @fade @slideDown>
+        <h1 class="display-2">Bless My Soul Creations</h1>
+        <p class="text-muted">Handcrafted to bless the soul of both the giver and receiver.</p>
+      </div>
     </div>
+  </div>
 </section>
 
 <section>
-    <div class="py-4 text-center container">
-        <div class="row py-lg-5">
-            <div class="mx-auto">
-                <h4 @fade @slideDown>Featured Categories</h4>
-                <div class="row justify-content-center">
-                    <hr style="width: 20%;" class="bg-success"/>
-                </div>
-                <div class="row justify-content-center py-5">
-                    <div class="overflow-auto d-flex justify-content-center" *ngIf="featuredCategories.length > 0">
-                        <app-category *ngFor="let category of featuredCategories" [category]="category"></app-category>
-                    </div>
-                    <div class="d-flex justify-content-center" *ngIf="featuredCategories.length == 0">
-                        <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
-                        <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
-                        <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
-                    </div>
-                </div>
-            </div>
+  <div class="py-4 text-center container">
+    <div class="row py-lg-5">
+      <div class="mx-auto">
+        <h4 @fade @slideDown>Featured Categories</h4>
+        <div class="row justify-content-center">
+          <hr style="width: 20%;" class="bg-success"/>
         </div>
+        <div *ngIf="getIsMobileScreen() | async; else normalCategoriesScreen">
+          <div class="carousel slide" id="carouselExampleIndicators" data-bs-ride="carousel"
+               *ngIf="featuredCategories.length > 0">
+            <div class="carousel-inner">
+              <div class="carousel-item py-3"
+                   *ngFor="let category of featuredCategories; let isFirst = first"
+                   [ngClass]="{'active': isFirst}">
+                <app-mobile-category [category]="category"></app-mobile-category>
+              </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <ng-template #normalCategoriesScreen>
+          <div class="row row-cols-3 align-items-center py-5" *ngIf="featuredCategories.length > 0">
+            <app-category *ngFor="let category of featuredCategories" [category]="category"></app-category>
+          </div>
+          <div class="row row-cols-3 row-cols-sm-1 justify-content-center py-5" *ngIf="featuredCategories.length === 0">
+            <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Category"></app-placeholder-object>
+          </div>
+        </ng-template>
+      </div>
     </div>
+  </div>
 </section>
 
 <section>
-    <div class="py-4 text-center container">
-        <div class="row py-lg-5">
-            <div class="mx-auto">
-                <h4 @fade @slideDown>Featured Products</h4>
-                <div class="row justify-content-center">
-                    <hr style="width: 20%;" class="bg-success"/>
-                </div>
-                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length > 0">
-                    <app-item *ngFor="let item of featuredItems" [item]="item" [isItemInCart]="false" @fade @zoom></app-item>
-                </div>
-                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length == 0">
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                </div>
-            </div>
+  <div class="py-4 text-center container">
+    <div class="row py-lg-5">
+      <div class="mx-auto">
+        <h4 @fade @slideDown>Featured Products</h4>
+        <div class="row justify-content-center">
+          <hr style="width: 20%;" class="bg-success"/>
         </div>
+        <div *ngIf="getIsMobileScreen() | async; else normalFeaturedProductsScreen">
+          <div class="row row-cols-2">
+            <div class="col" *ngFor="let item of featuredItems">
+              <app-mobile-item [item]="item"></app-mobile-item>
+            </div>
+          </div>
+        </div>
+        <ng-template #normalFeaturedProductsScreen>
+          <div class="row row-cols-1 row-cols-md-5 justify-content-center pt-3" *ngIf="featuredCategories.length > 0">
+            <app-mobile-item *ngFor="let item of featuredItems" [item]="item" @fade @zoom></app-mobile-item>
+          </div>
+          <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length == 0">
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          </div>
+        </ng-template>
+      </div>
     </div>
+  </div>
 </section>
 
 <section>
-    <div class="py-4 text-center container">
-        <div class="row py-lg-5">
-            <div class="mx-auto">
-                <h4 @fade @slideDown>Newest Releases</h4>
-                <div class="row justify-content-center">
-                    <hr style="width: 20%;" class="bg-success"/>
-                </div>
-                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length > 0">
-                    <app-item *ngFor="let item of newestReleases" [item]="item" [isItemInCart]="false" @fade @zoom></app-item>
-                </div>
-                <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length == 0">
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                    <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
-                </div>
-            </div>
+  <div class="py-4 text-center container">
+    <div class="row py-lg-5">
+      <div class="mx-auto">
+        <h4 @fade @slideDown>Newest Releases</h4>
+        <div class="row justify-content-center">
+          <hr style="width: 20%;" class="bg-success"/>
         </div>
+        <div *ngIf="getIsMobileScreen() | async; else normalNewestScreen">
+          <div class="row row-cols-2">
+            <div class="col" *ngFor="let item of newestReleases">
+              <app-mobile-item [item]="item"></app-mobile-item>
+            </div>
+          </div>
+        </div>
+        <ng-template #normalNewestScreen>
+          <div class="row row-cols-1 row-cols-md-5 justify-content-center pt-3" *ngIf="featuredCategories.length > 0">
+<!--            <app-item *ngFor="let item of newestReleases" [item]="item" [isItemInCart]="false" @fade @zoom></app-item>-->
+            <app-mobile-item *ngFor="let item of featuredItems" [item]="item"></app-mobile-item>
+          </div>
+          <div class="row row-cols-1 row-cols-md-5 justify-content-center py-5" *ngIf="featuredCategories.length == 0">
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+            <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          </div>
+        </ng-template>
+      </div>
     </div>
+  </div>
 </section>
