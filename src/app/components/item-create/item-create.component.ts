@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { StateType, StateTypeLabelMapping } from 'src/app/helpers/state-type';
-import { Category } from 'src/app/models/category.model';
+import { ActivatedRoute, Router } from '@angular/router'
+import { first } from 'rxjs/operators'
+import { ImageType } from 'src/app/helpers/enums/image-type'
+import { StateType, StateTypeLabelMapping } from 'src/app/helpers/enums/state-type'
+import { Category } from 'src/app/models/category.model'
 import { Image } from 'src/app/models/image.model'
-import { Item } from 'src/app/models/item.model';
-import { CategoryService } from 'src/app/services/category/category.service';
+import { Item } from 'src/app/models/item.model'
+import { CategoryService } from 'src/app/services/category/category.service'
 import { ImageService } from 'src/app/services/image/image.service'
-import { ItemService } from 'src/app/services/item/item.service';
+import { ItemService } from 'src/app/services/item/item.service'
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-item-create',
@@ -17,13 +19,17 @@ import { ItemService } from 'src/app/services/item/item.service';
 })
 export class ItemCreateComponent implements OnInit {
 
-  rawImage?: File;
-  newItem: Item = { 
-    id: -1, 
-    name: '', 
-    price: 0.00, 
-    description: '', 
+  image: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: '' }
+  images: Image[] = []
+  category: Category = { id: -1, name: '', sequence: 0, image: this.image };
+  newItem: Item = {
+    id: -1,
+    name: '',
+    price: 0.00,
+    description: '',
     state: StateType.Draft,
+    image: this.image,
+    category: this.category
   }
 
   isSubmitted = false
@@ -34,8 +40,7 @@ export class ItemCreateComponent implements OnInit {
   categories: Category[] = []
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
+    private location: Location,
     private itemService: ItemService,
     private categoryService: CategoryService,
     private imageService: ImageService
@@ -43,52 +48,37 @@ export class ItemCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategories()
+    this.getImages()
+  }
+
+  getImages(): void {
+    this.imageService.getImages()
+      .subscribe(response => {
+        this.images = response
+        this.newItem.image = this.images[0]
+      })
   }
 
   getCategories(): void {
     this.categoryService.getAllCategories()
-      .subscribe(response => this.categories = response)
-  }
-
-  setRawImage(image: any): void {
-    if (image)
-      this.rawImage = image
+      .subscribe(response => {
+        this.categories = response
+        this.newItem.category = response[0]
+      })
   }
 
   createItem(): void {
     this.isSubmitted = true
     this.isLoading = true
 
-    console.log("[CREATE]: ", this.rawImage)
-
-    // First we have to post the new Image
-    if (this.rawImage){
-      this.imageService.postImage(this.rawImage)
-        .subscribe(data => {
-          console.log("[POST]: ", data)
-          this.newItem.image = data
-          this.postItem();
-        }, error => {
-          console.log(error)
-        })
-    } else {
-      this.postItem();
-    }
-  }
-
-  postItem(): void {
     this.itemService.postItem(this.newItem)
-      .pipe(first())
-      .subscribe({
-        next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/'
-          this.router.navigateByUrl(returnUrl)
-        },
-        error: error => {
+      .subscribe(
+        data => this.location.back(),
+        error => {
           console.error(error)
           this.isLoading = false
         }
-      })
+      )
   }
 
 }

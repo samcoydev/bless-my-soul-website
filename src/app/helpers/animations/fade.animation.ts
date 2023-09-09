@@ -13,7 +13,7 @@ export const zoom =
         transition('void => *', [
             style({ transform: 'scale(0.99)' }), 
             animate(100, style({ transform: 'scale(1)' }))
-        ]) 
+        ])
     ])
 
 export const slideDown =

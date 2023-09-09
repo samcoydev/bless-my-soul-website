@@ -1,0 +1,101 @@
+<div class="jumbotron py-5">
+   <div class="container shadow-sm py-4 container-padding">
+      <div class="row">
+         <div class="row py-3">
+            <div class="float-start">
+               <h4>Upload Image</h4>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-6">
+               <div class="row">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist" *ngIf="rawImage">
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="metadata-tab" data-bs-toggle="tab" data-bs-target="#metadata" type="button" role="tab" aria-controls="metadata" aria-selected="true">Metadata</button>
+                     </li>
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="previews-tab" data-bs-toggle="tab" data-bs-target="#previews" type="button" role="tab" aria-controls="previews" aria-selected="true">Previews</button>
+                     </li>
+                  </ul>
+                  <div class="col-12 my-3 tab-content" id="myTabContent">
+                     <div class="tab-pane fade show active" id="metadata" role="tabpanel" aria-labelledby="metadata-tab">
+                        <form #newItemForm="ngForm">
+                           <div class="form-group">
+                              <label for="name">Name</label>
+                              <div class="input-group mb-3">
+                                 <input type="text" class="form-control" placeholder="{{currentFileName}}" id="name" required [(ngModel)]="newImage.name" name="name">
+                              </div>
+                           </div>
+                           <div class="form-group mb-3">
+                              <label for="type">Type</label>
+                              <select class="form-control" id="type"
+                                 required
+                                 [(ngModel)]="newImage.type" name="type">
+                                 <option *ngFor="let type of types" [value]="type">{{typeLabelMapping[type]}}</option>
+                              </select>
+                           </div>
+                           <button class="btn btn-primary my-2 col-3" (click)="compressFile()">
+                              <i class="bi bi-file-earmark-image mx-1"></i>Select Image
+                           </button>
+                        </form>
+                     </div>
+                     <div class="tab-pane fade" id="previews" role="tabpanel" aria-labelledby="previews-tab">
+                        <div class="row justify-content-center">
+                           <div class="col">
+                              <app-item [isClickable]="false" [item]="placeholderItem" [src]="cropPreview"></app-item>
+                           </div>
+                           <div class="col justify-content-center">
+                              <app-category [isClickable]="false" [category]="placeholderCategory" [src]="cropPreview"></app-category>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-6" *ngIf="rawImage">
+               <div class="row">
+                  <image-cropper
+                     [imageBase64]="rawImage"
+                     [maintainAspectRatio]="true"
+                     [aspectRatio]="3 / 4"
+                     [canvasRotation]="canvasRotation"
+                     [transform]="imageTransform"
+                     format="png"
+                     (imageCropped)="imageCropped($event)"
+                     (imageLoaded)="imageLoaded()"
+                     (cropperReady)="initCropper()"
+                     (loadImageFailed)="loadImageFailed()"
+                  ></image-cropper>
+               </div>
+               <div class="row my-2">
+                  <label for="angle" class="form-label">Angle</label>
+                  <input type="range" [(ngModel)]="rotation" (change)="updateRotation()" min="-90" max="90" class="form-range" id="angle">
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <button class="btn btn-light mx-1 col-1" (click)="rotateLeft()" type="button">
+                        <i class="bi bi-arrow-clockwise"></i>         
+                     </button>
+                     <button class="btn btn-light mx-1 col-1" (click)="rotateRight()" type="button">
+                        <i class="bi bi-arrow-counterclockwise"></i>         
+                     </button>
+                     <button class="btn btn-light mx-1 col-1" (click)="flipVertical()" type="button">
+                        <i class="bi bi-symmetry-horizontal"></i>         
+                     </button>
+                     <button class="btn btn-light mx-1 col-1" (click)="flipHorizontal()" type="button">
+                        <i class="bi bi-symmetry-vertical"></i>         
+                     </button>
+                     <button class="btn btn-danger mx-1 col-1" (click)="resetImage()" type="button">
+                        <i class="bi bi-arrow-repeat"></i>         
+                     </button>
+                     <button (click)="uploadImage()" [disabled]="isLoading" class="btn btn-success col-3 float-end" type="submit">
+                        <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                        <i class="bi bi-file-earmark-arrow-up mx-1"></i>Save
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

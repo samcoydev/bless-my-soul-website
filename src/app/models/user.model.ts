@@ -1,4 +1,4 @@
-import { RoleType } from "../helpers/role-type";
+import { RoleType } from "../helpers/enums/role-type";
 
 export interface User {
     id: number;

@@ -1,50 +1,88 @@
-<div class="container">
-    <h1>Create Item</h1>
-    <div class="row">
-        <div class="col-6">
-            <form (ngSubmit)="createItem()" #newItemForm="ngForm">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name"
-                        required
-                        [(ngModel)]="newItem.name" name="name">
+<div class="jumbotron py-5">
+    <div class="container shadow-sm py-4 container-padding">
+        <div class="row">
+            <div class="row py-3">
+                <div class="float-start">
+                    <h4>Create Item</h4>
                 </div>
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price"
-                        required
-                        [(ngModel)]="newItem.price" name="price">
+            </div>
+            <form #newItemForm="ngForm" class="row">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col">
+                                <label for="name">Name</label>
+                                <input type="text" placeholder="Name"  class="form-control my-2" id="name" required [(ngModel)]="newItem.name" name="name">
+                            </div>
+                            <div class="col">
+                                <label for="price">Price</label>
+                                <input type="number" placeholder="Price" class="form-control my-2" id="price" required [(ngModel)]="newItem.price" name="price">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <select class="form-control my-2" id="category" required [(ngModel)]="newItem.category"
+                                        name="category">
+                                        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <select class="form-control my-2" id="state" required [(ngModel)]="newItem.state" name="state">
+                                        <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="textarea" rows="3" class="form-control my-2" id="description" required
+                                [(ngModel)]="newItem.description" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label for="image">Select an Image</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-control my-2" id="image" required [(ngModel)]="newItem.image"
+                                    name="image">
+                                    <option *ngFor="let image of images" [ngValue]="image">{{image.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-2 text-center">
+                                <p class="my-2">- OR -</p>
+                            </div>
+                            <div class="col-4">
+                                <button name="button" class="btn btn-secondary my-2" routerLink="/image/create">
+                                    <i class="bi bi-file-earmark-arrow-up mx-1"></i>Upload New Image
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="newItem.image.url != ''">
+                            <label>Preview</label>
+                            <div class="container">
+                                <app-item [item]="newItem" [isClickable]="false"></app-item>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description"
-                        required
-                        [(ngModel)]="newItem.description" name="description">
+                <div class="row">
+                    <div class="form-group py-3">
+                        <button [disabled]="isLoading" class="btn btn-success float-end" type="submit" (click)="createItem()">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                            <i class="bi bi-file-earmark-arrow-up mx-1"></i>Save
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select class="form-control" id="category"
-                            required
-                            [(ngModel)]="newItem.category" name="category">
-                      <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="state">State</label>
-                    <select class="form-control" id="state"
-                            required
-                            [(ngModel)]="newItem.state" name="state">
-                      <option *ngFor="let state of states" [value]="state">{{stateLabelMapping[state]}}</option>
-                    </select>
-                </div>
-                <button [disabled]="isLoading" class="btn btn-primary" type="submit">
-                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Create
-                </button>
             </form>
-        </div>
-        <div class="col-6">
-            <app-image [editMode]="true" (selectedImageEvent)="setRawImage($event)"></app-image>
         </div>
     </div>
 </div>

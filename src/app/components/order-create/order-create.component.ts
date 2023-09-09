@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { OrderType } from 'src/app/helpers/order-type';
+import { OrderType } from 'src/app/helpers/enums/order-type';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { Order } from 'src/app/models/order.model';
 import { CartService } from 'src/app/services/cart/cart.service';
@@ -65,6 +65,5 @@ export class OrderCreateComponent implements OnInit {
         }
       })
   }
-
 
 }

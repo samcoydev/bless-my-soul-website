@@ -15,7 +15,12 @@ import { OrderCreateComponent } from './components/order-create/order-create.com
 import { OrderListComponent } from './components/order-list/order-list.component';
 import { OrderComponent } from './components/order/order.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ShortenPipe } from './pipes/shorten/shorten.pipe';
+import { CommonModule } from '@angular/common';
+import { HomeComponent } from './components/home/home.component';
+
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { MobileItemComponent } from './components/mobile-item/mobile-item.component';
 
 @NgModule({
   declarations: [
@@ -25,18 +30,23 @@ import { ShortenPipe } from './pipes/shorten/shorten.pipe';
     CartItemComponent,
     OrderCreateComponent,
     OrderListComponent,
-    OrderComponent
+    OrderComponent,
+    HomeComponent,
+    CarouselComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ItemModule,
     UserModule,
     FormsModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
-  providers: [],
+  exports: [
+  ],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

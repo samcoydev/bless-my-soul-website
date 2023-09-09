@@ -1,6 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order.model';
-import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import { OrderTypeLabelMapping } from 'src/app/helpers/enums/order-type';
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
+import { ActivatedRoute } from '@angular/router'
+import { CartService } from 'src/app/services/cart/cart.service'
+import { ItemService } from 'src/app/services/item/item.service'
+import { UserService } from 'src/app/services/user/user.service'
+import { OrderService } from 'src/app/services/order/order.service'
 
 @Component({
   selector: 'app-order',
@@ -9,13 +15,25 @@ import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
 })
 export class OrderComponent implements OnInit {
 
-  @Input() order!: Order;
-  orderLabelMapping = OrderTypeLabelMapping;
+  order?: Order
 
-  constructor() { }
+  placeHolderTypes = PlaceholderType
+  orderLabelMapping = OrderTypeLabelMapping
+
+  constructor(
+    private route: ActivatedRoute,
+    private orderService: OrderService
+    ) { }
 
   ngOnInit(): void {
-    console.log("ORDER: ", this.order);
+    const routeParams = this.route.snapshot.paramMap
+    if (routeParams.get('orderId'))
+      this.getOrderById(Number(routeParams.get('orderId')))
+  }
+
+  getOrderById(id: number): void {
+    this.orderService.getOrderByID(id)
+      .subscribe(response => this.order = response)
   }
 
 }

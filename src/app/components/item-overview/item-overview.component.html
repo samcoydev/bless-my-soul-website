@@ -1,0 +1,112 @@
+<div class="vertical-center">
+  <div class="container">
+    <div class="row" *ngIf="getIsLargeScreen() | async; else smallerScreen">
+      <div class="col-2"></div>
+      <div class="col-4">
+        <div class="card border-0 img-container">
+          <img [src]="(item.image | image | async)" alt="" class="img-item-preview shadow-sm">
+        </div>
+      </div>
+      <div class="col-5 shadow-sm">
+        <div class="card container mb-3 border-0">
+          <div class="card-body px-0">
+            <div class="card-subtitle mt-2 text-muted" style="display: flex;">
+              <p class="small" routerLink="/category/list">Category</p>
+              <p class="small mx-2">/</p>
+              <p class="small" [routerLink]="getCategoryUrl()">{{getCategoryName()}}</p>
+            </div>
+            <div class="row">
+              <h2 class="card-title">{{item.name}}</h2>
+              <p class="card-subtitle pt-0 mb-2 text-muted padded">{{item.price | currency}}</p>
+            </div>
+            <div class="row pt-2">
+              <p>{{item.description}}</p>
+            </div>
+            <div class="row justify-content-end padded">
+              <div class="col-2 p-0">
+                <input type="number" value="1" class="form-control">
+              </div>
+              <div class="col-6">
+                <!-- If the user is logged in -->
+                <div *ngIf="isSessionAuthed; else sessionNotAuthed">
+                  <div *ngIf="!isItemInCart; else itemInCart">
+                    <button class="btn btn-outline-success w-100" [disabled]="isLoading" (click)="addToCart()">
+                      <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Add To Cart
+                    </button>
+                  </div>
+                  <ng-template #itemInCart>
+                    <p>This item is in your cart</p>
+                  </ng-template>
+                </div>
+                <ng-template #sessionNotAuthed>
+                  <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                        title="Log in to add this to your cart.">
+                      <button class="btn btn-outline-secondary mt-auto" style="pointer-events: none;"
+                              type="button" disabled>
+                          Add To Cart
+                      </button>
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #smallerScreen>
+      <div class="row py-3">
+        <div class="col-2"></div>
+        <div class="col-9">
+          <div class="card border-0 img-container rounded-3 shadow-sm">
+            <img [src]="(item.image | image | async)" alt="" class="img-item-preview shadow-sm">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-9 shadow-sm">
+          <div class="container card px-1 mb-0 pb-0 border-0">
+            <div class="card-body">
+              <div class="text-center justify-content-center">
+                <h4 class="card-title">{{item.name}}</h4>
+                <p class="card-subtitle text-muted">{{item.price | currency}}</p>
+              </div>
+              <div class="row pt-2 text-center">
+                <p>{{item.description}}</p>
+              </div>
+            </div>
+            <div class="row pb-3 justify-content-center">
+              <div class="col-2 p-0">
+                <input type="number" value="1" class="form-control">
+              </div>
+              <div class="col-6 ps-2">
+                <!-- If the user is logged in -->
+                <div *ngIf="isSessionAuthed; else sessionNotAuthed" class="mx-0">
+                  <div *ngIf="!isItemInCart; else itemInCart">
+                    <button class="btn btn-outline-success w-100" [disabled]="isLoading" (click)="addToCart()">
+                      <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Add To Cart
+                    </button>
+                  </div>
+                  <ng-template #itemInCart>
+                    <p>This item is in your cart</p>
+                  </ng-template>
+                </div>
+                <ng-template #sessionNotAuthed>
+                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                          title="Log in to add this to your cart.">
+                                        <button class="btn btn-outline-secondary mt-auto" style="pointer-events: none;"
+                                                type="button" disabled>
+                                            Add To Cart
+                                        </button>
+                                    </span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

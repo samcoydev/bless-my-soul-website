@@ -1,0 +1,9 @@
+<div class="item justify-content-center my-3 shadow-sm" routerLink="/item/id/{{item.id}}">
+  <img [src]="(item.image | image | async)" alt="">
+  <div class="bottom-text-container">
+    <div class="mt-3 px-3 text-center">
+      <p class="bottom-text mb-0">{{item.name}}</p>
+      <p class="bottom-text text-muted mt-0">{{item.price}}</p>
+    </div>
+  </div>
+</div>

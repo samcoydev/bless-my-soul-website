@@ -1,26 +1,72 @@
-<div class="container py-5">
-    <div *ngIf="!viewAllOrders">
-        <div class="row text-center">
-            <h1>Your Orders</h1>
-        </div>
-        <div class="row py-lg-5">
-            <ul>
-                <div *ngFor="let order of userOrders">
-                    <app-order [order]="order"></app-order>
-                </div>
-            </ul>
-        </div>
+<div class="jumbotron py-5 px-3">
+  <div class="container shadow-sm py-4 px-5">
+    <div class="row py-3">
+      <div class="float-start">
+        <h4 *ngIf="!viewAllOrders">Your Orders</h4>
+        <h4 *ngIf="viewAllOrders">Order Table</h4>
+      </div>
     </div>
-    <div *ngIf="viewAllOrders">
-        <div class="row text-center">
-            <h1>All Orders</h1>
-        </div>
-        <div class="row py-lg-5">
-            <ul>
-                <div *ngFor="let order of orders">
-                    <app-order [order]="order"></app-order>
-                </div>
-            </ul>
-        </div>
+    <div class="row">
+      <table class="table table-hover table-sm w-100" *ngIf="isMobileScreen() | async; else normalScreen">
+        <thead>
+        <tr>
+          <th class="text-muted col-4" scope="col">Status</th>
+          <th class="text-muted col-7" scope="col">Notes</th>
+          <th class="text-muted col-3" scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="orders.length > 0">
+        <tr *ngFor="let order of orders" routerLink="/order/{{order.id}}">
+          <td>
+            <p>{{orderLabelMapping[order.state]}}</p>
+          </td>
+          <td>
+            <p>{{order.notes | shorten:[24, '...']}}</p>
+          </td>
+          <td>
+            <p>{{getTotal(order.cartItems) | currency}}</p>
+          </td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="orders.length == 0">
+        <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+        </tbody>
+      </table>
+      <ng-template #normalScreen>
+        <table class="table table-hover table-sm">
+          <thead>
+          <tr>
+            <th class="text-muted" scope="col">Status</th>
+            <th class="text-muted" scope="col">Items</th>
+            <th class="text-muted" scope="col">Notes</th>
+            <th class="text-muted" scope="col">Total</th>
+            <th class="text-muted" scope="col">Date Submitted</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="orders.length > 0">
+          <tr *ngFor="let order of orders" routerLink="/order/{{order.id}}">
+            <td>
+              <p>{{orderLabelMapping[order.state]}}</p>
+            </td>
+            <td>
+              <p>{{order.cartItems.length}}</p>
+            </td>
+            <td>
+              <p>{{order.notes | shorten:[24, '...']}}</p>
+            </td>
+            <td>
+              <p>{{getTotal(order.cartItems) | currency}}</p>
+            </td>
+            <td>
+              <p>MM/DD/YYYY</p>
+            </td>
+          </tr>
+          </tbody>
+          <tbody *ngIf="orders.length == 0">
+          <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+          </tbody>
+        </table>
+      </ng-template>
     </div>
+  </div>
 </div>

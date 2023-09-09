@@ -1,66 +1,132 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation"> 
+<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation"
+     *ngIf="getIsLargerScreen() | async; else mobileScreen">
+  <div class="container-fluid">
     <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
-        <!-- Left of brand -->
-        <ul class="navbar-nav ms-auto text-center">
-            <li class="nav-item">
-                <a class="nav-link active" routerLink="/item/list">Catalog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About Me</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" *ngIf="isLoggedIn">Contact</a>
-            </li>
-        </ul>
+      <!-- Left of brand -->
+      <ul class="navbar-nav ms-auto text-center">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/category/list">Catalog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About Me</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" *ngIf="isLoggedIn">Contact</a>
+        </li>
+      </ul>
     </div>
     <!-- Center brand logo -->
-    <div class="mx-auto my-2 order-1 order-md-1 position-relative">
-        <a class="mx-auto navbar-brand" href="#">
-            <img src="../../../assets/img/doodle-sheep-logo.png" class="img-fluid" width="90" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="mx-auto my-2 order-1 order-md-1 position-relative" *ngIf="getIsLargerScreen() | async">
+      <a class="mx-auto navbar-brand" href="#">
+        <img src="../../../assets/img/doodle-sheep-logo.png" class="img-fluid" width="90" alt="">
+      </a>
     </div>
+    <a class="navbar-brand" *ngIf="!(getIsLargerScreen() | async)" href="#">Bless My Soul</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <!-- Right of brand -->
     <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
-        <ul class="navbar-nav me-auto text-center">
-            <li class="nav-item" *ngIf="isLoggedIn">
-                <a class="nav-link active" routerLink="/cart">Cart</a>
-            </li>
-            <li class="nav-item" *ngIf="isLoggedIn">
-                <a class="nav-link active" routerLink="/order-list">Orders</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/login">Sign In</a>
-            </li> 
-            <li class="nav-item">
-                <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/register">Register</a>
-            </li> 
-            <li class="nav-item dropdown" *ngIf="isLoggedIn">
-                <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Account
-                </a>
-                <div class="dropdown-menu" aria-labelledby="accountDropdown">
-                    <a class="nav-link active" routerLink="/profile">Profile</a>
-                </div>
-            </li>
-        </ul>
-        <!-- Far right -->
-        <ul class="navbar-nav navbar-right">
-            <li class="nav-item dropdown" *ngIf="showAdminMenus">
-                <a class="nav-link dropdown-toggle active" href="#" id="adminDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Admin
-                </a>
-                <div class="dropdown-menu" aria-labelledby="adminDropDown">
-                    <a class="nav-link active" routerLink="/all-orders-list">All Orders</a>
-                    <a class="nav-link active" routerLink="/item/create">Create Item</a>
-                    <a class="nav-link active" routerLink="/user/list">User List</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" *ngIf="isLoggedIn" (click)="logout()">Log Out</a>
-            </li> 
-        </ul>
+      <ul class="navbar-nav me-auto text-center">
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link active" routerLink="/cart">Cart</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link active" routerLink="/order-list">Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/login">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/register">Register</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn">
+          <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="accountDropdown">
+            <a class="nav-link active" routerLink="/profile">Profile</a>
+          </div>
+        </li>
+      </ul>
+      <!-- Far right -->
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item dropdown" *ngIf="showAdminMenus">
+          <a class="nav-link dropdown-toggle active" href="#" id="adminDropDown" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Admin
+          </a>
+          <div class="dropdown-menu" aria-labelledby="adminDropDown">
+            <a class="nav-link active" routerLink="/all-orders-list">Order Table</a>
+            <a class="nav-link active" routerLink="/item/table">Item Table</a>
+            <a class="nav-link active" routerLink="/category/table">Category Table</a>
+            <a class="nav-link active" routerLink="/image/table">Image Table</a>
+            <a class="nav-link active" routerLink="/user/table">User Table</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="isLoggedIn" (click)="logout()">Log Out</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
+<ng-template #mobileScreen>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light px-3" role="navigation">
+    <a class="navbar-brand" *ngIf="!(getIsLargerScreen() | async)" href="#">Bless My Soul</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
+      <!-- Left of brand -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/category/list">Catalog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About Me</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" *ngIf="isLoggedIn">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/login">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="!isLoggedIn" routerLink="/user/register">Register</a>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn">
+          <a class="nav-link dropdown-toggle active" href="#" id="accountDropdownMobile" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Account
+          </a>
+          <div class="dropdown-menu" aria-labelledby="accountDropdownMobile">
+            <a class="nav-link active" routerLink="/profile">Profile</a>
+            <a class="nav-link active" routerLink="/cart">Cart</a>
+            <a class="nav-link active" routerLink="/order-list">Orders</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="showAdminMenus">
+          <a class="nav-link dropdown-toggle active" href="#" id="adminDropDownMobile" data-bs-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Admin
+          </a>
+          <div class="dropdown-menu" aria-labelledby="adminDropDownMobile">
+            <a class="nav-link active" routerLink="/all-orders-list">Order Table</a>
+            <a class="nav-link active" routerLink="/item/table">Item Table</a>
+            <a class="nav-link active" routerLink="/category/table">Category Table</a>
+            <a class="nav-link active" routerLink="/image/table">Image Table</a>
+            <a class="nav-link active" routerLink="/user/table">User Table</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" *ngIf="isLoggedIn" (click)="logout()">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</ng-template>

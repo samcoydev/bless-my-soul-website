@@ -1,7 +1,17 @@
-<div class="col mb-4">
-    <div class="card h-100">
-        <div routerLink="/item/id/{{item.id}}">
+<div class="col mb-4 item">
+    <div class="card h-100 item-rounded">
+        <div *ngIf="isClickable" routerLink="/item/id/{{item.id}}">
             <app-image [itemImage]="item.image"></app-image>
+            <div class="card-body">
+                <div class="text-center">
+                    <p>{{item.name | shorten:[24, '...'] }}</p>
+                    <p>{{item.price | currency}}</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isClickable">
+            <app-image *ngIf="src == ''" [itemImage]="item.image"></app-image>
+            <img class="card-img-top" *ngIf="src != ''" [src]="src"/>
             <div class="card-body">
                 <div class="text-center">
                     <p>{{item.name | shorten:[24, '...'] }}</p>
@@ -13,7 +23,7 @@
             <!-- If the user is logged in -->
             <div *ngIf="isSessionAuthed; else sessionNotAuthed">
                 <div *ngIf="!isItemInCart; else itemInCart">
-                    <button class="btn btn-outline-success mt-auto" [disabled]="isLoading" (click)="addToCart()">
+                    <button class="btn btn-outline-success mt-auto" [disabled]="isLoading || !isClickable" (click)="addToCart()">
                         <span *ngIf="isLoading" class="spinner-border spinner-border-sm mr-1"></span>
                         Add To Cart
                     </button>

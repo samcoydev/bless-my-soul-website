@@ -1,17 +1,36 @@
-<div class="jumbotron jumbotron-fluid py-5" @fade>
-    <div class="container text-center px-4 px-lg-5 my-5">
-        <h1 class="display-4">Catalog</h1>
-        <p class="lead">Handcrafted products, just for you.</p>
+<div class="bg-light py-5">
+  <div class="text-center container">
+    <div class="row">
+      <div class="col-lg-8 col-md-6 mx-auto" @fade @slideDown>
+        <h1 class="display-6">Catalog</h1>
+        <p class="text-muted">Handcrafted products, just for you.</p>
+        <p class="text-muted font-weight-light" *ngIf="categoryName">Viewing {{categoryName}}</p>
+      </div>
     </div>
+  </div>
 </div>
 <div class="container">
-    <div class="row">
-        <div *ngIf="items.length == 0" class="container text-center px-4 px-lg-5 my-5">
-            <span class="spinner-grow spinner-grow-lg mr-1"></span>
-            <p>Loading the Catalog...</p>
-        </div>
+  <div class="row text-center">
+  </div>
+  <div class="row justify-content-center">
+    <div *ngIf="items.length == 0" class="container text-center px-4 px-lg-5 my-5">
+      <div *ngIf="isLoading">
+        <span class="spinner-grow spinner-grow-lg mr-1"></span>
+        <p>Fetching the sheep...</p>
         <div class="row row-cols-1 row-cols-md-5">
-            <app-item *ngFor="let item of items" [item]="item" [isItemInCart]="checkIfItemIsInCart(item)" @fade @zoom></app-item>
+          <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
+          <app-placeholder-object [type]="placeHolderTypes.Item"></app-placeholder-object>
         </div>
+      </div>
+      <div *ngIf="!isLoading">
+        <p>We're sorry. It looks like there are no products under this category.</p>
+      </div>
     </div>
+    <div class="row row-cols-2 row-cols-md-5 justify-content-center pt-3">
+      <app-mobile-item *ngFor="let item of items" [item]="item" @fade @zoom></app-mobile-item>
+    </div>
+  </div>
 </div>

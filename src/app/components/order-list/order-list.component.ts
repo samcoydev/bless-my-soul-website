@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { OrderTypeLabelMapping } from 'src/app/helpers/order-type';
+import {Observable, Subscription} from 'rxjs';
+import { OrderTypeLabelMapping } from 'src/app/helpers/enums/order-type';
+import { PlaceholderType } from 'src/app/helpers/enums/placeholder-type'
+import { RoleType } from 'src/app/helpers/enums/role-type'
+import { CartItem } from 'src/app/models/cart-item.model'
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order/order.service';
 import { UserService } from 'src/app/services/user/user.service';
+import {BreakpointService} from "../../services/breakpoint/breakpoint.service";
 
 @Component({
   selector: 'app-order-list',
@@ -14,10 +18,9 @@ import { UserService } from 'src/app/services/user/user.service';
 export class OrderListComponent implements OnInit {
 
   orders: Order[] = []
-  userOrders: Order[] = []
-  
-  orderListSubscription = new Subscription
+
   orderLabelMapping = OrderTypeLabelMapping
+  placeHolderTypes = PlaceholderType
 
   isLoading = false
   isSessionAuthed = false
@@ -26,30 +29,38 @@ export class OrderListComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private breakpointService: BreakpointService
     ) { }
 
    ngOnInit(): void {
     this.checkIfViewingAllOrders()
-    
-    this.orderListSubscription = this.orderService.ordersUpdated$.subscribe(message => this.getOrders())
-    this.getOrders()
   }
-  
+
   checkIfViewingAllOrders(): void {
-    if (this.router.url === "/all-orders-list") {
+    if (this.router.url === "/all-orders-list" && this.userService.currentUserValue.role === RoleType.Admin) {
       this.viewAllOrders = true
+      this.getAllOrders()
     } else {
       this.viewAllOrders = false
+      this.getUserOrders()
     }
   }
 
-  getOrders(): void {
+  getAllOrders(): void {
     this.orderService.getAllOrders()
-      .subscribe(response => {
-        this.orders = response
-        this.userOrders = this.orders.filter(order => order.user.id == this.userService.currentUserValue.id)
-      })
+      .subscribe(response => this.orders = response)
+  }
+
+  getUserOrders(): void {
+    this.orderService.getOrdersByUserID(this.userService.currentUserValue.id)
+      .subscribe(response => this.orders = response)
+  }
+
+  getTotal(cartItems: CartItem[]): number {
+    let total = 0
+    cartItems.forEach(cartItem => total += cartItem.item.price * cartItem.qty)
+    return total
   }
 
   deleteOrder(order: Order): void {
@@ -58,5 +69,9 @@ export class OrderListComponent implements OnInit {
         this.isLoading = false
         console.log(error)
       });
+  }
+
+  isMobileScreen(): Observable<boolean> {
+    return this.breakpointService.getIsMobileScreen()
   }
 }

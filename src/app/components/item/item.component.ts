@@ -1,19 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Item } from 'src/app/models/item.model';
-import { ItemService } from 'src/app/services/item/item.service';
-import { Location } from '@angular/common';
-import { StateTypeLabelMapping, StateType } from 'src/app/helpers/state-type';
-import { CategoryService } from 'src/app/services/category/category.service';
-import { Category } from 'src/app/models/category.model';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { Item } from 'src/app/models/item.model'
+import { ItemService } from 'src/app/services/item/item.service'
+import { Location } from '@angular/common'
+import { StateTypeLabelMapping, StateType } from 'src/app/helpers/enums/state-type'
+import { Category } from 'src/app/models/category.model'
 import { UserService } from 'src/app/services/user/user.service'
 import { CartService } from 'src/app/services/cart/cart.service'
 import { first } from 'rxjs/operators'
-import { CartItem } from 'src/app/models/cart-item.model'
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { fader } from 'src/app/helpers/animations/fade.animation'
-
+import { ImageType } from 'src/app/helpers/enums/image-type'
+import { Image } from 'src/app/models/image.model'
 
 @Component({
   selector: 'app-item',
@@ -22,11 +19,14 @@ import { fader } from 'src/app/helpers/animations/fade.animation'
   animations: [fader]
 })
 export class ItemComponent implements OnInit {
-  
-  category: Category = {id: 0, name: "No Category"}
-  @Input() item: Item = {id: -1, name: '', price: 0, description: '', state: StateType.Draft, category: this.category}
+
+  image: Image = { id: 0, name: '', type: ImageType.Catalog, fileExtension: '', url: '' }
+  category: Category = { id: 0, name: "No Category", sequence: 0, image: this.image }
+  @Input() item: Item = { id: -1, name: '', price: 0, description: '', state: StateType.Draft, image: this.image, category: this.category }
   @Input() isItemInCart: boolean = false
-  
+  @Input() isClickable: boolean = true
+  @Input() src: any = ''
+
   isLoading = false
   isSubmitted = false
   isSessionAuthed = false
@@ -40,7 +40,7 @@ export class ItemComponent implements OnInit {
     private itemService: ItemService,
     private cartService: CartService,
     private userService: UserService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap
@@ -59,10 +59,10 @@ export class ItemComponent implements OnInit {
       .subscribe(response => this.item = response)
   }
 
-  updateItem(): void{
+  updateItem(): void {
     this.isSubmitted = true
     this.isLoading = true
-    
+
     let oldId = this.item.id
     this.item.id = oldId
 
@@ -81,6 +81,7 @@ export class ItemComponent implements OnInit {
   //////////////////
 
   addToCart(): void {
+    if (!this.isClickable) return
     this.isLoading = true
     let convertedItem = this.cartService.convertItemToCartItem(this.item)
     this.cartService.postCartItem(convertedItem).pipe(first())

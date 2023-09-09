@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/mixins/_breakpoints.scss";
+
+@include media-breakpoint-up(lg) {
+    .landing-section {
+        padding-top: 15rem;
+        padding-bottom: 20rem;
+    }
+}
+
+.landing-section {
+    padding-bottom: 10rem;
+  padding-top: 8rem;
+}
+
+
+.img-container {
+    display: flex;
+}
+
+.hoverable:hover {
+    box-shadow: 0 4px 7px 0 rgba(0,0,0,0.2), 0 6px 5px 0 rgba(0,0,0,0.19);
+    transition: all .2s ease-in-out;
+}

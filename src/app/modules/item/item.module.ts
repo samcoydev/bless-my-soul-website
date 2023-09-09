@@ -11,6 +11,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ImageComponent } from 'src/app/components/image/image.component';
 import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
+import { ItemOverviewComponent } from 'src/app/components/item-overview/item-overview.component'
+import { CategoryTableComponent } from 'src/app/components/category-table/category-table.component'
+import { ImagePipe } from 'src/app/pipes/image/image.pipe'
+import { ItemTableComponent } from 'src/app/components/item-table/item-table.component'
+import { PlaceholderObjectComponent } from 'src/app/components/placeholder-object/placeholder-object.component'
+import { ImageTableComponent } from 'src/app/components/image-table/image-table.component'
+import { ImageCreateComponent } from 'src/app/components/image-create/image-create.component'
+import { ImageCropperModule } from 'ngx-image-cropper'
+import {MobileCategoryComponent} from "../../components/mobile-category/mobile-category.component";
+import {MobileItemComponent} from "../../components/mobile-item/mobile-item.component";
 
 
 @NgModule({
@@ -18,21 +28,38 @@ import { ShortenPipe } from 'src/app/pipes/shorten/shorten.pipe'
     ItemComponent,
     ItemListComponent,
     ItemCreateComponent,
+    ItemOverviewComponent,
+    ItemTableComponent,
     CategoryComponent,
     CategoryCreateComponent,
     CategoryListComponent,
     ImageComponent,
-    ShortenPipe
+    ShortenPipe,
+    ImagePipe,
+    CategoryTableComponent,
+    PlaceholderObjectComponent,
+    ImageTableComponent,
+    ImageCreateComponent,
+    MobileCategoryComponent,
+    MobileItemComponent,
   ],
   imports: [
     CommonModule,
     ItemRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ImageCropperModule
   ],
   exports: [
     ImageComponent,
-    ShortenPipe
+    MobileItemComponent,
+    CategoryComponent,
+    MobileCategoryComponent,
+    CategoryTableComponent,
+    ItemComponent,
+    ImagePipe,
+    ShortenPipe,
+    PlaceholderObjectComponent
   ]
 })
 export class ItemModule { }

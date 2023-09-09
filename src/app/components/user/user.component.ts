@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user/user.service';
 import { Location } from '@angular/common';
-import { RoleType } from 'src/app/helpers/role-type';
+import { RoleType } from 'src/app/helpers/enums/role-type';
 
 @Component({
   selector: 'app-user',

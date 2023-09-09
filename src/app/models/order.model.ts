@@ -1,4 +1,4 @@
-import { OrderType } from "../helpers/order-type";
+import { OrderType } from "../helpers/enums/order-type";
 import { CartItem } from "./cart-item.model";
 import { User } from "./user.model";
 

@@ -1,0 +1,33 @@
+th{
+    font-weight: normal;
+}
+
+.container-padding {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.img-table-preview {
+    object-fit: cover;
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.product-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-info-details {
+    margin-bottom: 0;
+}

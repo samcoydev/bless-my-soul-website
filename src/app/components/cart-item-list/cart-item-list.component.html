@@ -1,18 +1,161 @@
-<div class="container py-5">
-    <div class="row text-center">
-        <h1>Shopping Cart</h1>
-    </div>
-    <div class="row py-lg-5">
-        <ul>
-            <div *ngFor="let cartItem of cartItems" class="mb-2">
-                <app-cart-item [cartItem]="cartItem"></app-cart-item>
-            </div>
-        </ul>
-    </div>
+<div class="jumbotron py-5 px-3">
+  <div *ngIf="isLargeScreen() | async; else normalScreen" class="container shadow-sm py-4 px-3">
     <div class="row">
-        <p>Subtotal: {{subtotal | currency}}</p>
+      <div class="row py-3">
+        <div class="col-9">
+          <div class="float-start">
+            <h4>Shopping Cart</h4>
+          </div>
+          <div class="float-end">
+            <h4 class="text-muted">{{cartItems.length}} Items</h4>
+          </div>
+        </div>
+        <div class="col-3">
+          <h4 class="text-center">Order Summary</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-9">
+          <hr/>
+        </div>
+        <div class="col-3">
+          <hr/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-9">
+          <div class="row">
+            <table class="table table-borderless">
+              <thead>
+              <tr>
+                <th class="text-muted" scope="col">Product</th>
+                <th class="text-muted" scope="col">Quantity</th>
+                <th class="text-muted float-end" scope="col">Subtotal</th>
+              </tr>
+              </thead>
+              <tbody *ngIf="cartItems.length > 0">
+              <tr *ngFor="let cartItem of cartItems">
+                <td>
+                  <div class="product-info">
+                    <img [src]="(cartItem.item.image | image | async)" class="rounded img-table-preview">
+                    <div>
+                      <p class="product-info-details">{{cartItem.item.name}}</p>
+                      <p class="text-muted product-info-details">{{cartItem.item.price | currency}}</p>
+                      <p class="text-danger product-info-details" (click)="deleteCartItem(cartItem)">Remove</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="col-2">
+                    <input type="number" class="form-control" [disabled]="isLoading" [(ngModel)]="cartItem.qty"
+                           (change)="updateCartItem(cartItem)">
+                  </div>
+                </td>
+                <td class="float-end">{{cartItem.item.price * cartItem.qty | currency}}</td>
+              </tr>
+              </tbody>
+              <tbody *ngIf="cartItems.length == 0">
+              <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-3 col-center text-center">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <textarea class="form-control" [(ngModel)]="notes" rows=3></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <p>Total: {{subtotal | currency}}</p>
+          </div>
+          <div *ngIf="cartItems.length >= 1" class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <button class="btn btn-success" (click)="createOrder()">Create an Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div *ngIf="cartItems.length >= 1" class="row">
-        <button class="btn btn-success col-2" routerLink="/new-order">Place an Order</button>
+  </div>
+  <ng-template #normalScreen>
+    <div class="container shadow-sm py-4 container-padding">
+      <div class="row py-1">
+        <div class="col-12">
+          <div class="float-start ps-2">
+            <h6>Shopping Cart</h6>
+          </div>
+          <div class="float-end pe-2">
+            <h6 class="text-muted">{{cartItems.length}} Items</h6>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <hr/>
+        </div>
+      </div>
+      <div class="row px-3">
+        <table class="table-sm table-borderless">
+          <thead>
+          <tr>
+            <th class="text-muted col-10" scope="col">Product</th>
+            <th class="text-muted col-2" scope="col">Quantity</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="cartItems.length > 0">
+          <tr class="align-items-center" *ngFor="let cartItem of cartItems">
+            <td>
+              <div class="product-info">
+                <div class="img-preview-container">
+                  <img [src]="(cartItem.item.image | image | async)" class="rounded">
+                </div>
+                <div>
+                  <p class="product-info-details">{{cartItem.item.name}}</p>
+                  <p class="text-muted product-info-details">{{cartItem.item.price | currency}}</p>
+                  <p class="text-danger product-info-details" (click)="deleteCartItem(cartItem)">Remove</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="p-0">
+                <input type="number" class="form-control" [disabled]="isLoading" [(ngModel)]="cartItem.qty"
+                       (change)="updateCartItem(cartItem)">
+              </div>
+            </td>
+          </tr>
+          </tbody>
+          <tbody *ngIf="cartItems.length == 0">
+          <app-placeholder-object [type]="placeHolderTypes.TableRow"></app-placeholder-object>
+          </tbody>
+        </table>
+      </div>
+      <div class="row pt-2">
+        <div class="col-12">
+          <hr/>
+        </div>
+      </div>
+      <div class="row pt-3">
+        <div class="col-12 col-center text-center">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+              <textarea class="form-control" [(ngModel)]="notes" rows=3></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <p>Total: {{subtotal | currency}}</p>
+          </div>
+          <div *ngIf="cartItems.length >= 1" class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <button class="btn btn-success" (click)="createOrder()">Create an Order</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </ng-template>
 </div>
