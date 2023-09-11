@@ -74,7 +74,9 @@
 </nav>
 <ng-template #mobileScreen>
   <nav class="navbar navbar-expand-lg navbar-light bg-light px-3" role="navigation">
-    <a class="navbar-brand" *ngIf="!(getIsLargerScreen() | async)" href="#">Bless My Soul</a>
+    <a class="ms-1 navbar-brand" href="#">
+      <img src="../../../assets/img/doodle-sheep-logo.png" class="img-fluid" width="40" alt="">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
       <span class="navbar-toggler-icon"></span>
     </button>
